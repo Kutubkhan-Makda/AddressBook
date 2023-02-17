@@ -1,0 +1,32 @@
+@{
+    Layout="~/Views/Shared/_Layout.cshtml";
+}
+
+@model LOC_CityModel
+
+<div class="row">
+    <h3>@TempData["CityInsetMsg"]</h3>
+    <div>
+        <form method="post" asp-controller="LOC_City" asp-action="Save">
+            @Html.HiddenFor(x=>x.CityID)
+            <div class="form-group">
+                <label>Country Name</label>
+                <select class="form-control" asp-for="CountryID" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))">
+                    <option value="">Select Country</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>City Name</label>
+                <input type="text" class="form-control" asp-for="CityName" placeholder="Entry City Name"/>
+            </div>
+            <div class="form-group">
+                <label>City Code</label>
+                <input type="text" asp-for="CityCode" class="form-control" placeholder="Entry City Code"/>
+            </div>
+
+            <hr/>
+            <div class="center-button"><input class="btn btn-success" type="submit" value="Save"></div>
+            <div class="center-button"><a asp-controller="LOC_City" asp-action="Index" class="btn btn-danger">Cancel</a></div>
+        </form>
+    </div>
+</div>

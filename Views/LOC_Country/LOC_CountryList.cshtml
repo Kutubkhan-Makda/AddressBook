@@ -1,0 +1,72 @@
+@{
+    Layout="~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data;
+@model DataTable;
+
+<div class="row">
+    <div class="col-md-10"><h2>Country List</h2></div>
+    <div class="col-md-2"><button class="btn btn-success"><a asp-controller="LOC_Country" asp-action="Add">ADD Country</a></button></div>
+</div>
+<br/>
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+<br/>
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th>CountryName</th>
+            <th>CountryCode</th>
+            <th>CreationDate</th>
+            <th>Modification</th>
+            <th>Action</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="myTable">
+        @foreach (DataRow dr in Model.Rows)
+        {
+            <tr>
+                <td scope="row">@dr["CountryName"]</td>
+                <td>@dr["CountryCode"]</td>
+                <td>@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-MM-yyyy")</td>
+                <td>@Convert.ToDateTime(dr["ModificationDate"]).ToString("dd-MM-yyyy")</td>
+                <td>
+                    <a class="btn btn-danger" asp-controller="LOC_Country" asp-action="Delete" asp-route-CountryID="@Convert.ToInt32(dr["CountryID"])" onclick="DeleteConf()">Delete</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="LOC_Country" asp-action="Add" asp-route-CountryID="@Convert.ToInt32(dr["CountryID"])">Update</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts
+{
+    <script>
+        function DeleteConf()
+        {
+            if(confirm("Are you sure you want to Delete ?"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

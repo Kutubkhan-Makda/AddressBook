@@ -1,0 +1,32 @@
+@{
+    Layout="~/Views/Shared/_Layout.cshtml";
+}
+
+@model LOC_StateModel
+
+<div class="row">
+    <h3>@TempData["StateInsetMsg"]</h3>
+    <div>
+        <form method="post" asp-controller="LOC_State" asp-action="Save">
+            @Html.HiddenFor(x=>x.StateID)
+            <div class="form-group">
+                <label>Country Name</label>
+                <select class="form-control" asp-for="CountryID" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))">
+                    <option value="">Select Country</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>State Name</label>
+                <input type="text" class="form-control" asp-for="StateName" placeholder="Entry State Name"/>
+            </div>
+            <div class="form-group">
+                <label>State Code</label>
+                <input type="text" asp-for="StateCode" class="form-control" placeholder="Entry State Code"/>
+            </div>
+
+            <hr/>
+            <div class="center-button"><input class="btn btn-success" type="submit" value="Save"></div>
+            <div class="center-button"><a asp-controller="LOC_State" asp-action="Index" class="btn btn-danger">Cancel</a></div>
+        </form>
+    </div>
+</div>

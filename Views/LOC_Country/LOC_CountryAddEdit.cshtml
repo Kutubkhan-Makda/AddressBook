@@ -1,0 +1,33 @@
+@{
+    Layout="~/Views/Shared/_Layout.cshtml";
+}
+
+@model LOC_CountryModel
+
+<div class="row">
+    <h3>@TempData["CountryInsetMsg"]</h3>
+    <div>
+        <form method="post" asp-controller="LOC_Country" asp-action="Save">
+            @Html.HiddenFor(x=>x.CountryID)
+            <div class="form-group">
+                <label>Country Name</label>
+                <input type="text" class="form-control" asp-for="CountryName" placeholder="Entry Country Name"/>
+            </div>
+            <div class="form-group">
+                <label>Country Code</label>
+                <input type="text" asp-for="CountryCode" class="form-control" placeholder="Entry Country Code"/>
+            </div>
+            <div class="form-group">
+                <label>Created Date</label>
+                <input type="date" asp-for="CreationDate" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label>Modification Date</label>
+                <input type="date" asp-for="ModificationDate" class="form-control"/>
+            </div>
+            <hr/>
+            <div class="center-button"><input class="btn btn-success" class="btn btn-success" type="submit" value="Save"></div>
+            <div class="center-button"><a asp-controller="LOC_Country" asp-action="Index" class="btn btn-danger">Cancel</a></div>
+        </form>
+    </div>
+</div>
