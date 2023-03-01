@@ -137,5 +137,33 @@ namespace AddressBook.Controllers
             
             return View("LOC_CountryAddEdit");
         }
+
+        public IActionResult SearchByPage(string CountryName, string CountryCode)
+        {
+            //TempData["SearchInput"] = CountryName + " " + CountryCode;
+
+            string str = this.Configuration.GetConnectionString("SQL_AddressBook");
+            SqlConnection conn = new SqlConnection(str);
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "";
+            if (CountryName == null)
+            {
+                CountryName = "";
+
+            }
+            if (CountryCode == null)
+            {
+                CountryCode = "";
+
+            }
+            cmd.Parameters.AddWithValue("@CountryName", CountryName);
+            cmd.Parameters.AddWithValue("@CountryCode", CountryCode);
+            DataTable dt = new DataTable();
+            SqlDataReader dr = cmd.ExecuteReader();
+            dt.Load(dr);
+            return View("", dt);
+        }
     }
 }

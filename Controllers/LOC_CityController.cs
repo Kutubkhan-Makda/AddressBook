@@ -76,6 +76,9 @@ namespace AddressBook.Controllers
             }
             ViewBag.CountryList = list;
 
+            List<LOC_CountryDropDownModel> LOC_StateDropdown_List = new List<LOC_CountryDropDownModel>();
+            ViewBag.StateList = LOC_StateDropdown_List;
+
             if(CityID!=null)
             {
                 SqlConnection conn = new SqlConnection(connectionString);

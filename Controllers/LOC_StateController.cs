@@ -75,6 +75,7 @@ namespace AddressBook.Controllers
                 list.Add(vlst);
             }
             ViewBag.CountryList = list;
+            conn1.Close();
 
             if(StateID!=null)
             {
