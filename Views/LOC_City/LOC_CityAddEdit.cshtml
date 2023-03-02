@@ -1,32 +1,80 @@
-@{
-    Layout="~/Views/Shared/_Layout.cshtml";
+﻿@{
+    ViewData["Title"] = "City Add/Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @model LOC_CityModel
-
 <div class="row">
-    <h3>@TempData["CityInsetMsg"]</h3>
-    <div>
-        <form method="post" asp-controller="LOC_City" asp-action="Save">
+    <div class="col-md-12">
+        <h3> @TempData["CityInsertMsg"]</h3>
+        <form method="post" asp-controller="LOC_City" asp-action="Save" enctype="multipart/form-data">
             @Html.HiddenFor(x=>x.CityID)
+            @Html.HiddenFor(x=>x.PhotoPath)
             <div class="form-group">
-                <label>Country Name</label>
-                <select class="form-control" asp-for="CountryID" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))">
+                <label>CityName</label>
+                <input type="text" asp-for="CityName" class=form-control placeholder="Enter City Name" />
+            </div>
+            <div class="form-group">
+                <label>CityCode</label>
+                <input type="text" asp-for="CityCode" class=form-control placeholder="Enter City Code" />
+            </div>
+            <div class="form-group">
+                <label>CountryName</label>
+                <select class="form-control" asp-for="CountryID" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))" onchange="fnOnStateChange();">
                     <option value="">Select Country</option>
                 </select>
             </div>
             <div class="form-group">
-                <label>City Name</label>
-                <input type="text" class="form-control" asp-for="CityName" placeholder="Entry City Name"/>
-            </div>
-            <div class="form-group">
-                <label>City Code</label>
-                <input type="text" asp-for="CityCode" class="form-control" placeholder="Entry City Code"/>
+                <label>StateName</label>
+                <select class="form-control" asp-for="StateID" asp-items="@(new SelectList(ViewBag.StateList,"StateID","StateName"))">
+                    <option value="">Select State</option>
+                </select>
             </div>
 
-            <hr/>
-            <div class="center-button"><input class="btn btn-success" type="submit" value="Save"></div>
-            <div class="center-button"><a asp-controller="LOC_City" asp-action="Index" class="btn btn-danger">Cancel</a></div>
+            <div class="form-group">
+                <label>PhotoPath</label>
+                <input class="form-control"  type="file" asp-for="File" placeholder="Upload File" />
+            </div>
+           
+           
+            <hr />
+            <input type="submit" asp-controller="LOC_City" asp-action="Save" />
         </form>
     </div>
 </div>
+
+@section Scripts
+    {
+    <script>
+        function fnOnStateChange() {
+            var CountryID = $("#CountryID").val();
+
+            if (CountryID !== "") {
+                $("#StateID").empty();
+                $("#StateID").append($("<option></option>").val("").html("Select State"));
+                $.ajax(
+                    {
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: "@Url.Action("DropDownByCountry","LOC_City")" + "?&CountryID=" + CountryID,
+                        data: {},
+                        dataType: "json",
+                        success: function (Result) {
+                            $.each(Result,
+                                function (key, value) {
+                                    $("#StateID").append($("<option></option>").val(value.stateID).html(value.stateName));
+                                }
+                            );
+                        },
+                        error: function (r) {
+                            alert("Error While Loading DropDown");
+                        }
+                    }
+                );
+            }
+            else {
+                $("#StateID").empty();
+                $("#StateID").append($("<option></option>").val("").html("Select State"));
+            }
+        }
+    </script>
+}

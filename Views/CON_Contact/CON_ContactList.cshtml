@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewData["Title"] = "Country List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using System.Data
+@model DataTable
+<div class="col-md-12">
+    <div class="row">
+        <div class=" col-md-10">
+            <h3>Contact List</h3>
+        </div>
+        <div class="actions">
+            <div class="btn-group btn-group-devided">
+                <a asp-controller="CON_Contact" asp-action="Add" class="btn green"><i class="fa fa-plus"></i>&nbsp;Add Contact</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="portlet-body">
+    <div class="pull-right">
+        <div id="sample_1_filter" class="dataTables_filter">
+            <label>Search Any&nbsp;<input type="" class="form-control input-sm input-small input-inline" placeholder="Search Anything" id="sample_1" aria-controls="sample_1"></label>
+        </div>&nbsp;
+    </div>
+</div>
+<table class="table table-striped table-bordered table-hover table-header-fixed dataTable" id="sample_1">
+    <thead>
+        <tr>
+           <th>Action</th> 
+            <th>ContactID</th>&nbsp
+            <th>Name</th>&nbsp
+            <th>Mail</th>&nbsp
+            <th>Address</th>&nbsp
+            
+            <th>CityName</th>&nbsp
+            
+            <th>StateName</th>&nbsp
+            
+            <th>CountryName</th>&nbsp
+            <th>Pincode</th>&nbsp
+            <th>Gender</th>&nbsp
+            <th>DateofBirth</th>&nbsp
+            <th>Linkedin</th>
+            <th>ContactCategory</th>
+            <th>Photo</th>
+            
+        </tr>
+    </thead>
+    <tbody id="sample_2">
+        @foreach (DataRow dr in Model.Rows)
+        {
+            <tr>
+                <td>
+                    <form method="post" asp-controller="CON_Contact" asp-action="Delete">
+                        <input type="hidden" name="ContactID" value=" @Convert.ToInt32(dr["ContactID"].ToString()) " />
+                         <button type="submit" class=" btn btn-danger btn-xs" onclick="return fun4();"><i class="fa fa-close"></i></button>
+                            <a class=" btn btn-info btn-xs" asp-controller="CON_Contact" asp-action="Add" asp-route-contactid="@Convert.ToInt32(dr["ContactID"])"><i class="fa fa-pencil"></i></a>
+                    </form>
+                </td>
+                <td>@dr["ContactID"]</td>&nbsp
+                <td>@dr["Name"]</td>&nbsp
+                <td>@dr["Mail"]</td>&nbsp
+                <td>@dr["Address"]</td>&nbsp
+                
+                <td>@dr["CityName"]</td>&nbsp
+               
+                <td>@dr["StateName"]</td>&nbsp
+                
+                <td>@dr["CountryName"]</td>&nbsp
+                <td>@dr["Pincode"]</td>&nbsp
+                <td>@dr["Gender"]</td>&nbsp
+                <td>@Convert.ToDateTime(dr["DateofBirth"]).ToString("dd-mm-yyyy")</td>&nbsp
+                <td>@dr["Linkedin"]</td>
+                <td>@dr["ContactCategory"]</td>
+                <td><img src={@dr["PhotoPath"]} height="30px" width="30px" alt="img"></td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+        function fun4() {
+            if (confirm("Are you sure you want to delete")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+}

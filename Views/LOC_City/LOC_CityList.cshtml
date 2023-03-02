@@ -1,77 +1,109 @@
-@{
-    Layout="~/Views/Shared/_Layout.cshtml";
+﻿@{
+    ViewData["Title"] = "Country List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@using System.Data;
-@model DataTable;
-
-<div class="row">
-    <div class="col-md-10"><h2>City List</h2></div>
-    <div class="col-md-2"><button class="btn btn-success"><a asp-controller="LOC_City" asp-action="Add">ADD City</a></button></div>
+@using System.Data
+@model DataTable
+<div class="col-md-12">
+    <div class="row">
+        <div class=" col-md-10">
+            <h3>City List</h3>
+        </div>
+        <div class="actions">
+            <div class="btn-group btn-group-devided">
+                <a asp-controller="LOC_City" asp-action="Add" class="btn green"><i class="fa fa-plus"></i>&nbsp;Add City</a>
+            </div>
+        </div>
+    </div>
 </div>
-<br/>
-<input class="form-control" id="myInput" type="text" placeholder="Search..">
-<br/>
-<table class="table table-dark">
+<div class="portlet-body">
+    <div class="pull-right">
+        <div id="sample_1_filter" class="dataTables_filter">
+            <label>Search Any&nbsp;<input type="" class="form-control input-sm input-small input-inline" placeholder="Search Anything" id="sample_1" aria-controls="sample_1"></label>
+        </div>&nbsp;
+    </div>
+</div>
+<form method="post" asp-controller="LOC_City" asp-action="Search">
+    <div>
+        <div class="split-left">
+            <div class="centered">
+
+                <label>
+                    State Name &nbsp;
+                    <input type="text" name="CityName" class="form-control input-sm input-small input-inline" placeholder="Enter City" />
+                </label>
+            </div>
+        </div>
+        <div class="split-right">
+            <div class="centered">
+                <label>
+                    City Code &nbsp;
+                    <input type="text" name="CityCode" class="form-control input-sm input-small input-inline" placeholder="Enter City Code" />
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-info">Search</button>
+</form>
+<table class="table table-striped table-bordered table-hover table-header-fixed dataTable" id="sample_1">
     <thead>
         <tr>
-            <th>CityName</th>
-            <th>CityCode</th>
-            <th>StateName</th>
-            <th>CountryName</th>
-            <th>CreationDate</th>
-            <th>Modification</th>
+            
+            <th>CityName </th>&nbsp
+            <th>CityCode </th>&nbsp
+            <th>CreationDate </th>&nbsp
+            <th>ModificationDate </th>
+            <th>StateName </th>
+            <th>CountryName </th>
             <th>Action</th>
-            <th>Action</th>
+
         </tr>
     </thead>
-    <tbody id="myTable">
+    <tbody id="sample_2">
         @foreach (DataRow dr in Model.Rows)
         {
             <tr>
-                <td scope="row">@dr["CityName"]</td>
-                <td>@dr["CityCode"]</td>
-                <td>@dr["StateName"]</td>
+                
+                <td>@dr["CityName"]</td>&nbsp
+                <td>@dr["CityCode"]</td>&nbsp
+                <td>@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-mm-yyyy")</td>&nbsp
+                <td>@Convert.ToDateTime(dr["ModificationDate"]).ToString("dd-mm-yyyy")</td>
+                
+                <td>@dr["StateName"]</td>&nbsp
+                
                 <td>@dr["CountryName"]</td>
-                <td>@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-MM-yyyy")</td>
-                <td>@Convert.ToDateTime(dr["ModificationDate"]).ToString("dd-MM-yyyy")</td>
                 <td>
-                    <a class="btn btn-danger" asp-controller="LOC_City" asp-action="Delete" asp-route-CityID="@Convert.ToInt32(dr["CityID"])" onclick="DeleteConf()">Delete</a>
-                </td>
-                <td>
-                    <a class="btn btn-primary" asp-controller="LOC_City" asp-action="Add" asp-route-CityID="@Convert.ToInt32(dr["CityID"])">Update</a>
+                    <form method="post" asp-controller="LOC_City" asp-action="Delete">
+                        <input type="hidden" name="CityID" value=" @Convert.ToInt32(dr["CityID"].ToString()) "/>
+                        <button type="submit" class=" btn btn-danger btn-xs" onclick="return fun3();"><i class="fa fa-close"></i></button>
+                        <a class=" btn btn-info btn-xs" asp-controller="LOC_City" asp-action="Add" asp-route-cityid="@Convert.ToInt32(dr["CityID"])"><i class="fa fa-pencil"></i></a>
+                    </form>
                 </td>
             </tr>
         }
+
     </tbody>
 </table>
-
-
 @section Scripts
 {
     <script>
-        function DeleteConf()
-        {
-            if(confirm("Are you sure you want to Delete ?"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    </script>
-
-    <script>
-        $(document).ready(function(){
-            $("#myInput").on("keyup", function() {
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
-                $("#myTable tr").filter(function() {
+                $("#sample_2 tr").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
+        function fun3()
+        {
+            if (confirm("Are you sure you want to delete")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     </script>
-
 }

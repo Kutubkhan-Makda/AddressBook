@@ -1,147 +1,175 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 using System.Data;
-using Microsoft.Practices.EnterpriseLibrary.Data;
-using System.Reflection;
 using AddressBook.Models;
+using AddressBook.DAL;
 
 namespace AddressBook.Controllers
 {
     public class LOC_StateController : Controller
     {
         private IConfiguration Configuration;
-
         public LOC_StateController(IConfiguration _configuration)
         {
             Configuration = _configuration;
         }
-
-        public ActionResult Index()
+        public IActionResult Index()
         {
-            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(connectionString); 
+            String str = this.Configuration.GetConnectionString("myConnectionString");
+            LOC_DAL dalLOC= new LOC_DAL();
+            DataTable dt1 = dalLOC.dbo_PR_LOC_State_SelectAll(str);
+            return View("LOC_StateList", dt1);
             
-            conn.Open();
-            SqlCommand objCmd = conn.CreateCommand();
-            objCmd.CommandType = CommandType.StoredProcedure;
-            objCmd.CommandText = "PR_LOC_State_SelectAll";
-            
-            SqlDataReader objSDR = objCmd.ExecuteReader();
-            dt.Load(objSDR);
-            conn.Close();
 
-            return View("LOC_StateList",dt);
+
+
         }
-
-
         public ActionResult Delete(int StateID)
         {
-            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(connectionString); 
-            
+            String str = this.Configuration.GetConnectionString("myConnectionString");
+            SqlConnection conn = new SqlConnection(str);
             conn.Open();
-            SqlCommand objCmd = conn.CreateCommand();
-            objCmd.CommandType = CommandType.StoredProcedure;
-            objCmd.CommandText = "PR_LOC_State_DeleteByPK";
-            objCmd.Parameters.AddWithValue("@stateID",StateID);
-            objCmd.ExecuteNonQuery();
-            
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "PR_LOC_State_DeleteByPK";
+            cmd.Parameters.AddWithValue("@StateID", StateID);
+            DataTable dt = new DataTable();
+            cmd.ExecuteNonQuery();
             conn.Close();
+
 
             return RedirectToAction("Index");
         }
-
-
         public IActionResult Add(int? StateID)
-        {
-            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
-            SqlConnection conn1 = new SqlConnection(connectionString);
-            conn1.Open();
-            SqlCommand objCmd1 = conn1.CreateCommand();
-            objCmd1.CommandType = CommandType.StoredProcedure;
-            objCmd1.CommandText = "PR_LOC_Country_SelectForDropDown";
-            DataTable dt1 = new DataTable();
-            SqlDataReader objSDR1 = objCmd1.ExecuteReader();
-            dt1.Load(objSDR1);
+         {
 
-            List<LOC_CountryDropDownModel> list = new List<LOC_CountryDropDownModel>();
+            String connectionstr = this.Configuration.GetConnectionString("myConnectionString");
+            DataTable dt1 = new DataTable();
+            SqlConnection conn1 = new SqlConnection(connectionstr);
+            conn1.Open();
+            SqlCommand cmd1 = conn1.CreateCommand();
+            cmd1.CommandType = CommandType.StoredProcedure;
+            cmd1.CommandText = "PR_LOC_Country_SelectForDropDown";
+            SqlDataReader objSDR1 = cmd1.ExecuteReader();
+            dt1.Load(objSDR1);
+            List<LOC_CountryDropDownModel> list=new List<LOC_CountryDropDownModel>();
             foreach(DataRow dr in dt1.Rows)
             {
-                LOC_CountryDropDownModel vlst = new LOC_CountryDropDownModel();
-                vlst.CountryID = Convert.ToInt32(dr["CountryID"]);
-                vlst.CountryName = dr["CountryName"].ToString();
-                list.Add(vlst);
+                LOC_CountryDropDownModel modelLOC_CountryDropDown = new LOC_CountryDropDownModel();
+                modelLOC_CountryDropDown.CountryID = (Convert.ToInt32(dr["CountryID"]));
+                modelLOC_CountryDropDown.CountryName = (Convert.ToString(dr["CountryName"]));
+                list.Add(modelLOC_CountryDropDown);
             }
-            ViewBag.CountryList = list;
-            conn1.Close();
-
-            if(StateID!=null)
+            ViewBag.CountryList=list;
+            if (StateID != null)
             {
-                SqlConnection conn = new SqlConnection(connectionString);
+                String str = this.Configuration.GetConnectionString("myConnectionString");
+                SqlConnection conn = new SqlConnection(str);
                 conn.Open();
-                SqlCommand objCmd = conn.CreateCommand();
-                objCmd.CommandType = CommandType.StoredProcedure;
-                objCmd.CommandText = "PR_LOC_State_SelectByPK";
-                objCmd.Parameters.Add("@StateID",SqlDbType.Int).Value = StateID;
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "PR_LOC_State_SelectByPK";
+                cmd.Parameters.Add("@StateID", SqlDbType.Int).Value = StateID;
                 DataTable dt = new DataTable();
-                SqlDataReader objSDR = objCmd.ExecuteReader();
+                SqlDataReader objSDR = cmd.ExecuteReader();
                 dt.Load(objSDR);
-                LOC_StateModel modelLoc_State = new LOC_StateModel();
-
-                foreach(DataRow dr in dt.Rows)
+                if(dt.Rows.Count > 0)
                 {
-                    modelLoc_State.StateID = Convert.ToInt32(dr["StateID"]);
-                    modelLoc_State.StateName = dr["StateName"].ToString();
-                    modelLoc_State.StateCode = dr["StateCode"].ToString();
-                    modelLoc_State.CountryID = Convert.ToInt32(dr["CountryID"]);
-                    modelLoc_State.CreationDate = Convert.ToDateTime(dr["CreationDate"]);
-                    modelLoc_State.ModificationDate = Convert.ToDateTime(dr["ModificationDate"]);
-                }
-                return View("LOC_StateAddEdit",modelLoc_State);
+                    LOC_StateModel modelLOC_State = new LOC_StateModel();
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        modelLOC_State.StateID = (Convert.ToInt32(dr["StateID"]));
+                        modelLOC_State.StateName = (Convert.ToString(dr["StateName"]));
+                        modelLOC_State.StateCode = (Convert.ToString(dr["StateCode"]));
+                        modelLOC_State.CreationDate = (Convert.ToDateTime(dr["CreationDate"]));
+                        modelLOC_State.ModificationDate = (Convert.ToDateTime(dr["ModificationDate"]));
+                        modelLOC_State.CountryID = (Convert.ToInt32(dr["CountryID"]));
+                        modelLOC_State.PhotoPath = (Convert.ToString(dr["PhotoPath"]));
+                    }
+                    conn.Close();
+                    return View("LOC_StateAddEdit", modelLOC_State);
+                } 
             }
             return View("LOC_StateAddEdit");
         }
-
-
         [HttpPost]
-        public IActionResult Save(LOC_StateModel modelLoc_State)
+        public ActionResult Save(LOC_StateModel modelLOC_State)
         {
-            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
-            SqlConnection conn = new SqlConnection(connectionString);
-            conn.Open();
-            SqlCommand objCmd = conn.CreateCommand();
-            objCmd.CommandType = CommandType.StoredProcedure;
-            if(modelLoc_State.StateID == null)
+            if (modelLOC_State.File != null)
             {
-                objCmd.CommandText = "PR_LOC_State_Insert";
-                objCmd.Parameters.Add("@CreationDate",SqlDbType.Date).Value = DBNull.Value;
+                string FilePath = "wwwroot\\Upload";
+                string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
+
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+
+                string fileNameWithPath = Path.Combine(path, modelLOC_State.File.FileName);
+                modelLOC_State.PhotoPath = "~" + FilePath.Replace("wwwroot\\", "/") + "/" + modelLOC_State.File.FileName;
+
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+
+                {
+                    modelLOC_State.File.CopyTo(stream);
+                }
+
+            }
+
+
+            String str = this.Configuration.GetConnectionString("myConnectionString");
+            SqlConnection conn = new SqlConnection(str);
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (modelLOC_State.StateID == null)
+            {
+                cmd.CommandText = "PR_LOC_State_Insert";
+                cmd.Parameters.Add("@CreationDate", SqlDbType.DateTime).Value = DBNull.Value;
+                cmd.Parameters.Add("@PhotoPath", SqlDbType.NVarChar).Value = modelLOC_State.PhotoPath;
             }
             else
             {
-                objCmd.CommandText = "PR_LOC_State_UpdateByPK";
-                objCmd.Parameters.Add("@StateID",SqlDbType.Int).Value = modelLoc_State.StateID;
+                cmd.CommandText = "PR_LOC_state_UpdateByPK";
+                cmd.Parameters.Add("@StateID", SqlDbType.Int).Value = modelLOC_State.StateID;
+                cmd.Parameters.Add("@PhotoPath", SqlDbType.NVarChar).Value = modelLOC_State.PhotoPath;
             }
-            objCmd.Parameters.Add("@StateName",SqlDbType.VarChar).Value = modelLoc_State.StateName;
-            objCmd.Parameters.Add("@StateCode",SqlDbType.VarChar).Value = modelLoc_State.StateCode;
-            objCmd.Parameters.Add("@CountryID",SqlDbType.Int).Value = modelLoc_State.CountryID;
-            objCmd.Parameters.Add("@ModificationDate",SqlDbType.Date).Value = DBNull.Value;
-             
-            if(Convert.ToBoolean(objCmd.ExecuteNonQuery()))
+            cmd.Parameters.Add("@StateName", SqlDbType.NVarChar).Value = modelLOC_State.StateName;
+            cmd.Parameters.Add("@StateCode", SqlDbType.NVarChar).Value = modelLOC_State.StateCode;
+            cmd.Parameters.Add("@ModificationDate", SqlDbType.DateTime).Value = DBNull.Value;
+            cmd.Parameters.Add("@CountryID", SqlDbType.Int).Value = modelLOC_State.CountryID;
+
+            if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
             {
-                if(modelLoc_State.StateID == null)
+                if (modelLOC_State.StateID == null)
                 {
-                    TempData["StateInsetMsg"] = "Record Inserted Successfully";
+                    TempData["StateInsertMsg"] = "Record Inserted Successfully!!!";
                 }
                 else
                 {
-                    TempData["StateInsetMsg"] = "Record Updated Successfully";
+                    TempData["StateInsertMsg"] = "Record Updated Successfully!!!";
                 }
             }
-            conn.Close();
             
-            return RedirectToAction("Index");
+            conn.Close();
+            return RedirectToAction("Add");
+;        }
+        public ActionResult Search(int StateID)
+        {
+            string str = this.Configuration.GetConnectionString("myConnectionString");
+            SqlConnection conn = new SqlConnection(str);
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "PR_LOC_State_Search";
+            cmd.Parameters.AddWithValue("@StateName", Convert.ToString(HttpContext.Request.Form["StateName"]));
+            cmd.Parameters.AddWithValue("@StateCode", Convert.ToString(HttpContext.Request.Form["StateCode"]));
+            /*cmd.Parameters.AddWithValue("@CountryName", Convert.ToString(HttpContext.Request.Form["CountryName"]));
+            cmd.Parameters.Add("@CountryName", SqlDbType.VarChar).Value = CountryName;
+            cmd.Parameters.Add("@CountryCode", SqlDbType.VarChar).Value = CountryCode;*/
+            DataTable dt = new DataTable();
+            SqlDataReader objSDR = cmd.ExecuteReader();
+            dt.Load(objSDR);
+
+            return View("LOC_StateList", dt);
         }
     }
 }

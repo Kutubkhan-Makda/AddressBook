@@ -1,18 +1,25 @@
+﻿//using Newtonsoft.Json;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 namespace AddressBook.Models
 {
     public class LOC_StateModel
     {
-        public int StateID {set;get;}
-        public string StateName {set;get;}
-        public string? StateCode {set;get;}
-        public int CountryID {set;get;}
-        public DateTime CreationDate {set;get;}
-        public DateTime ModificationDate {set;get;}
+        [Required]
+        public int? StateID { get; set; }
+        public string StateName { get; set; }
+        public string StateCode { get; set; }
+        [Required]
+        public DateTime CreationDate { get; set; }
+        public int CountryID { get; set; }
+        public DateTime ModificationDate { get; set; }   
+        public string CountryName { get; set; }
+        public IFormFile File { get; set; }
+        public string PhotoPath { get; set; }
     }
-
     public class LOC_StateDropDownModel
     {
-        public int StateID {set;get;}
-        public string StateName {set;get;}
+        public int StateID { get; set; }
+        public string? StateName { get; set; }
     }
 }

@@ -1,19 +1,22 @@
-namespace AddressBook.Models
+﻿namespace AddressBook.Models
 {
     public class LOC_CityModel
     {
-        public int CityID {set;get;}
-        public string CityName {set;get;}
-        public string? CityCode {set;get;}
-        public int StateID {set;get;}
-        public int CountryID {set;get;}
-        public DateTime CreationDate {set;get;}
-        public DateTime ModificationDate {set;get;}
+        public int? CityID { get; set; }
+        public string CityName { get; set; }
+        public string CityCode { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime ModificationDate { get; set; }
+        public int StateID { get; set; }
+        public string StateName { get; set; }
+        public int CountryID { get; set; }
+        public string CountryName { get; set; }
+        public IFormFile File { get; set; }
+        public string PhotoPath { get; set; }
     }
-
     public class LOC_CityDropDownModel
     {
-        public int CityID {set;get;}
-        public string CityName {set;get;}
+        public int CityID { get; set; }
+        public string CityName { get; set; }
     }
 }

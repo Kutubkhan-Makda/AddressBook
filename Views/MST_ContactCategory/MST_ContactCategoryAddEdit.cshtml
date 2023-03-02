@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "ContactCategory Add/Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model MST_ContactCategoryModel
+<div class="row">
+    <div class="col-md-12">
+        <h3> @TempData["ContactCategoryInsertMsg"]</h3>
+        <form method="post" asp-controller="MST_ContactCategory" asp-action="Save" enctype="multipart/form-data">
+            @Html.HiddenFor(x=>x.ContactCategoryID)
+            @Html.HiddenFor(x=>x.PhotoPath)
+            <div class="form-group">
+                <label>ContactCategory</label>
+                <input type="text" asp-for="ContactCategory" class=form-control placeholder="Enter ContactCategory Name" />
+            </div>
+
+            <div class="form-group">
+                <label>PhotoPath</label>
+                <input class="form-control"  type="file" asp-for="File" placeholder="Upload File" />
+            </div>
+            
+            <hr />
+            <input type="submit" asp-controller="MST_ContactCategory" asp-action="Save" />
+        </form>
+    </div>
+</div>
