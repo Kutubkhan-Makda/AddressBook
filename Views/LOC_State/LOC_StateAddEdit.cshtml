@@ -24,12 +24,10 @@
                     <option value="">Select Country</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label>PhotoPath</label>
-                <input class="form-control" type="file" asp-for="File" placeholder="Upload File" />
-            </div>
             <hr />
             <input type="submit" asp-controller="LOC_State" asp-action="Save" />
+            <div class="center-button"><input class="btn btn-success" type="submit" value="Save"></div>
+            <div class="center-button"><a asp-controller="LOC_Country" asp-action="Index" class="btn btn-danger">Cancel</a></div>
         </form>
     </div>
 </div>

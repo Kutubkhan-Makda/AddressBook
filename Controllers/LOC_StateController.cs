@@ -15,9 +15,9 @@ namespace AddressBook.Controllers
         }
         public IActionResult Index()
         {
-            String str = this.Configuration.GetConnectionString("myConnectionString");
+            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
             LOC_DAL dalLOC= new LOC_DAL();
-            DataTable dt1 = dalLOC.dbo_PR_LOC_State_SelectAll(str);
+            DataTable dt1 = dalLOC.PR_LOC_State_SelectAll(str);
             return View("LOC_StateList", dt1);
             
         }
