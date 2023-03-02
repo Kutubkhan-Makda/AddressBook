@@ -23,19 +23,19 @@
             </div>
             <div class="form-group">
                 <label>CountryName</label>
-              <select class="form-control" asp-for="ContactCountryID" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))" onchange="fnOnStateChange();">
+              <select class="form-control" asp-for="ContactCountryID" asp-items="@(new SelectList(ViewBag.CountryList,"ContactCountryID","CountryName"))" onchange="fnOnStateChange();">
                     <option value="">Select Country</option>*
                 </select>
             </div>
             <div class="form-group">
                 <label>StateName</label>
-                <select class="form-control" asp-for="ContactStateID" asp-items="@(new SelectList(ViewBag.StateList,"StateID","StateName"))" onchange="fnOnCityChange();">
+                <select class="form-control" asp-for="ContactStateID" asp-items="@(new SelectList(ViewBag.StateList,"ContactStateID","StateName"))" onchange="fnOnCityChange();">
                     <option value="0">Select State</option>
                 </select>
             </div>
             <div class="form-group">
                 <label>CityName</label>
-                <select class="form-control" asp-for="ContactCityID" asp-items="@(new SelectList(ViewBag.CityList,"CityID","CityName"))">
+                <select class="form-control" asp-for="ContactCityID" asp-items="@(new SelectList(ViewBag.CityList,"ContactCityID","CityName"))">
                     <option value="0">Select City</option>
                 </select>
             </div>
@@ -63,7 +63,8 @@
                 <input class="form-control" type="file" asp-for="File" placeholder="Upload File" />
             </div>
             <hr />
-            <button type="submit" asp-controller="CON_Contact" asp-action="Save">Submit</button>
+            <div class="center-button"><input class="btn btn-success" type="submit" value="Save"></div>
+            <div class="center-button"><a asp-controller="MAS_Contact" asp-action="Index" class="btn btn-danger">Cancel</a></div>
         </form>
     </div>
 </div>

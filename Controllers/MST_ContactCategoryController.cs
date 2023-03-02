@@ -56,7 +56,6 @@ namespace AddressBook.Controllers
                     modelMST_ContactCategory.ContactCategory = (Convert.ToString(dr["ContactCategory"]));
                     modelMST_ContactCategory.CreationDate = (Convert.ToDateTime(dr["CreationDate"]));
                     modelMST_ContactCategory.ModificationDate = (Convert.ToDateTime(dr["ModificationDate"]));
-                    modelMST_ContactCategory.PhotoPath = (Convert.ToString(dr["PhotoPath"]));
                 }
                 return View("MST_ContactCategoryAddEdit", modelMST_ContactCategory);
             }
@@ -66,25 +65,6 @@ namespace AddressBook.Controllers
         [HttpPost]
         public ActionResult Save(MST_ContactCategoryModel modelMST_ContactCategory)
         {
-            if (modelMST_ContactCategory.File != null)
-            {
-                string FilePath = "wwwroot\\Upload";
-                string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
-
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
-
-                string fileNameWithPath = Path.Combine(path, modelMST_ContactCategory.File.FileName);
-                modelMST_ContactCategory.PhotoPath = "~" + FilePath.Replace("wwwroot\\", "/") + "/" + modelMST_ContactCategory.File.FileName;
-
-                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-
-                {
-                    modelMST_ContactCategory.File.CopyTo(stream);
-                }
-
-            }
-
             String str = this.Configuration.GetConnectionString("myConnectionString");
             SqlConnection conn = new SqlConnection(str);
             conn.Open();
@@ -94,13 +74,11 @@ namespace AddressBook.Controllers
             {
                 cmd.CommandText = "PR_MST_ContactCategory_Insert";
                 cmd.Parameters.Add("@CreationDate", SqlDbType.DateTime).Value = DBNull.Value;
-                cmd.Parameters.Add("@PhotoPath", SqlDbType.NVarChar).Value = modelMST_ContactCategory.PhotoPath;
             }
             else
             {
                 cmd.CommandText = "PR_MST_ContactCategory_UpdateByPK";
                 cmd.Parameters.Add("@ContactCategoryID", SqlDbType.Int).Value = modelMST_ContactCategory.ContactCategoryID;
-                cmd.Parameters.Add("@PhotoPath", SqlDbType.NVarChar).Value = modelMST_ContactCategory.PhotoPath;
             } 
             cmd.Parameters.Add("@ContactCategory", SqlDbType.NVarChar).Value = modelMST_ContactCategory.ContactCategory;
             cmd.Parameters.Add("@ModificationDate", SqlDbType.DateTime).Value = DBNull.Value;
