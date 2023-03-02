@@ -58,12 +58,12 @@ namespace AddressBook.DAL
 
 
         #region dbo.PR_LOC_City_SelectAll
-        public DataTable dbo_PR_LOC_City_SelectAll(string conn)
+        public DataTable PR_LOC_City_SelectAll(string conn)
         {
             try
             {
                 SqlDatabase sqlDB = new SqlDatabase(conn);
-                DbCommand dbCMD = sqlDB.GetStoredProcCommand("dbo.PR_LOC_City_SelectAll");
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_City_SelectAll");
 
                 DataTable dt = new DataTable();
                 using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))

@@ -16,15 +16,15 @@ namespace AddressBook.Controllers
         }
         public ActionResult Index()
         {
-            String str = this.Configuration.GetConnectionString("myConnectionString");
+            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
             LOC_DAL dalLOC = new LOC_DAL();
-            DataTable dt = dalLOC.dbo_PR_LOC_City_SelectAll(str);
+            DataTable dt = dalLOC.PR_LOC_City_SelectAll(str);
             return View("LOC_CityList", dt);
         }
 
         public ActionResult Delete(int CityID)
         {
-            String str = this.Configuration.GetConnectionString("myConnectionString");
+            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
             SqlConnection conn = new SqlConnection(str);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -40,7 +40,7 @@ namespace AddressBook.Controllers
         public IActionResult Add(int? CityID)
         {
             
-            String connectionstr1 = this.Configuration.GetConnectionString("myConnectionString");
+            String connectionstr1 = this.Configuration.GetConnectionString("SQL_AddressBook");
             DataTable dt2 = new DataTable();
             SqlConnection conn2 = new SqlConnection(connectionstr1);
             conn2.Open();
@@ -64,7 +64,7 @@ namespace AddressBook.Controllers
 
             if (CityID != null)
             {
-                String str = this.Configuration.GetConnectionString("myConnectionString");
+                String str = this.Configuration.GetConnectionString("SQL_AddressBook");
                 SqlConnection conn = new SqlConnection(str);
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
@@ -86,9 +86,8 @@ namespace AddressBook.Controllers
                         modelLOC_City.ModificationDate = (Convert.ToDateTime(dr["ModificationDate"]));
                         modelLOC_City.StateID = (Convert.ToInt32(dr["StateID"]));
                         modelLOC_City.CountryID = (Convert.ToInt32(dr["CountryID"]));
-                        modelLOC_City.PhotoPath = (Convert.ToString(dr["PhotoPath"]));
                     }
-                    String connectionstr = this.Configuration.GetConnectionString("myConnectionString");
+                    String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
 
 
                     SqlConnection conn1 = new SqlConnection(connectionstr);
@@ -118,69 +117,47 @@ namespace AddressBook.Controllers
             return View("LOC_CityAddEdit");
         }
         [HttpPost]
-        public ActionResult Save(LOC_CityModel modelLOC_City)
+        public IActionResult Save(LOC_CityModel modelLoc_City)
         {
-
-            if (modelLOC_City.File != null)
-            {
-                string FilePath = "wwwroot\\Upload";
-                string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
-
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
-
-                string fileNameWithPath = Path.Combine(path, modelLOC_City.File.FileName);
-                modelLOC_City.PhotoPath = "~" + FilePath.Replace("wwwroot\\", "/") + "/" + modelLOC_City.File.FileName;
-
-                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-
-                {
-                    modelLOC_City.File.CopyTo(stream);
-                }
-
-            }
-
-
-            String str = this.Configuration.GetConnectionString("myConnectionString");
-            SqlConnection conn = new SqlConnection(str);
+            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
+            SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            if (modelLOC_City.CityID == null)
+            SqlCommand objCmd = conn.CreateCommand();
+            objCmd.CommandType = CommandType.StoredProcedure;
+            if(modelLoc_City.CityID == null)
             {
-                cmd.CommandText = "PR_LOC_City_Insert";
-                cmd.Parameters.Add("@CreationDate", SqlDbType.DateTime).Value = DBNull.Value;
-                cmd.Parameters.Add("@PhotoPath", SqlDbType.NVarChar).Value = modelLOC_City.PhotoPath;
+                objCmd.CommandText = "PR_LOC_City_Insert";
+                objCmd.Parameters.Add("@CreationDate",SqlDbType.Date).Value = DBNull.Value;
             }
             else
             {
-                cmd.CommandText = "PR_LOC_City_UpdateByPK";
-                cmd.Parameters.Add("@CityID", SqlDbType.Int).Value = modelLOC_City.CityID;
-                cmd.Parameters.Add("@PhotoPath", SqlDbType.NVarChar).Value = modelLOC_City.PhotoPath;
+                objCmd.CommandText = "PR_LOC_City_UpdateByPK";
+                objCmd.Parameters.Add("@CityID",SqlDbType.Int).Value = modelLoc_City.CityID;
             }
-            
-            cmd.Parameters.Add("@CityName", SqlDbType.NVarChar).Value = modelLOC_City.CityName;
-            cmd.Parameters.Add("@CityCode", SqlDbType.NVarChar).Value = modelLOC_City.CityCode; 
-            cmd.Parameters.Add("@ModificationDate", SqlDbType.DateTime).Value = DBNull.Value;
-            cmd.Parameters.Add("@StateID", SqlDbType.Int).Value = modelLOC_City.StateID;
-            cmd.Parameters.Add("@CountryID", SqlDbType.Int).Value = modelLOC_City.CountryID;
-            if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
+            objCmd.Parameters.Add("@CityName",SqlDbType.VarChar).Value = modelLoc_City.CityName;
+            objCmd.Parameters.Add("@CityCode",SqlDbType.VarChar).Value = modelLoc_City.CityCode;
+            objCmd.Parameters.Add("@StateID",SqlDbType.Int).Value = modelLoc_City.StateID;
+            objCmd.Parameters.Add("@CountryID",SqlDbType.Int).Value = modelLoc_City.CountryID;
+            objCmd.Parameters.Add("@ModificationDate",SqlDbType.Date).Value = DBNull.Value;
+             
+            if(Convert.ToBoolean(objCmd.ExecuteNonQuery()))
             {
-                if (modelLOC_City.CityID == null)
+                if(modelLoc_City.CityID == null)
                 {
-                    TempData["CityInsertMsg"] = "Record Inserted Successfully!!!";
+                    TempData["CityInsetMsg"] = "Record Inserted Successfully";
                 }
                 else
                 {
-                    TempData["CityInsertMsg"] = "Record Updated Successfully!!!";
+                    TempData["CityInsetMsg"] = "Record Updated Successfully";
                 }
             }
             conn.Close();
-            return RedirectToAction("Add");
+            
+            return RedirectToAction("Index");
         }
         public ActionResult DropDownByCountry(int CountryID)
         {
-            String connectionstr = this.Configuration.GetConnectionString("myConnectionString");
+            String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
            
            
             SqlConnection conn1 = new SqlConnection(connectionstr);
@@ -202,7 +179,6 @@ namespace AddressBook.Controllers
                 list.Add(vl);
             }
            
-
             var vmodel = list;
             return Json(vmodel);
         }

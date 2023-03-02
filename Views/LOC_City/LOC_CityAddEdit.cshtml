@@ -8,7 +8,6 @@
         <h3> @TempData["CityInsertMsg"]</h3>
         <form method="post" asp-controller="LOC_City" asp-action="Save" enctype="multipart/form-data">
             @Html.HiddenFor(x=>x.CityID)
-            @Html.HiddenFor(x=>x.PhotoPath)
             <div class="form-group">
                 <label>CityName</label>
                 <input type="text" asp-for="CityName" class=form-control placeholder="Enter City Name" />
@@ -30,14 +29,9 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label>PhotoPath</label>
-                <input class="form-control"  type="file" asp-for="File" placeholder="Upload File" />
-            </div>
-           
-           
             <hr />
-            <input type="submit" asp-controller="LOC_City" asp-action="Save" />
+            <div class="center-button"><input class="btn btn-success" type="submit" value="Save"></div>
+            <div class="center-button"><a asp-controller="LOC_Country" asp-action="Index" class="btn btn-danger">Cancel</a></div>
         </form>
     </div>
 </div>

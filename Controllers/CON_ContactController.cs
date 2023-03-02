@@ -21,7 +21,7 @@ namespace AddressBook.Controllers
         {
             String str = this.Configuration.GetConnectionString("myConnectionString");
             CON_DAL dalCON = new CON_DAL();
-            DataTable dt = dalCON.PR_CON_Contact_SelectAll(str);
+            DataTable dt = dalCON.dbo_PR_MST_ContactCategory_SelectAll(str);
             return View("CON_ContactList", dt);
 
 

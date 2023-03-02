@@ -31,12 +31,12 @@ namespace AddressBook.DAL
 
 
         #region dbo.PR_CON_Contact_SelectAll
-        public DataTable PR_CON_Contact_SelectAll(string conn)
+        public DataTable PR_MAS_Contact_SelectAll(string conn)
         {
             try
             {
                 SqlDatabase sqlDB = new SqlDatabase(conn);
-                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_CON_Contact_SelectAll");
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MAS_Contact_SelectAll");
 
                 DataTable dt = new DataTable();
                 using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
