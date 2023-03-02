@@ -20,9 +20,6 @@ namespace AddressBook.Controllers
             DataTable dt1 = dalLOC.dbo_PR_LOC_State_SelectAll(str);
             return View("LOC_StateList", dt1);
             
-
-
-
         }
         public ActionResult Delete(int StateID)
         {
