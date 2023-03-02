@@ -23,7 +23,7 @@ namespace AddressBook.Controllers
         }
         public ActionResult Delete(int StateID)
         {
-            String str = this.Configuration.GetConnectionString("myConnectionString");
+            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
             SqlConnection conn = new SqlConnection(str);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -40,7 +40,7 @@ namespace AddressBook.Controllers
         public IActionResult Add(int? StateID)
          {
 
-            String connectionstr = this.Configuration.GetConnectionString("myConnectionString");
+            String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
             DataTable dt1 = new DataTable();
             SqlConnection conn1 = new SqlConnection(connectionstr);
             conn1.Open();
@@ -60,7 +60,7 @@ namespace AddressBook.Controllers
             ViewBag.CountryList=list;
             if (StateID != null)
             {
-                String str = this.Configuration.GetConnectionString("myConnectionString");
+                String str = this.Configuration.GetConnectionString("SQL_AddressBook");
                 SqlConnection conn = new SqlConnection(str);
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
@@ -81,7 +81,6 @@ namespace AddressBook.Controllers
                         modelLOC_State.CreationDate = (Convert.ToDateTime(dr["CreationDate"]));
                         modelLOC_State.ModificationDate = (Convert.ToDateTime(dr["ModificationDate"]));
                         modelLOC_State.CountryID = (Convert.ToInt32(dr["CountryID"]));
-                        modelLOC_State.PhotoPath = (Convert.ToString(dr["PhotoPath"]));
                     }
                     conn.Close();
                     return View("LOC_StateAddEdit", modelLOC_State);
@@ -90,65 +89,43 @@ namespace AddressBook.Controllers
             return View("LOC_StateAddEdit");
         }
         [HttpPost]
-        public ActionResult Save(LOC_StateModel modelLOC_State)
+        public IActionResult Save(LOC_StateModel modelLoc_State)
         {
-            if (modelLOC_State.File != null)
-            {
-                string FilePath = "wwwroot\\Upload";
-                string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
-
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
-
-                string fileNameWithPath = Path.Combine(path, modelLOC_State.File.FileName);
-                modelLOC_State.PhotoPath = "~" + FilePath.Replace("wwwroot\\", "/") + "/" + modelLOC_State.File.FileName;
-
-                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-
-                {
-                    modelLOC_State.File.CopyTo(stream);
-                }
-
-            }
-
-
-            String str = this.Configuration.GetConnectionString("myConnectionString");
-            SqlConnection conn = new SqlConnection(str);
+            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
+            SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            if (modelLOC_State.StateID == null)
+            SqlCommand objCmd = conn.CreateCommand();
+            objCmd.CommandType = CommandType.StoredProcedure;
+            if(modelLoc_State.StateID == null)
             {
-                cmd.CommandText = "PR_LOC_State_Insert";
-                cmd.Parameters.Add("@CreationDate", SqlDbType.DateTime).Value = DBNull.Value;
-                cmd.Parameters.Add("@PhotoPath", SqlDbType.NVarChar).Value = modelLOC_State.PhotoPath;
+                objCmd.CommandText = "PR_LOC_State_Insert";
+                objCmd.Parameters.Add("@CreationDate",SqlDbType.Date).Value = DBNull.Value;
             }
             else
             {
-                cmd.CommandText = "PR_LOC_state_UpdateByPK";
-                cmd.Parameters.Add("@StateID", SqlDbType.Int).Value = modelLOC_State.StateID;
-                cmd.Parameters.Add("@PhotoPath", SqlDbType.NVarChar).Value = modelLOC_State.PhotoPath;
+                objCmd.CommandText = "PR_LOC_State_UpdateByPK";
+                objCmd.Parameters.Add("@StateID",SqlDbType.Int).Value = modelLoc_State.StateID;
             }
-            cmd.Parameters.Add("@StateName", SqlDbType.NVarChar).Value = modelLOC_State.StateName;
-            cmd.Parameters.Add("@StateCode", SqlDbType.NVarChar).Value = modelLOC_State.StateCode;
-            cmd.Parameters.Add("@ModificationDate", SqlDbType.DateTime).Value = DBNull.Value;
-            cmd.Parameters.Add("@CountryID", SqlDbType.Int).Value = modelLOC_State.CountryID;
-
-            if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
+            objCmd.Parameters.Add("@StateName",SqlDbType.VarChar).Value = modelLoc_State.StateName;
+            objCmd.Parameters.Add("@StateCode",SqlDbType.VarChar).Value = modelLoc_State.StateCode;
+            objCmd.Parameters.Add("@CountryID",SqlDbType.Int).Value = modelLoc_State.CountryID;
+            objCmd.Parameters.Add("@ModificationDate",SqlDbType.Date).Value = DBNull.Value;
+             
+            if(Convert.ToBoolean(objCmd.ExecuteNonQuery()))
             {
-                if (modelLOC_State.StateID == null)
+                if(modelLoc_State.StateID == null)
                 {
-                    TempData["StateInsertMsg"] = "Record Inserted Successfully!!!";
+                    TempData["StateInsetMsg"] = "Record Inserted Successfully";
                 }
                 else
                 {
-                    TempData["StateInsertMsg"] = "Record Updated Successfully!!!";
+                    TempData["StateInsetMsg"] = "Record Updated Successfully";
                 }
             }
-            
             conn.Close();
-            return RedirectToAction("Add");
-;        }
+            
+            return RedirectToAction("Index");
+        }
         public ActionResult Search(int StateID)
         {
             string str = this.Configuration.GetConnectionString("myConnectionString");
