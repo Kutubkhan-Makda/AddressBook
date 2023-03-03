@@ -52,15 +52,8 @@ namespace AddressBook.Controllers
             if (CityID != null)
             {
                 String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-                SqlConnection conn = new SqlConnection(str);
-                conn.Open();
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "PR_LOC_City_SelectByPK";
-                cmd.Parameters.Add("@CityID", SqlDbType.Int).Value = CityID;
-                DataTable dt = new DataTable();
-                SqlDataReader objSDR = cmd.ExecuteReader();
-                dt.Load(objSDR);
+                DataTable dt = dalLOC.PR_LOC_Country_SelectByPK(str, CityID);
+
                 if (dt.Rows.Count > 0)
                 {
                     LOC_CityModel modelLOC_City = new LOC_CityModel();
@@ -97,7 +90,6 @@ namespace AddressBook.Controllers
                     }
                     ViewBag.StateList = list;
 
-                    conn.Close();
                     return View("LOC_CityAddEdit", modelLOC_City);
                 }
             }

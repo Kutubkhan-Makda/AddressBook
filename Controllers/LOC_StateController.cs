@@ -46,16 +46,16 @@ namespace AddressBook.Controllers
             ViewBag.CountryList=list;
             if (StateID != null)
             {
-                String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-                SqlConnection conn = new SqlConnection(str);
-                conn.Open();
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "PR_LOC_State_SelectByPK";
-                cmd.Parameters.Add("@StateID", SqlDbType.Int).Value = StateID;
-                DataTable dt = new DataTable();
-                SqlDataReader objSDR = cmd.ExecuteReader();
-                dt.Load(objSDR);
+                //String str = this.Configuration.GetConnectionString("SQL_AddressBook");
+                //SqlConnection conn = new SqlConnection(str);
+                //conn.Open();
+                //SqlCommand cmd = conn.CreateCommand();
+                //cmd.CommandType = CommandType.StoredProcedure;
+                //cmd.CommandText = "PR_LOC_State_SelectByPK";
+                //cmd.Parameters.Add("@StateID", SqlDbType.Int).Value = StateID;
+                DataTable dt = dalLOC.PR_LOC_State_SelectByPK(connectionstr, StateID);
+                //SqlDataReader objSDR = cmd.ExecuteReader();
+                //dt.Load(objSDR);
                 if(dt.Rows.Count > 0)
                 {
                     LOC_StateModel modelLOC_State = new LOC_StateModel();
@@ -68,7 +68,7 @@ namespace AddressBook.Controllers
                         modelLOC_State.ModificationDate = (Convert.ToDateTime(dr["ModificationDate"]));
                         modelLOC_State.CountryID = (Convert.ToInt32(dr["CountryID"]));
                     }
-                    conn.Close();
+
                     return View("LOC_StateAddEdit", modelLOC_State);
                 } 
             }

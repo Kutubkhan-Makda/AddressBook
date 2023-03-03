@@ -40,15 +40,8 @@ namespace AddressBook.Controllers
             if (CountryID != null)
             {
                 String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-                SqlConnection conn = new SqlConnection(str);
-                conn.Open();
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "PR_LOC_Country_SelectByPK";
-                cmd.Parameters.Add("@CountryID", SqlDbType.Int).Value = CountryID;
-                DataTable dt = new DataTable();
-                SqlDataReader objSDR = cmd.ExecuteReader();
-                dt.Load(objSDR);
+                DataTable dt = dalLOC.PR_LOC_Country_SelectByPK(str, CountryID);
+
                 LOC_CountryModel modelLOC_Country = new LOC_CountryModel();
                 foreach (DataRow dr in dt.Rows)
                 {
