@@ -6,11 +6,15 @@ namespace AddressBook.Models
     public class MAS_ContactModel
     {
         public int ContactID {set;get;}
+        [Required(ErrorMessage = "Name is Required")]
         public string ContactName {set;get;}
         public string ContactAddress {set;get;}
-        public string ContactCountryID {set;get;}
-        public string ContactStateID {set;get;}
-        public string ContactCityID {set;get;}
+        public String CountryName {set;get;}
+        public String StateName {set;get;}
+        public String CityName {set;get;}
+        public int CountryID {set;get;}
+        public int StateID {set;get;}
+        public int CityID {set;get;}
         public int ContactPincode {set;get;}
         public string ContactMobile {set;get;}
         public string ContactEmail {set;get;}
@@ -26,5 +30,11 @@ namespace AddressBook.Models
         public string ContactCategoryName { get; set; }
         public IFormFile File { get; set; }
         public string PhotoPath { get; set; }
+    }
+
+    public class MAS_ContactCategoryDropDownModel
+    {
+        public int ContactCategoryID { get; set; }
+        public string ContactCategoryName { get; set; }
     }
 }

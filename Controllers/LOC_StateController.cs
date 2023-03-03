@@ -13,10 +13,11 @@ namespace AddressBook.Controllers
         {
             Configuration = _configuration;
         }
+
+        LOC_DAL dalLOC = new LOC_DAL();
         public IActionResult Index()
         {
             String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-            LOC_DAL dalLOC= new LOC_DAL();
             DataTable dt1 = dalLOC.PR_LOC_State_SelectAll(str);
             return View("LOC_StateList", dt1);
             
@@ -24,18 +25,22 @@ namespace AddressBook.Controllers
         public ActionResult Delete(int StateID)
         {
             String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-            SqlConnection conn = new SqlConnection(str);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PR_LOC_State_DeleteByPK";
-            cmd.Parameters.AddWithValue("@StateID", StateID);
-            DataTable dt = new DataTable();
-            cmd.ExecuteNonQuery();
-            conn.Close();
+            if (Convert.ToBoolean(dalLOC.PR_LOC_State_Delete(str, StateID)))
+                return RedirectToAction("Index");
+            return View("Index");
+
+            //SqlConnection conn = new SqlConnection(str);
+            //conn.Open();
+            //SqlCommand cmd = conn.CreateCommand();
+            //cmd.CommandType = CommandType.StoredProcedure;
+            //cmd.CommandText = "PR_LOC_State_DeleteByPK";
+            //cmd.Parameters.AddWithValue("@StateID", StateID);
+            //DataTable dt = new DataTable();
+            //cmd.ExecuteNonQuery();
+            //conn.Close();
 
 
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
         }
         public IActionResult Add(int? StateID)
          {

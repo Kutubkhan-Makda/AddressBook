@@ -12,7 +12,7 @@
         </div>
         <div class="actions">
             <div class="btn-group btn-group-devided">
-                <a asp-controller="CON_Contact" asp-action="Add" class="btn green"><i class="fa fa-plus"></i>&nbsp;Add Contact</a>
+                <a asp-controller="MAS_Contact" asp-action="Add" class="btn green"><i class="fa fa-plus"></i>&nbsp;Add Contact</a>
             </div>
         </div>
     </div>
@@ -29,6 +29,7 @@
         <tr>
            <th>Action</th> 
            <th>ContactName</th>
+           <th>ContactCatagoryName</th>
             <th>ContactAddress</th>
             <th>ContactCountry</th>
             <th>ContactState</th>
@@ -42,10 +43,7 @@
             <th>ContactTypeOfProfession</th>
             <th>ContactCompanyName</th>
             <th>ContactDesignation</th>
-            <th>CreationDate</th>
-            <th>Modification</th>
             <th>Photo</th>
-            
         </tr>
     </thead>
     <tbody id="sample_2">
@@ -60,7 +58,7 @@
                     </form>
                 </td>
                 <td scope="row">@dr["ContactName"]</td>
-                <td>@dr["ContactID"]</td>&nbsp
+                <td>@dr["ContactCategoryName"]</td>&nbsp
                 <td>@dr["ContactAddress"]</td>
                 <td>@dr["CountryName"]</td>
                 <td>@dr["StateName"]</td>
@@ -74,8 +72,6 @@
                 <td>@dr["ContactTypeOfProfession"]</td>
                 <td>@dr["ContactCompanyName"]</td>
                 <td>@dr["ContactDesignation"]</td>
-                <td>@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-MM-yyyy")</td>
-                <td>@Convert.ToDateTime(dr["ModificationDate"]).ToString("dd-MM-yyyy")</td>
                 <td><img src={@dr["PhotoPath"]} height="30px" width="30px" alt="img"></td>
             </tr>
         }

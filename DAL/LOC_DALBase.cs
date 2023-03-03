@@ -151,5 +151,37 @@ namespace AddressBook.DAL
 //            }
 //        }
 //        #endregion
+
+        public bool? PR_LOC_State_Delete(string conn,int? StateID)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(conn);
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_State_DeleteByPK");
+                sqlDB.AddInParameter(dbCMD, "StateID", SqlDbType.Int, StateID);
+                int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
+                return (vReturnValue == -1 ? false : true);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public bool? PR_LOC_City_Delete(string conn,int? CityID)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(conn);
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_City_DeleteByPK");
+                sqlDB.AddInParameter(dbCMD, "CityID", SqlDbType.Int, CityID);
+                int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
+                return (vReturnValue == -1 ? false : true);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }
