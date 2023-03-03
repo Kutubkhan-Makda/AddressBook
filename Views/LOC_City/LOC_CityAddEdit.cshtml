@@ -11,6 +11,7 @@
             <div class="form-group">
                 <label>CityName</label>
                 <input type="text" asp-for="CityName" class=form-control placeholder="Enter City Name" />
+                <span asp-validation-for="CityName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label>CityCode</label>
@@ -21,12 +22,14 @@
                 <select class="form-control" asp-for="CountryID" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))" onchange="fnOnStateChange();">
                     <option value="">Select Country</option>
                 </select>
+                <span asp-validation-for="CountryID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label>StateName</label>
                 <select class="form-control" asp-for="StateID" asp-items="@(new SelectList(ViewBag.StateList,"StateID","StateName"))">
                     <option value="">Select State</option>
                 </select>
+                <span asp-validation-for="StateID" class="text-danger"></span>
             </div>
 
             <hr />
