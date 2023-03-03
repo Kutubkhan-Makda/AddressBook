@@ -16,12 +16,7 @@ namespace AddressBook.Models
         [Required]
         public DateTime CreationDate { get; set; }
         public DateTime ModificationDate { get; set; }
-        public IFormFile File { get; set; }
-        public string PhotoPath { get; set; }
 
-       
-        
-        
     }
     public class LOC_CountryDropDownModel
     {

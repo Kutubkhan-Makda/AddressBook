@@ -10,7 +10,6 @@
         <h3> @TempData["CountryInsertMsg"]</h3>
         <form method="post" asp-controller="LOC_Country" asp-action="Save" enctype="multipart/form-data">
             @Html.HiddenFor(x=>x.CountryID)
-            @Html.HiddenFor(x=>x.PhotoPath)
             <div class="form-group">
                 <lable class="text-danger">
                     *
