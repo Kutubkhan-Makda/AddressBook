@@ -492,13 +492,52 @@ License: You must have a valid license purchased only from themeforest(the above
                             </form>
                             <!-- END RESPONSIVE QUICK SEARCH FORM -->
                         </li>
-                        <li class="nav-item start active open">
-                            <a href="javascript:;" class="nav-link nav-toggle">
+                        <li class="dropdown dropdown-user">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                 <i class="icon-home"></i>
                                 <span class="title">Dashboard</span>
                                 <span class="selected"></span>
                                 <span class="arrow open"></span>
                             </a>
+                            <ul class="dropdown-menu dropdown-menu-default">
+                                <li class="nav-item start active open">
+                                    <a asp-controller="Home" asp-action="Home" class="nav-link ">
+                                        <i class="icon-bar-chart"></i>
+                                        <span class="title">Home</span>
+                                        <span class="selected"></span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start ">
+                                    <a asp-area="" asp-controller="LOC_Country" asp-action="Index" class="nav-link ">
+                                        <i class="icon-bulb"></i>
+                                        <span class="title">Country</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start ">
+                                    <a asp-area="" asp-controller="LOC_State" asp-action="Index" class="nav-link ">
+                                        <i class="icon-graph"></i>
+                                        <span class="title">State</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start ">
+                                    <a asp-area="" asp-controller="LOC_City" asp-action="Index" class="nav-link ">
+                                        <i class="icon-graph"></i>
+                                        <span class="title">City</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start ">
+                                    <a asp-area="" asp-controller="CON_Contact" asp-action="Index" class="nav-link ">
+                                        <i class="icon-graph"></i>
+                                        <span class="title">Contact</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start ">
+                                    <a asp-area="" asp-controller="MST_ContactCategorey" asp-action="Index" class="nav-link ">
+                                        <i class="icon-graph"></i>
+                                        <span class="title">ContactCategory</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="heading">
                             <h3 class="uppercase">Features</h3>
