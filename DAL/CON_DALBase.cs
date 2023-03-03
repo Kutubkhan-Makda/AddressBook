@@ -68,5 +68,27 @@ namespace AddressBook.DAL
                 return null;
             }
         }
+
+        public DataTable PR_ContactCategory_SelectByDropdownList(string conn)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(conn);
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MAS_ContactCategory_SelectForDropDown");
+
+                DataTable dt = new DataTable();
+                using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
+                {
+                    dt.Load(dr);
+                }
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
     }
 }

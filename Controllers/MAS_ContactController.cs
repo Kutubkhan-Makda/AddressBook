@@ -37,15 +37,8 @@ namespace AddressBook.Controllers
         public IActionResult Add(int? ContactID)
         {
             String connectionstr7 = this.Configuration.GetConnectionString("SQL_AddressBook");
-            DataTable dt7 = new DataTable();
-            SqlConnection conn7 = new SqlConnection(connectionstr7);
-            conn7.Open();
-            SqlCommand cmd7 = conn7.CreateCommand();
-            cmd7.CommandType = CommandType.StoredProcedure;
-            cmd7.CommandText = "PR_MAS_ContactCategory_SelectForDropDown";
-            SqlDataReader objSDR7 = cmd7.ExecuteReader();
-            dt7.Load(objSDR7);
-            conn7.Close();
+            DataTable dt7 = dalCON.PR_ContactCategory_SelectByDropdownList(connectionstr7);
+            
             List<MAS_ContactCategoryDropDownModel> list7 = new List<MAS_ContactCategoryDropDownModel>();
             foreach (DataRow dr in dt7.Rows)
             {
