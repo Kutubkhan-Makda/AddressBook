@@ -52,5 +52,21 @@ namespace AddressBook.DAL
             }
         }
         #endregion
+
+        public bool? PR_MAS_Contact_Delete(string conn,int? ContactID)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(conn);
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MAS_Contact_DeleteByPK");
+                sqlDB.AddInParameter(dbCMD, "ContactID", SqlDbType.Int, ContactID);
+                int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
+                return (vReturnValue == -1 ? false : true);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

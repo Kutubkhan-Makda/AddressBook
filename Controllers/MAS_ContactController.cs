@@ -15,10 +15,11 @@ namespace AddressBook.Controllers
             Configuration = _configuration;
         }
 
+        CON_DAL dalCON = new CON_DAL();
+
         public ActionResult Index()
         {
             string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
-            CON_DAL dalCON = new CON_DAL();
             DataTable dt = dalCON.PR_MAS_Contact_SelectAll(connectionString);
             return View("MAS_ContactList",dt);
         }
@@ -26,20 +27,10 @@ namespace AddressBook.Controllers
 
         public ActionResult Delete(int ContactID)
         {
-            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(connectionString); 
-            
-            conn.Open();
-            SqlCommand objCmd = conn.CreateCommand();
-            objCmd.CommandType = CommandType.StoredProcedure;
-            objCmd.CommandText = "PR_MAS_Contact_DeleteByPK";
-            objCmd.Parameters.AddWithValue("@ContactID",ContactID);
-            objCmd.ExecuteNonQuery();
-            
-            conn.Close();
-
-            return RedirectToAction("Index");
+            String connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
+            if (Convert.ToBoolean(dalCON.PR_MAS_Contact_Delete(connectionString, ContactID)))
+                return RedirectToAction("Index");
+            return View("Index");
         }
 
 
