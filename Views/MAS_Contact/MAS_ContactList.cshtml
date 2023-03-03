@@ -3,6 +3,12 @@
     ViewData["Title"] = "Country List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .img{
+        width: 50px;
+        height: 50px;
+    }
+</style>
 @using System.Data
 @model DataTable
 <div class="col-md-12">
@@ -72,7 +78,7 @@
                 <td>@dr["ContactTypeOfProfession"]</td>
                 <td>@dr["ContactCompanyName"]</td>
                 <td>@dr["ContactDesignation"]</td>
-                <td><img src={@dr["PhotoPath"]} height="30px" width="30px" alt="img"></td>
+                <td><img src=@dr["PhotoPath"] class="img" alt="img"></td>
             </tr>
         }
 

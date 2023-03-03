@@ -34,7 +34,7 @@
             <div class="form-group">
                 <label>StateName</label>
                 <select class="form-control" asp-for="StateID" asp-items="@(new SelectList(ViewBag.StateList,"StateID","StateName"))" onchange="fnOnCityChange();">
-                    <option value="0">Select State</option>
+                    <option value="">Select State</option>
                 </select>
             </div>
             <div class="form-group">

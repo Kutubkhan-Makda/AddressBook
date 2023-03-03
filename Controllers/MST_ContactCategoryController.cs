@@ -15,19 +15,19 @@ namespace AddressBook.Controllers
         }
         public ActionResult Index()
         {
-            String str = this.Configuration.GetConnectionString("myConnectionString");
+            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
             CON_DAL dalCON = new CON_DAL();
-            DataTable dt = dalCON.dbo_PR_MST_ContactCategory_SelectAll(str);
+            DataTable dt = dalCON.PR_ContactCategory_SelectAll(str);
             return View("MST_ContactCategoryList", dt);
         }
         public ActionResult Delete(int ContactCategoryID)
         {
-            String str = this.Configuration.GetConnectionString("myConnectionString");
+            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
             SqlConnection conn = new SqlConnection(str);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PR_MST_ContactCategory_DeleteByPK";
+            cmd.CommandText = "PR_ContactCategory_DeleteByPK";
             cmd.Parameters.AddWithValue("@ContactCategoryID", ContactCategoryID);
             DataTable dt = new DataTable();
             cmd.ExecuteNonQuery();
@@ -39,12 +39,12 @@ namespace AddressBook.Controllers
         {
             if (ContactCategoryID != null)
             {
-                String str = this.Configuration.GetConnectionString("myConnectionString");
+                String str = this.Configuration.GetConnectionString("SQL_AddressBook");
                 SqlConnection conn = new SqlConnection(str);
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "PR_MST_ContactCategory_SelectByPK";
+                cmd.CommandText = "PR_ContactCategory_SelectByPK";
                 cmd.Parameters.Add("@ContactCategoryID", SqlDbType.Int).Value = ContactCategoryID;
                 DataTable dt = new DataTable();
                 SqlDataReader objSDR = cmd.ExecuteReader();
@@ -53,7 +53,7 @@ namespace AddressBook.Controllers
                 foreach (DataRow dr in dt.Rows)
                 {
                     modelMST_ContactCategory.ContactCategoryID = (Convert.ToInt32(dr["ContactCategoryID"]));
-                    modelMST_ContactCategory.ContactCategory = (Convert.ToString(dr["ContactCategory"]));
+                    modelMST_ContactCategory.ContactCategoryName = (Convert.ToString(dr["ContactCategoryName"]));
                     modelMST_ContactCategory.CreationDate = (Convert.ToDateTime(dr["CreationDate"]));
                     modelMST_ContactCategory.ModificationDate = (Convert.ToDateTime(dr["ModificationDate"]));
                 }
@@ -65,22 +65,22 @@ namespace AddressBook.Controllers
         [HttpPost]
         public ActionResult Save(MST_ContactCategoryModel modelMST_ContactCategory)
         {
-            String str = this.Configuration.GetConnectionString("myConnectionString");
+            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
             SqlConnection conn = new SqlConnection(str);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             if (modelMST_ContactCategory.ContactCategoryID == null)
             {
-                cmd.CommandText = "PR_MST_ContactCategory_Insert";
+                cmd.CommandText = "PR_ContactCategory_Insert";
                 cmd.Parameters.Add("@CreationDate", SqlDbType.DateTime).Value = DBNull.Value;
             }
             else
             {
-                cmd.CommandText = "PR_MST_ContactCategory_UpdateByPK";
+                cmd.CommandText = "PR_ContactCategory_UpdateByPK";
                 cmd.Parameters.Add("@ContactCategoryID", SqlDbType.Int).Value = modelMST_ContactCategory.ContactCategoryID;
             } 
-            cmd.Parameters.Add("@ContactCategory", SqlDbType.NVarChar).Value = modelMST_ContactCategory.ContactCategory;
+            cmd.Parameters.Add("@ContactCategoryName", SqlDbType.NVarChar).Value = modelMST_ContactCategory.ContactCategoryName;
             cmd.Parameters.Add("@ModificationDate", SqlDbType.DateTime).Value = DBNull.Value;
 
             cmd.ExecuteNonQuery();

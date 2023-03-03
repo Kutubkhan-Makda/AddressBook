@@ -9,8 +9,8 @@
         <form method="post" asp-controller="MST_ContactCategory" asp-action="Save" enctype="multipart/form-data">
             @Html.HiddenFor(x=>x.ContactCategoryID)
             <div class="form-group">
-                <label>ContactCategory</label>
-                <input type="text" asp-for="ContactCategory" class=form-control placeholder="Enter ContactCategory Name" />
+                <label>ContactCategory Name</label>
+                <input type="text" asp-for="ContactCategoryName" class=form-control placeholder="Enter ContactCategory Name" />
             </div>
             
             <hr />

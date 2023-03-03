@@ -148,7 +148,7 @@ namespace AddressBook.Controllers
                     Directory.CreateDirectory(path);
 
                 string fileNameWithPath = Path.Combine(path, modelMAS_Contact.File.FileName);
-                modelMAS_Contact.PhotoPath = "~" + FilePath.Replace("wwwroot\\", "/") + "/" + modelMAS_Contact.File.FileName;
+                modelMAS_Contact.PhotoPath = "" + FilePath.Replace("wwwroot\\", "/") + "/" + modelMAS_Contact.File.FileName;
 
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
 
@@ -181,7 +181,7 @@ namespace AddressBook.Controllers
             objCmd.Parameters.Add("@ContactPincode",SqlDbType.VarChar).Value = modelMAS_Contact.ContactPincode;
             objCmd.Parameters.Add("@ContactMobile",SqlDbType.VarChar).Value = modelMAS_Contact.ContactMobile;
             objCmd.Parameters.Add("@ContactEmail",SqlDbType.VarChar).Value = modelMAS_Contact.ContactEmail;
-            objCmd.Parameters.Add("@ContactDOB",SqlDbType.VarChar).Value = modelMAS_Contact.ContactDOB;
+            objCmd.Parameters.Add("@ContactDOB",SqlDbType.Date).Value = modelMAS_Contact.ContactDOB;
             objCmd.Parameters.Add("@ContactLinkedIN",SqlDbType.VarChar).Value = modelMAS_Contact.ContactLinkedIN;
             objCmd.Parameters.Add("@ContactGender",SqlDbType.VarChar).Value = modelMAS_Contact.ContactGender;
             objCmd.Parameters.Add("@ContactTypeOfProfession",SqlDbType.VarChar).Value = modelMAS_Contact.ContactTypeOfProfession;

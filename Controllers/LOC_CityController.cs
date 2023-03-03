@@ -29,31 +29,13 @@ namespace AddressBook.Controllers
             if (Convert.ToBoolean(dalLOC.PR_LOC_City_Delete(str, CityID)))
                 return RedirectToAction("Index");
             return View("Index");
-
-            //SqlConnection conn = new SqlConnection(str);
-            //conn.Open();
-            //SqlCommand cmd = conn.CreateCommand();
-            //cmd.CommandType = CommandType.StoredProcedure;
-            //cmd.CommandText = "PR_LOC_City_DeleteByPK";
-            //cmd.Parameters.AddWithValue("@CityID", CityID);
-            //DataTable dt = new DataTable();
-            //cmd.ExecuteNonQuery();
-            //conn.Close();
-
-            //return RedirectToAction("Index");
         }
         public IActionResult Add(int? CityID)
         {
             
             String connectionstr1 = this.Configuration.GetConnectionString("SQL_AddressBook");
-            DataTable dt2 = new DataTable();
-            SqlConnection conn2 = new SqlConnection(connectionstr1);
-            conn2.Open();
-            SqlCommand cmd2 = conn2.CreateCommand();
-            cmd2.CommandType = CommandType.StoredProcedure;
-            cmd2.CommandText = "PR_LOC_Country_SelectForDropDown";
-            SqlDataReader objSDR2 = cmd2.ExecuteReader();
-            dt2.Load(objSDR2);
+            DataTable dt2 = dalLOC.PR_LOC_State_SelectByDropdownList(connectionstr1);
+            
             List<LOC_CountryDropDownModel> list1 = new List<LOC_CountryDropDownModel>();
             foreach (DataRow dr in dt2.Rows)
             {
@@ -63,7 +45,7 @@ namespace AddressBook.Controllers
                 list1.Add(modelLOC_CountryDropDown);
             }
             ViewBag.CountryList = list1;
-            conn2.Close();
+            
             List<LOC_StateDropDownModel> list = new List<LOC_StateDropDownModel>();
             ViewBag.StateList = list;
 

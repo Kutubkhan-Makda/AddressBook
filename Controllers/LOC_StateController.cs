@@ -28,32 +28,13 @@ namespace AddressBook.Controllers
             if (Convert.ToBoolean(dalLOC.PR_LOC_State_Delete(str, StateID)))
                 return RedirectToAction("Index");
             return View("Index");
-
-            //SqlConnection conn = new SqlConnection(str);
-            //conn.Open();
-            //SqlCommand cmd = conn.CreateCommand();
-            //cmd.CommandType = CommandType.StoredProcedure;
-            //cmd.CommandText = "PR_LOC_State_DeleteByPK";
-            //cmd.Parameters.AddWithValue("@StateID", StateID);
-            //DataTable dt = new DataTable();
-            //cmd.ExecuteNonQuery();
-            //conn.Close();
-
-
-            //return RedirectToAction("Index");
         }
         public IActionResult Add(int? StateID)
          {
 
             String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
-            DataTable dt1 = new DataTable();
-            SqlConnection conn1 = new SqlConnection(connectionstr);
-            conn1.Open();
-            SqlCommand cmd1 = conn1.CreateCommand();
-            cmd1.CommandType = CommandType.StoredProcedure;
-            cmd1.CommandText = "PR_LOC_Country_SelectForDropDown";
-            SqlDataReader objSDR1 = cmd1.ExecuteReader();
-            dt1.Load(objSDR1);
+            DataTable dt1 = dalLOC.PR_LOC_State_SelectByDropdownList(connectionstr);
+            
             List<LOC_CountryDropDownModel> list=new List<LOC_CountryDropDownModel>();
             foreach(DataRow dr in dt1.Rows)
             {
