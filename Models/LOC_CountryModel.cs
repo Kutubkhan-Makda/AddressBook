@@ -9,7 +9,7 @@ namespace AddressBook.Models
     {
         [Required]
         public int? CountryID { get; set; }
-       
+       [Required(ErrorMessage = "Country Name is Required")]
         public string CountryName {get;set;}
         
         public string CountryCode { get; set; }

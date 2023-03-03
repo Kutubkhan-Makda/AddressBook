@@ -8,10 +8,10 @@
         <h3> @TempData["StateInsertMsg"]</h3>
         <form method="post" asp-controller="LOC_State" asp-action="Save" enctype="multipart/form-data">
             @Html.HiddenFor(x=>x.StateID)
-            @Html.HiddenFor(x=>x.PhotoPath)
             <div class="form-group">
                 <label>StateName</label>
                 <input type="text" asp-for="StateName" class=form-control placeholder="Enter State Name" />
+                <span asp-validation-for="StateName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label>StateCode</label>
@@ -23,6 +23,7 @@
                 <select class="form-control" asp-for="CountryID" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))">
                     <option value="">Select Country</option>
                 </select>
+                <span asp-validation-for="CountryID" class="text-danger"></span>
             </div>
             <hr />
             <div class="center-button"><input class="btn btn-success" type="submit" value="Save"></div>

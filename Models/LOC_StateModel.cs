@@ -7,15 +7,15 @@ namespace AddressBook.Models
     {
         [Required]
         public int? StateID { get; set; }
+        [Required(ErrorMessage = "State Name is Required")]
         public string StateName { get; set; }
         public string StateCode { get; set; }
         [Required]
         public DateTime CreationDate { get; set; }
         public int CountryID { get; set; }
-        public DateTime ModificationDate { get; set; }   
+        public DateTime ModificationDate { get; set; }  
+        [Required(ErrorMessage = "Select Country")] 
         public string CountryName { get; set; }
-        public IFormFile File { get; set; }
-        public string PhotoPath { get; set; }
     }
     public class LOC_StateDropDownModel
     {
