@@ -90,5 +90,26 @@ namespace AddressBook.DAL
             }
         }
 
+        public DataTable PR_MAS_Contact_SelectByPK(string conn, int? ContactID)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(conn);
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MAS_Contact_SelectByPK");
+                sqlDB.AddInParameter(dbCMD, "ContactID", SqlDbType.Int, ContactID);
+
+                DataTable dt = new DataTable();
+                using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
+                {
+                    dt.Load(dr);
+                }
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

@@ -79,16 +79,7 @@ namespace AddressBook.Controllers
             
             if(ContactID!=null)
             {
-                string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
-                SqlConnection conn = new SqlConnection(connectionString);
-                conn.Open();
-                SqlCommand objCmd = conn.CreateCommand();
-                objCmd.CommandType = CommandType.StoredProcedure;
-                objCmd.CommandText = "PR_MAS_Contact_SelectByPK";
-                objCmd.Parameters.Add("@ContactID",SqlDbType.Int).Value = ContactID;
-                DataTable dt = new DataTable();
-                SqlDataReader objSDR = objCmd.ExecuteReader();
-                dt.Load(objSDR);
+                DataTable dt = dalCON.PR_MAS_Contact_SelectByPK(str6, ContactID);
                 MAS_ContactModel modelMAS_Contact = new MAS_ContactModel();
 
                 foreach(DataRow dr in dt.Rows)
