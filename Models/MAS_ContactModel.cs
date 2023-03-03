@@ -8,6 +8,7 @@ namespace AddressBook.Models
         public int ContactID {set;get;}
         [Required(ErrorMessage = "Name is Required")]
         public string ContactName {set;get;}
+        [Required(ErrorMessage = "Address is Required")]
         public string ContactAddress {set;get;}
         public String CountryName {set;get;}
         public String StateName {set;get;}

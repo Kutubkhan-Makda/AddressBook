@@ -21,18 +21,6 @@ namespace AddressBook.Controllers
             CON_DAL dalCON = new CON_DAL();
             DataTable dt = dalCON.PR_MAS_Contact_SelectAll(connectionString);
             return View("MAS_ContactList",dt);
-
-
-
-            //SqlConnection conn = new SqlConnection(connectionString);
-            //conn.Open();
-            //SqlCommand objCmd = conn.CreateCommand();
-            //objCmd.CommandType = CommandType.StoredProcedure;
-            //objCmd.CommandText = "PR_MAS_Contact_SelectAll";
-            //
-            //SqlDataReader objSDR = objCmd.ExecuteReader();
-            //dt.Load(objSDR);
-            //return View("MAS_ContactList",dt);
         }
 
 
@@ -186,9 +174,10 @@ namespace AddressBook.Controllers
             }
             objCmd.Parameters.Add("@ContactName",SqlDbType.VarChar).Value = modelMAS_Contact.ContactName;
             objCmd.Parameters.Add("@ContactAddress",SqlDbType.VarChar).Value = modelMAS_Contact.ContactAddress;
-            objCmd.Parameters.Add("@ContactCountryID",SqlDbType.VarChar).Value = modelMAS_Contact.CountryID;
-            objCmd.Parameters.Add("@ContactStateID",SqlDbType.VarChar).Value = modelMAS_Contact.StateID;
-            objCmd.Parameters.Add("@ContactCityID",SqlDbType.VarChar).Value = modelMAS_Contact.CityID;
+            objCmd.Parameters.Add("@ContactCategoryID",SqlDbType.Int).Value = modelMAS_Contact.ContactCategoryID;
+            objCmd.Parameters.Add("@CountryID",SqlDbType.Int).Value = modelMAS_Contact.CountryID;
+            objCmd.Parameters.Add("@StateID",SqlDbType.Int).Value = modelMAS_Contact.StateID;
+            objCmd.Parameters.Add("@CityID",SqlDbType.Int).Value = modelMAS_Contact.CityID;
             objCmd.Parameters.Add("@ContactPincode",SqlDbType.VarChar).Value = modelMAS_Contact.ContactPincode;
             objCmd.Parameters.Add("@ContactMobile",SqlDbType.VarChar).Value = modelMAS_Contact.ContactMobile;
             objCmd.Parameters.Add("@ContactEmail",SqlDbType.VarChar).Value = modelMAS_Contact.ContactEmail;
