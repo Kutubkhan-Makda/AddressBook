@@ -184,7 +184,7 @@ namespace AddressBook.Controllers
         }
         public ActionResult Search(int CityID)
         {
-            string str = this.Configuration.GetConnectionString("myConnectionString");
+            string str = this.Configuration.GetConnectionString("SQL_AddressBook");
             SqlConnection conn = new SqlConnection(str);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
