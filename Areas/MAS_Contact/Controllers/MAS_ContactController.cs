@@ -1,11 +1,13 @@
 ﻿using AddressBook.DAL;
-using AddressBook.Models;
+using AddressBook.Areas.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace AddressBook.Controllers
+namespace AddressBook.Areas.MAS_Contact.Controllers
 {
+    [Area("MAS_Contact")]
+    [Route("MAS_Contact/[Controller]/[action]")]
     public class MAS_ContactController : Controller
     {
         private IConfiguration Configuration;
@@ -39,10 +41,10 @@ namespace AddressBook.Controllers
             String connectionstr7 = this.Configuration.GetConnectionString("SQL_AddressBook");
             DataTable dt7 = dalCON.PR_ContactCategory_SelectByDropdownList(connectionstr7);
             
-            List<MST_ContactCategoryDropDownModel> list7 = new List<MST_ContactCategoryDropDownModel>();
+            List<Areas.Models.MST_ContactCategoryDropDownModel> list7 = new List<Areas.Models.MST_ContactCategoryDropDownModel>();
             foreach (DataRow dr in dt7.Rows)
             {
-                MST_ContactCategoryDropDownModel modelMST_ContactCategory = new MST_ContactCategoryDropDownModel();
+                Areas.Models.MST_ContactCategoryDropDownModel modelMST_ContactCategory = new Areas.Models.MST_ContactCategoryDropDownModel();
                 modelMST_ContactCategory.ContactCategoryID = Convert.ToInt32(dr["ContactCategoryID"]);
                 modelMST_ContactCategory.ContactCategoryName = (string)dr["ContactCategoryName"];
                 list7.Add(modelMST_ContactCategory);
@@ -73,7 +75,7 @@ namespace AddressBook.Controllers
             List<Areas.Models.LOC_StateDropDownModel> list4 = new List<Areas.Models.LOC_StateDropDownModel>();
             ViewBag.StateList = list4;
 
-            List<LOC_CityDropDownModel> list5 = new List<LOC_CityDropDownModel>();
+            List<Areas.Models.LOC_CityDropDownModel> list5 = new List<Areas.Models.LOC_CityDropDownModel>();
             ViewBag.CityList = list5;
 
             
@@ -195,10 +197,10 @@ namespace AddressBook.Controllers
             SqlDataReader objSDR1 = cmd1.ExecuteReader();
             dt1.Load(objSDR1);
            
-            List<LOC_CityDropDownModel> list = new List<LOC_CityDropDownModel>();
+            List<Areas.Models.LOC_CityDropDownModel> list = new List<Areas.Models.LOC_CityDropDownModel>();
             foreach (DataRow dr in dt1.Rows)
             {
-                LOC_CityDropDownModel vl = new LOC_CityDropDownModel();
+                Areas.Models.LOC_CityDropDownModel vl = new Areas.Models.LOC_CityDropDownModel();
                 vl.CityID = (Convert.ToInt32(dr["CityID"]));
                 vl.CityName = (Convert.ToString(dr["CityName"]));
                 list.Add(vl);

@@ -1,11 +1,13 @@
 ﻿using AddressBook.DAL;
-using AddressBook.Models;
+using AddressBook.Areas.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace AddressBook.Controllers
+namespace AddressBook.Areas.MST_ContactCategory.Controllers
 {
+    [Area("MST_ContactCategory")]
+    [Route("MST_ContactCategory/[Controller]/[action]")]
     public class MST_ContactCategoryController : Controller
     {
         private IConfiguration Configuration;

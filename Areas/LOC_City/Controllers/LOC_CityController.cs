@@ -1,12 +1,13 @@
 ﻿using AddressBook.DAL;
-using AddressBook.Models;
+using AddressBook.Areas.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
-using System.Reflection.Metadata.Ecma335;
 
-namespace AddressBook.Controllers
+namespace AddressBook.Areas.LOC_City.Controllers
 {
+    [Area("LOC_City")]
+    [Route("LOC_City/[Controller]/[action]")]
     public class LOC_CityController : Controller
     {
         private IConfiguration Configuration;
