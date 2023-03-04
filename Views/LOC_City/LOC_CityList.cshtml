@@ -20,14 +20,13 @@
     <div class="pull-right">
         <div id="sample_1_filter" class="dataTables_filter">
             <label>Search Any&nbsp;<input type="" class="form-control input-sm input-small input-inline" placeholder="Search Anything" id="sample_1" aria-controls="sample_1"></label>
-        </div>&nbsp;
+        </div>
     </div>
 </div>
 <form method="post" asp-controller="LOC_City" asp-action="Search">
     <div>
         <div class="split-left">
             <div class="centered">
-
                 <label>
                     State Name &nbsp;
                     <input type="text" name="CityName" class="form-control input-sm input-small input-inline" placeholder="Enter City" />
@@ -43,20 +42,18 @@
             </div>
         </div>
     </div>
-
     <button class="btn btn-info">Search</button>
 </form>
-<table class="table table-striped table-bordered table-hover table-header-fixed dataTable" id="sample_1">
+<table class="table table-striped table-bordered table-hover table-header-fixed dataTable" style="margin-top: 1rem;" id="sample_1">
     <thead>
         <tr>
-            <th>CityName </th>&nbsp
-            <th>CityCode </th>&nbsp
-            <th>CreationDate </th>&nbsp
-            <th>ModificationDate </th>
-            <th>StateName </th>
-            <th>CountryName </th>
+            <th>CityName</th>
+            <th>CityCode</th>
+            <th>CreationDate</th>
+            <th>ModificationDate</th>
+            <th>StateName</th>
+            <th>CountryName</th>
             <th>Action</th>
-
         </tr>
     </thead>
     <tbody id="sample_2">
@@ -64,12 +61,12 @@
         {
             <tr>
                 
-                <td>@dr["CityName"]</td>&nbsp
-                <td>@dr["CityCode"]</td>&nbsp
-                <td>@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-mm-yyyy")</td>&nbsp
+                <td>@dr["CityName"]</td>
+                <td>@dr["CityCode"]</td>
+                <td>@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-mm-yyyy")</td>
                 <td>@Convert.ToDateTime(dr["ModificationDate"]).ToString("dd-mm-yyyy")</td>
                 
-                <td>@dr["StateName"]</td>&nbsp
+                <td>@dr["StateName"]</td>
                 
                 <td>@dr["CountryName"]</td>
                 <td>

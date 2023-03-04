@@ -5,7 +5,8 @@ namespace AddressBook.Models
 {
     public class MAS_ContactModel
     {
-        public int ContactID {set;get;}
+        [Required]
+        public int? ContactID {set;get;}
         [Required(ErrorMessage = "Name is Required")]
         public string ContactName {set;get;}
         [Required(ErrorMessage = "Address is Required")]
@@ -22,7 +23,6 @@ namespace AddressBook.Models
         public int ContactPincode {set;get;}
         [Required(ErrorMessage = "Phone Number is Required")]
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^\(?([0-9]{2})[-. ]?([0-9]{4})[-. ]?([0-9]{3})[-. ]?([0-9]{3})$", ErrorMessage = "Not a valid Phone number")]
         public string ContactMobile {set;get;}
         [Required(ErrorMessage = "Email ID is Required")]
         [DataType(DataType.EmailAddress)]
@@ -37,7 +37,7 @@ namespace AddressBook.Models
         public string ContactDesignation {set;get;}
         public DateTime CreationDate {set;get;}
         public DateTime ModificationDate {set;get;}
-        public int ContactCategoryID { get; set; }
+        public int? ContactCategoryID { get; set; }
         public string ContactCategoryName { get; set; }
         public IFormFile File { get; set; }
         public string PhotoPath { get; set; }

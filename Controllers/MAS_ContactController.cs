@@ -79,7 +79,8 @@ namespace AddressBook.Controllers
             
             if(ContactID!=null)
             {
-                DataTable dt = dalCON.PR_MAS_Contact_SelectByPK(str6, ContactID);
+                String str5 = this.Configuration.GetConnectionString("SQL_AddressBook");
+                DataTable dt = dalCON.PR_MAS_Contact_SelectByPK(str5, ContactID);
                 MAS_ContactModel modelMAS_Contact = new MAS_ContactModel();
 
                 foreach(DataRow dr in dt.Rows)
