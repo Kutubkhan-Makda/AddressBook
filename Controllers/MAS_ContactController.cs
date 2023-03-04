@@ -39,13 +39,13 @@ namespace AddressBook.Controllers
             String connectionstr7 = this.Configuration.GetConnectionString("SQL_AddressBook");
             DataTable dt7 = dalCON.PR_ContactCategory_SelectByDropdownList(connectionstr7);
             
-            List<MAS_ContactCategoryDropDownModel> list7 = new List<MAS_ContactCategoryDropDownModel>();
+            List<MST_ContactCategoryDropDownModel> list7 = new List<MST_ContactCategoryDropDownModel>();
             foreach (DataRow dr in dt7.Rows)
             {
-                MAS_ContactCategoryDropDownModel modelMAS_ContactCategory = new MAS_ContactCategoryDropDownModel();
-                modelMAS_ContactCategory.ContactCategoryID = Convert.ToInt32(dr["ContactCategoryID"]);
-                modelMAS_ContactCategory.ContactCategoryName = (string)dr["ContactCategoryName"];
-                list7.Add(modelMAS_ContactCategory);
+                MST_ContactCategoryDropDownModel modelMST_ContactCategory = new MST_ContactCategoryDropDownModel();
+                modelMST_ContactCategory.ContactCategoryID = Convert.ToInt32(dr["ContactCategoryID"]);
+                modelMST_ContactCategory.ContactCategoryName = (string)dr["ContactCategoryName"];
+                list7.Add(modelMST_ContactCategory);
             }
             ViewBag.ContactCategoryList = list7;
 
@@ -60,10 +60,10 @@ namespace AddressBook.Controllers
             dt6.Load(objSDR6);
             conn6.Close();
 
-            List<LOC_CountryDropDownModel> list6 = new List<LOC_CountryDropDownModel>();
+            List<Areas.Models.LOC_CountryDropDownModel> list6 = new List<Areas.Models.LOC_CountryDropDownModel>();
             foreach (DataRow dr in dt6.Rows)
             {
-                LOC_CountryDropDownModel modelLOC_CountryDropDown = new LOC_CountryDropDownModel();
+                Areas.Models.LOC_CountryDropDownModel modelLOC_CountryDropDown = new Areas.Models.LOC_CountryDropDownModel();
                 modelLOC_CountryDropDown.CountryID = Convert.ToInt32(dr["CountryID"]);
                 modelLOC_CountryDropDown.CountryName = (string)dr["CountryName"];
                 list6.Add(modelLOC_CountryDropDown);
@@ -91,9 +91,6 @@ namespace AddressBook.Controllers
                     modelMAS_Contact.CountryID = Convert.ToInt32(dr["CountryID"]);
                     modelMAS_Contact.StateID = Convert.ToInt32(dr["StateID"]);
                     modelMAS_Contact.CityID = Convert.ToInt32(dr["CityID"]);
-                    modelMAS_Contact.CountryName = dr["CountryName"].ToString();
-                    modelMAS_Contact.StateName = dr["StateName"].ToString();
-                    modelMAS_Contact.CityName = dr["CityName"].ToString();
                     modelMAS_Contact.ContactPincode = Convert.ToInt32(dr["ContactPincode"]);
                     modelMAS_Contact.ContactMobile = dr["ContactMobile"].ToString();
                     modelMAS_Contact.ContactEmail = dr["ContactEmail"].ToString();

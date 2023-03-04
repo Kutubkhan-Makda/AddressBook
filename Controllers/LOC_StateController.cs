@@ -35,10 +35,10 @@ namespace AddressBook.Controllers
             String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
             DataTable dt1 = dalLOC.PR_LOC_State_SelectByDropdownList(connectionstr);
             
-            List<LOC_CountryDropDownModel> list=new List<LOC_CountryDropDownModel>();
+            List<Areas.Models.LOC_CountryDropDownModel> list=new List<Areas.Models.LOC_CountryDropDownModel>();
             foreach(DataRow dr in dt1.Rows)
             {
-                LOC_CountryDropDownModel modelLOC_CountryDropDown = new LOC_CountryDropDownModel();
+                Areas.Models.LOC_CountryDropDownModel modelLOC_CountryDropDown = new Areas.Models.LOC_CountryDropDownModel();
                 modelLOC_CountryDropDown.CountryID = (Convert.ToInt32(dr["CountryID"]));
                 modelLOC_CountryDropDown.CountryName = (Convert.ToString(dr["CountryName"]));
                 list.Add(modelLOC_CountryDropDown);

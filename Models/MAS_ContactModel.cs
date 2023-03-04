@@ -12,11 +12,6 @@ namespace AddressBook.Models
         [Required(ErrorMessage = "Address is Required")]
         public string ContactAddress {set;get;}
         [Required(ErrorMessage = "Select Country")]
-        public String CountryName {set;get;}
-        [Required(ErrorMessage = "Select State")]
-        public String StateName {set;get;}
-        [Required(ErrorMessage = "Select City")]
-        public String CityName {set;get;}
         public int CountryID {set;get;}
         public int StateID {set;get;}
         public int CityID {set;get;}
@@ -37,8 +32,7 @@ namespace AddressBook.Models
         public string ContactDesignation {set;get;}
         public DateTime CreationDate {set;get;}
         public DateTime ModificationDate {set;get;}
-        public int? ContactCategoryID { get; set; }
-        public string ContactCategoryName { get; set; }
+        public int ContactCategoryID { get; set; }
         public IFormFile File { get; set; }
         public string PhotoPath { get; set; }
     }

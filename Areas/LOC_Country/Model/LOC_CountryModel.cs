@@ -1,9 +1,7 @@
-﻿
-//using Newtonsoft.Json;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace AddressBook.Models
+namespace AddressBook.Areas.Models
 {
     public class LOC_CountryModel
     {
