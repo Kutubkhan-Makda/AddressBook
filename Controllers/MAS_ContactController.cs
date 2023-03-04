@@ -70,7 +70,7 @@ namespace AddressBook.Controllers
             }
             ViewBag.CountryList = list6;
 
-            List<LOC_StateDropDownModel> list4 = new List<LOC_StateDropDownModel>();
+            List<Areas.Models.LOC_StateDropDownModel> list4 = new List<Areas.Models.LOC_StateDropDownModel>();
             ViewBag.StateList = list4;
 
             List<LOC_CityDropDownModel> list5 = new List<LOC_CityDropDownModel>();

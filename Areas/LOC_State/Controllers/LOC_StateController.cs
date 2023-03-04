@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 using System.Data;
-using AddressBook.Models;
+using AddressBook.Areas.Models;
 using AddressBook.DAL;
 
-namespace AddressBook.Controllers
+namespace AddressBook.Areas.LOC_State.Controllers
 {
+    [Area("LOC_State")]
+    [Route("LOC_State/[Controller]/[action]")]
     public class LOC_StateController : Controller
     {
         private IConfiguration Configuration;
@@ -15,6 +17,9 @@ namespace AddressBook.Controllers
         }
 
         LOC_DAL dalLOC = new LOC_DAL();
+
+        public IConfiguration Configuration1 { get => Configuration; set => Configuration = value; }
+
         public IActionResult Index()
         {
             String str = this.Configuration.GetConnectionString("SQL_AddressBook");

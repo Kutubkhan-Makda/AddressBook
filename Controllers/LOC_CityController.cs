@@ -46,7 +46,7 @@ namespace AddressBook.Controllers
             }
             ViewBag.CountryList = list1;
             
-            List<LOC_StateDropDownModel> list = new List<LOC_StateDropDownModel>();
+            List<Areas.Models.LOC_StateDropDownModel> list = new List<Areas.Models.LOC_StateDropDownModel>();
             ViewBag.StateList = list;
 
             if (CityID != null)
@@ -80,10 +80,10 @@ namespace AddressBook.Controllers
                     SqlDataReader objSDR1 = cmd1.ExecuteReader();
                     dt1.Load(objSDR1);
 
-                    List<LOC_StateDropDownModel> list6 = new List<LOC_StateDropDownModel>();
+                    List<Areas.Models.LOC_StateDropDownModel> list6 = new List<Areas.Models.LOC_StateDropDownModel>();
                     foreach (DataRow dr in dt1.Rows)
                     {
-                        LOC_StateDropDownModel vl = new LOC_StateDropDownModel();
+                        Areas.Models.LOC_StateDropDownModel vl = new Areas.Models.LOC_StateDropDownModel();
                         vl.StateID = (Convert.ToInt32(dr["StateID"]));
                         vl.StateName = (Convert.ToString(dr["StateName"]));
                         list6.Add(vl);
@@ -149,10 +149,10 @@ namespace AddressBook.Controllers
             SqlDataReader objSDR1 = cmd1.ExecuteReader();
             dt1.Load(objSDR1);
            
-            List<LOC_StateDropDownModel> list = new List<LOC_StateDropDownModel>();
+            List<Areas.Models.LOC_StateDropDownModel> list = new List<Areas.Models.LOC_StateDropDownModel>();
             foreach (DataRow dr in dt1.Rows)
             {
-                LOC_StateDropDownModel vl = new LOC_StateDropDownModel();
+                Areas.Models.LOC_StateDropDownModel vl = new Areas.Models.LOC_StateDropDownModel();
                 vl.StateID = (Convert.ToInt32(dr["StateID"]));
                 vl.StateName = (Convert.ToString(dr["StateName"]));
                 list.Add(vl);
