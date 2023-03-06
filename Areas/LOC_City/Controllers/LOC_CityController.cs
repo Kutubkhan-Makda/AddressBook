@@ -52,8 +52,7 @@ namespace AddressBook.Areas.LOC_City.Controllers
 
             if (CityID != null)
             {
-                String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-                DataTable dt = dalLOC.PR_LOC_Country_SelectByPK(str, CityID);
+                DataTable dt = dalLOC.PR_LOC_City_SelectByPK(connectionstr1, CityID);
 
                 if (dt.Rows.Count > 0)
                 {

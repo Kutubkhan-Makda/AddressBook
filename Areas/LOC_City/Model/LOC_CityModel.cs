@@ -4,7 +4,7 @@ namespace AddressBook.Areas.Models
 {
     public class LOC_CityModel
     {
-        public int? CityID { get; set; }
+        public int CityID { get; set; }
         [Required(ErrorMessage = "City Name is Required")]
         public string CityName { get; set; }
         public string CityCode { get; set; }

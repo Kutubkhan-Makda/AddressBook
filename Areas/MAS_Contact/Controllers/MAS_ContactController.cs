@@ -18,6 +18,7 @@ namespace AddressBook.Areas.MAS_Contact.Controllers
         }
 
         CON_DAL dalCON = new CON_DAL();
+        LOC_DAL dalLOC = new LOC_DAL();
 
         public ActionResult Index()
         {
@@ -39,7 +40,7 @@ namespace AddressBook.Areas.MAS_Contact.Controllers
         public IActionResult Add(int? ContactID)
         {
             String connectionstr7 = this.Configuration.GetConnectionString("SQL_AddressBook");
-            DataTable dt7 = dalCON.PR_ContactCategory_SelectByDropdownList(connectionstr7);
+            DataTable dt7 = dalCON.PR_ContactCategory_SelectByDropdownList(conn: connectionstr7);
             
             List<Areas.Models.MST_ContactCategoryDropDownModel> list7 = new List<Areas.Models.MST_ContactCategoryDropDownModel>();
             foreach (DataRow dr in dt7.Rows)
@@ -51,26 +52,18 @@ namespace AddressBook.Areas.MAS_Contact.Controllers
             }
             ViewBag.ContactCategoryList = list7;
 
-            String str6 = this.Configuration.GetConnectionString("SQL_AddressBook");
-            DataTable dt6 = new DataTable();
-            SqlConnection conn6 = new SqlConnection(str6);
-            conn6.Open();
-            SqlCommand cmd6 = conn6.CreateCommand();
-            cmd6.CommandType = CommandType.StoredProcedure;
-            cmd6.CommandText = "PR_LOC_Country_SelectForDropDown";
-            SqlDataReader objSDR6 = cmd6.ExecuteReader();
-            dt6.Load(objSDR6);
-            conn6.Close();
-
-            List<Areas.Models.LOC_CountryDropDownModel> list6 = new List<Areas.Models.LOC_CountryDropDownModel>();
-            foreach (DataRow dr in dt6.Rows)
+            String connectionstr1 = this.Configuration.GetConnectionString("SQL_AddressBook");
+            DataTable dt2 = dalLOC.PR_LOC_State_SelectByDropdownList(connectionstr1);
+            
+            List<Areas.Models.LOC_CountryDropDownModel> list1 = new List<Areas.Models.LOC_CountryDropDownModel>();
+            foreach (DataRow dr in dt2.Rows)
             {
                 Areas.Models.LOC_CountryDropDownModel modelLOC_CountryDropDown = new Areas.Models.LOC_CountryDropDownModel();
-                modelLOC_CountryDropDown.CountryID = Convert.ToInt32(dr["CountryID"]);
-                modelLOC_CountryDropDown.CountryName = (string)dr["CountryName"];
-                list6.Add(modelLOC_CountryDropDown);
+                modelLOC_CountryDropDown.CountryID = (Convert.ToInt32(dr["CountryID"]));
+                modelLOC_CountryDropDown.CountryName = (Convert.ToString(dr["CountryName"]));
+                list1.Add(modelLOC_CountryDropDown);
             }
-            ViewBag.CountryList = list6;
+            ViewBag.CountryList = list1;
 
             List<Areas.Models.LOC_StateDropDownModel> list4 = new List<Areas.Models.LOC_StateDropDownModel>();
             ViewBag.StateList = list4;
