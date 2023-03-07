@@ -25,12 +25,39 @@ namespace AddressBook.Areas.SEC_User.Controllers
         [HttpPost]
         public IActionResult Login(SEC_UserModel modelSEC_User)
         {
-            string connstr = this.Configuration.GetConnectionString("SQL_AddressBook");
-            string error = null;
+            String connstr = this.Configuration.GetConnectionString("SQL_AddressBook");
+            String error = null;
 
             if(modelSEC_User.UserName == null )
             {
-                error  += 
+                error  += "User Name is Required";
+            }
+            if(modelSEC_User.Password == null )
+            {
+                error  += "<br/>Password is Required";
+            }
+
+            if(error != null)
+            {
+                TempData["Error"] = error;
+                return RedirectToAction("Index");
+            }
+            else{
+                SEC_DAL dal = new SEC_DAL();
+                DataTable dt = dal.PR_User_SelectByIDPass(connstr,modelSEC_User.UserName,modelSEC_User.Password);
+                if(dt.Rows.Count > 0)
+                {
+                    foreach(DataRow dr in dt.Rows)
+                    {
+                        HttpContext.Session.SetString("UserName",dr["UserName"].ToString());
+                        HttpContext.Session.SetString("Password",dr["Password"].ToString());
+                        break;
+                    }
+                }
+                else
+                {
+                    TempData["Error"] = ""
+                }
             }
         }
     }

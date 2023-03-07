@@ -29,7 +29,6 @@ namespace AddressBook.DAL
                 return null;
             }
 
-
         }
         #endregion
 
