@@ -1,23 +1,30 @@
 @{
     ViewData["Title"] = "Login";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
 }
 
 <link href="~/css/Login.css" rel="stylesheet" type="text/css" />
 
+@model AddressBook.Areas.Models.SEC_UserModel
+
 <div class="container">
 	<div class="screen">
 		<div class="screen__content">
-			<form class="login">
+			<form class="login" method="post" asp-area="SEC_User" asp-controller="SCE_User" asp-action="Login">
+				@if(TempData["Error"]!=null){
+					<div class="text-danger">@Html.Raw(TempData["Error"])</div>
+				}
 				<div class="login__field">
 					<i class="login__icon fas fa-user"></i>
-					<input type="text" class="login__input" placeholder="User name / Email">
+					<input type="text" class="login__input" asp-for="UserName" placeholder="User name / Email">
+					<span asp-validation-for="UserName" class="text-danger"></span>
 				</div>
 				<div class="login__field">
 					<i class="login__icon fas fa-lock"></i>
-					<input type="password" class="login__input" placeholder="Password">
+					<input type="password" class="login__input" asp-for="Password" placeholder="Password">
+					<span asp-validation-for="Password" class="text-danger"></span>
 				</div>
-				<button class="button login__submit">
+				<button class="button login__submit" type="submit">
 					<span class="button__text">Log In Now</span>
 					<i class="button__icon fas fa-chevron-right"></i>
 				</button>				
