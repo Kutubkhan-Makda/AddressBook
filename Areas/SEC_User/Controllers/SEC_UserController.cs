@@ -56,9 +56,15 @@ namespace AddressBook.Areas.SEC_User.Controllers
                 }
                 else
                 {
-                    TempData["Error"] = ""
+                    TempData["Error"] = "User Name and Password is Incorect";
+                    return RedirectToAction("Index");
+                }
+                if(HttpContext.Session.GetString("UserName") != null && HttpContext.Session.GetString("Password") != null)
+                {
+                    return RedirectToAction("Index","Home");
                 }
             }
+            return RedirectToAction("Index");
         }
     }
 }
