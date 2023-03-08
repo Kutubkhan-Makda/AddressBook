@@ -7,15 +7,15 @@ namespace AddressBook.BAL
     {
         public void OnAuthorization(AuthorizationFilterContext filterContext)
         {
-            var rd = filterContext.RouteData;
-            string currentAction = rd.Values["action"].ToString();
-            string currentController = rd.Values["controller"].ToString();
-            //string currentArea = rd.DataTokens["area"].ToString();
-
             if (filterContext.HttpContext.Session.GetString("UserID") == null)
             {
-                filterContext.Result = new RedirectResult("~/SEC_User/Index");
+                filterContext.Result = new RedirectResult("~/SEC_User/SEC_User/Index");
             }
+
+            var rd = filterContext.RouteData;
+            string currentArea = rd.Values["Area"].ToString();
+            string currentAction = rd.Values["action"].ToString();
+            string currentController = rd.Values["controller"].ToString();
         }
 
         public override void OnResultExecuting(ResultExecutingContext filterContext)

@@ -50,6 +50,7 @@ namespace AddressBook.Areas.SEC_User.Controllers
                 {
                     foreach(DataRow dr in dt.Rows)
                     {
+                        HttpContext.Session.SetInt32("UserID",Convert.ToInt32(dr["UserID"]));
                         HttpContext.Session.SetString("UserName",dr["UserName"].ToString());
                         HttpContext.Session.SetString("Password",dr["Password"].ToString());
                         break;

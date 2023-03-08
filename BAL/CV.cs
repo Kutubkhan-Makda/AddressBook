@@ -28,7 +28,7 @@ namespace AddressBook.BAL
 
             if(_HttpContextAccessor.HttpContext.Session.GetString("UserID") != null)
             {
-                UserID = Convert.ToInt32(_HttpContextAccessor.HttpContext.Session.GetString("UserID"));
+                UserID = Convert.ToInt32(_HttpContextAccessor.HttpContext.Session.GetInt32("UserID"));
             }
             return UserID;
         }
