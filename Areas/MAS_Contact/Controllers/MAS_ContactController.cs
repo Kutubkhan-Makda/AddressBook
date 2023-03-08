@@ -1,4 +1,5 @@
 ﻿using AddressBook.DAL;
+using AddressBook.BAL;
 using AddressBook.Areas.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Data.SqlClient;
 
 namespace AddressBook.Areas.MAS_Contact.Controllers
 {
+    [CheckAccess]
     [Area("MAS_Contact")]
     [Route("MAS_Contact/[Controller]/[action]")]
     public class MAS_ContactController : Controller

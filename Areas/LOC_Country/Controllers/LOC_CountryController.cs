@@ -1,4 +1,5 @@
 using AddressBook.DAL;
+using AddressBook.BAL;
 using AddressBook.Areas.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -6,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace AddressBook.Areas.LOC_Country.Controllers
 {
-    
+    [CheckAccess]
     [Area("LOC_Country")]
     [Route("LOC_Country/[Controller]/[action]")]
     public class LOC_CountryController : Controller

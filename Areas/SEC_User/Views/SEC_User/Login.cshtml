@@ -10,7 +10,7 @@
 <div class="container">
 	<div class="screen">
 		<div class="screen__content">
-			<form class="login" method="post" asp-area="SEC_User" asp-controller="SCE_User" asp-action="Login">
+			<form class="login" method="post" asp-area="SEC_User" asp-controller="SEC_User" asp-action="Login">
 				@if(TempData["Error"]!=null){
 					<div class="text-danger">@Html.Raw(TempData["Error"])</div>
 				}

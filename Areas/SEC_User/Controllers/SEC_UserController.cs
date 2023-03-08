@@ -1,4 +1,5 @@
 using AddressBook.DAL;
+using AddressBook.BAL;
 using AddressBook.Areas.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -6,8 +7,8 @@ using System.Data.SqlClient;
 
 namespace AddressBook.Areas.SEC_User.Controllers
 {
-    [Area("SCE_User")]
-    [Route("SCE_User/[Controller]/[action]")]
+    [Area("SEC_User")]
+    [Route("SEC_User/[Controller]/[action]")]
 
     public class SEC_User : Controller
     {
@@ -19,7 +20,7 @@ namespace AddressBook.Areas.SEC_User.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("Login");
         }
 
         [HttpPost]

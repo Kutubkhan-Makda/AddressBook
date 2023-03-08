@@ -3,9 +3,11 @@ using System.Data.SqlClient;
 using System.Data;
 using AddressBook.Areas.Models;
 using AddressBook.DAL;
+using AddressBook.BAL;
 
 namespace AddressBook.Areas.LOC_State.Controllers
 {
+    [CheckAccess]
     [Area("LOC_State")]
     [Route("LOC_State/[Controller]/[action]")]
     public class LOC_StateController : Controller

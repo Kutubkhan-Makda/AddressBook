@@ -1,4 +1,5 @@
 ﻿using AddressBook.DAL;
+using AddressBook.BAL;
 using AddressBook.Areas.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Data.SqlClient;
 
 namespace AddressBook.Areas.MST_ContactCategory.Controllers
 {
+    [CheckAccess]
     [Area("MST_ContactCategory")]
     [Route("MST_ContactCategory/[Controller]/[action]")]
     public class MST_ContactCategoryController : Controller
