@@ -200,7 +200,7 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
 
         public ActionResult DropDownByState(int StateID)
         {
-            String connectionstr = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
+            String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
            
            
             SqlConnection conn1 = new SqlConnection(connectionstr);
@@ -213,10 +213,10 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
             SqlDataReader objSDR1 = cmd1.ExecuteReader();
             dt1.Load(objSDR1);
            
-            List<Areas.Models.LOC_CityDropDownModel> list = new List<Areas.Models.LOC_CityDropDownModel>();
+            List<Models.LOC_CityDropDownModel> list = new List<Models.LOC_CityDropDownModel>();
             foreach (DataRow dr in dt1.Rows)
             {
-                Areas.Models.LOC_CityDropDownModel vl = new Areas.Models.LOC_CityDropDownModel();
+                Models.LOC_CityDropDownModel vl = new Models.LOC_CityDropDownModel();
                 vl.CityID = (Convert.ToInt32(dr["CityID"]));
                 vl.CityName = (Convert.ToString(dr["CityName"]));
                 list.Add(vl);
