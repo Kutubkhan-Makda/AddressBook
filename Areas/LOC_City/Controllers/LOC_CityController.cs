@@ -95,7 +95,7 @@ namespace Multi_AddressBook.Areas.LOC_City.Controllers
         [HttpPost]
         public IActionResult Save(LOC_CityModel modelLoc_City)
         {
-            string connectionString = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
+            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
             SqlCommand objCmd = conn.CreateCommand();
@@ -159,7 +159,7 @@ namespace Multi_AddressBook.Areas.LOC_City.Controllers
         }
         public ActionResult Search(int CityID)
         {
-            string str = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
+            string str = this.Configuration.GetConnectionString("SQL_AddressBook");
             SqlConnection conn = new SqlConnection(str);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();

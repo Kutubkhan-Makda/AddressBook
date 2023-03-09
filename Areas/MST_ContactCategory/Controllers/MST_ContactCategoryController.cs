@@ -25,7 +25,7 @@ namespace Multi_AddressBook.Areas.MST_ContactCategory.Controllers
         }
         public ActionResult Delete(int ContactCategoryID)
         {
-            String str = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
+            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
             SqlConnection conn = new SqlConnection(str);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -42,7 +42,7 @@ namespace Multi_AddressBook.Areas.MST_ContactCategory.Controllers
         {
             if (ContactCategoryID != null)
             {
-                String str = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
+                String str = this.Configuration.GetConnectionString("SQL_AddressBook");
                 SqlConnection conn = new SqlConnection(str);
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
@@ -68,7 +68,7 @@ namespace Multi_AddressBook.Areas.MST_ContactCategory.Controllers
         [HttpPost]
         public ActionResult Save(MST_ContactCategoryModel modelMST_ContactCategory)
         {
-            String str = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
+            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
             SqlConnection conn = new SqlConnection(str);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();

@@ -59,7 +59,7 @@ namespace Multi_AddressBook.Areas.LOC_Country.Controllers
         [HttpPost]
         public IActionResult Save(LOC_CountryModel modelLoc_Country)
         {
-            string connectionString = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
+            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
             SqlCommand objCmd = conn.CreateCommand();
@@ -96,7 +96,7 @@ namespace Multi_AddressBook.Areas.LOC_Country.Controllers
         }
         public ActionResult Search(int CountryID)
         {
-            string str = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
+            string str = this.Configuration.GetConnectionString("SQL_AddressBook");
             SqlConnection conn = new SqlConnection(str);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();

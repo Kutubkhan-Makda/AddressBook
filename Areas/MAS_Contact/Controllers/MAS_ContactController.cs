@@ -148,7 +148,7 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
                 }
 
             }
-            string connectionString = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
+            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
             SqlCommand objCmd = conn.CreateCommand();

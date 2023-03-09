@@ -60,7 +60,7 @@
                     <form method="post" asp-controller="CON_Contact" asp-action="Delete">
                         <input type="hidden" name="ContactID" value=" @Convert.ToInt32(dr["ContactID"].ToString()) " />
                          <button type="submit" class=" btn btn-danger btn-xs" onclick="return fun4();"><i class="fa fa-close"></i></button>
-                            <a class=" btn btn-info btn-xs" asp-controller="MAS_Contact" asp-action="Add" asp-route-contactid="@Convert.ToInt32(dr["ContactID"])"><i class="fa fa-pencil"></i></a>
+                        <a class=" btn btn-info btn-xs" asp-controller="MAS_Contact" asp-action="Add" asp-route-contactid="@Convert.ToInt32(dr["ContactID"])"><i class="fa fa-pencil"></i></a>
                     </form>
                 </td>
                 <td scope="row">@dr["ContactName"]</td>
