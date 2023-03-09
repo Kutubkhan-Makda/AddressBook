@@ -2,16 +2,16 @@
 using System.Data.Common;
 using System.Data;
 
-namespace AddressBook.DAL
+namespace Multi_AddressBook.DAL
 {
-    public class CON_DALBase
+    public class CON_DALBase : DALConnection
     {
         #region PR_ContactCategory_SelectAll
-        public DataTable PR_ContactCategory_SelectAll(string conn)
+        public DataTable PR_ContactCategory_SelectAll()
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_ContactCategory_SelectAll");
 
                 DataTable dt = new DataTable();
@@ -31,11 +31,11 @@ namespace AddressBook.DAL
 
 
         #region dbo.PR_CON_Contact_SelectAll
-        public DataTable PR_MAS_Contact_SelectAll(string conn)
+        public DataTable PR_MAS_Contact_SelectAll()
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MAS_Contact_SelectAll");
 
                 DataTable dt = new DataTable();
@@ -53,11 +53,11 @@ namespace AddressBook.DAL
         }
         #endregion
 
-        public bool? PR_MAS_Contact_Delete(string conn,int? ContactID)
+        public bool? PR_MAS_Contact_Delete(int? ContactID)
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MAS_Contact_DeleteByPK");
                 sqlDB.AddInParameter(dbCMD, "ContactID", SqlDbType.Int, ContactID);
                 int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
@@ -69,11 +69,11 @@ namespace AddressBook.DAL
             }
         }
 
-        public DataTable PR_ContactCategory_SelectByDropdownList(string conn)
+        public DataTable PR_ContactCategory_SelectByDropdownList()
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MAS_ContactCategory_SelectForDropDown");
 
                 DataTable dt = new DataTable();
@@ -90,11 +90,11 @@ namespace AddressBook.DAL
             }
         }
 
-        public DataTable PR_MAS_Contact_SelectByPK(string conn, int? ContactID)
+        public DataTable PR_MAS_Contact_SelectByPK(int? ContactID)
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MAS_Contact_SelectByPK");
                 sqlDB.AddInParameter(dbCMD, "ContactID", SqlDbType.Int, ContactID);
 

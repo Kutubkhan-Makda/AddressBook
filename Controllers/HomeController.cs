@@ -1,8 +1,8 @@
-﻿using AddressBook.Models;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Multi_AddressBook.Models;
 
-namespace AddressBook.Controllers
+namespace Multi_AddressBook.Controllers
 {
     public class HomeController : Controller
     {
@@ -18,12 +18,7 @@ namespace AddressBook.Controllers
             return View();
         }
 
-        public ActionResult Privacy()
-        {
-            return View();
-        }
-
-        public ActionResult Login()
+        public IActionResult Privacy()
         {
             return View();
         }

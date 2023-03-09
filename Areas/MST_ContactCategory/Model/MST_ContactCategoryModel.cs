@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace AddressBook.Areas.Models
+namespace Multi_AddressBook.Areas.Models
 {
     public class MST_ContactCategoryModel
     {

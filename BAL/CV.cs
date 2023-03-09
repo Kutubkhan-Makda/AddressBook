@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace AddressBook.BAL
+namespace Multi_AddressBook.BAL
 {
     public static class CV
     {

@@ -1,11 +1,11 @@
-using AddressBook.DAL;
-using AddressBook.BAL;
-using AddressBook.Areas.Models;
+using Multi_AddressBook.DAL;
+using Multi_AddressBook.BAL;
+using Multi_AddressBook.Areas.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace AddressBook.Areas.LOC_Country.Controllers
+namespace Multi_AddressBook.Areas.LOC_Country.Controllers
 {
     [CheckAccess]
     [Area("LOC_Country")]
@@ -22,8 +22,7 @@ namespace AddressBook.Areas.LOC_Country.Controllers
         #region SelectAll
         public ActionResult Index()
         {
-            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-            DataTable dt = dalLOC.PR_LOC_Country_SelectAll(str);
+            DataTable dt = dalLOC.PR_LOC_Country_SelectAll();
             return View("LOC_CountryList", dt);
         }
         #endregion
@@ -31,8 +30,7 @@ namespace AddressBook.Areas.LOC_Country.Controllers
         #region Delete
         public ActionResult Delete(int CountryID)
         {
-            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-            if (Convert.ToBoolean(dalLOC.PR_LOC_Country_Delete(str, CountryID)))
+            if (Convert.ToBoolean(dalLOC.PR_LOC_Country_Delete(CountryID)))
                 return RedirectToAction("Index");
             return View("Index");
         }
@@ -43,8 +41,7 @@ namespace AddressBook.Areas.LOC_Country.Controllers
         {
             if (CountryID != null)
             {
-                String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-                DataTable dt = dalLOC.PR_LOC_Country_SelectByPK(str, CountryID);
+                DataTable dt = dalLOC.PR_LOC_Country_SelectByPK(CountryID);
 
                 LOC_CountryModel modelLOC_Country = new LOC_CountryModel();
                 foreach (DataRow dr in dt.Rows)
@@ -54,7 +51,6 @@ namespace AddressBook.Areas.LOC_Country.Controllers
                     modelLOC_Country.CountryCode = (Convert.ToString (dr["CountryCode"]));
                     modelLOC_Country.CreationDate = (Convert.ToDateTime(dr["CreationDate"]));
                     modelLOC_Country.ModificationDate = (Convert.ToDateTime(dr["ModificationDate"]));
-                    //modelLOC_Country.PhotoPath = (Convert.ToString(dr["PhotoPath"]));
                 }
                 return View("LOC_CountryAddEdit", modelLOC_Country);
             }
@@ -63,7 +59,7 @@ namespace AddressBook.Areas.LOC_Country.Controllers
         [HttpPost]
         public IActionResult Save(LOC_CountryModel modelLoc_Country)
         {
-            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
+            string connectionString = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
             SqlCommand objCmd = conn.CreateCommand();
@@ -100,7 +96,7 @@ namespace AddressBook.Areas.LOC_Country.Controllers
         }
         public ActionResult Search(int CountryID)
         {
-            string str = this.Configuration.GetConnectionString("SQL_AddressBook");
+            string str = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
             SqlConnection conn = new SqlConnection(str);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -108,8 +104,6 @@ namespace AddressBook.Areas.LOC_Country.Controllers
             cmd.CommandText = "PR_LOC_Country_Search";
             cmd.Parameters.AddWithValue("@CountryName", Convert.ToString(HttpContext.Request.Form["CountryName"]));
             cmd.Parameters.AddWithValue("@CountryCode", Convert.ToString(HttpContext.Request.Form["CountryCode"]));
-            /*cmd.Parameters.Add("@CountryName", SqlDbType.VarChar).Value = CountryName;
-            cmd.Parameters.Add("@CountryCode", SqlDbType.VarChar).Value = CountryCode;*/
             DataTable dt = new DataTable();
             SqlDataReader objSDR = cmd.ExecuteReader();
             dt.Load(objSDR);

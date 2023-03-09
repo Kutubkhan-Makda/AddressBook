@@ -1,48 +1,38 @@
 @{
-    ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout_Login.cshtml";
 }
 
-<link href="~/css/Login.css" rel="stylesheet" type="text/css" />
-
-@model AddressBook.Areas.Models.SEC_UserModel
-
-<div class="container">
-	<div class="screen">
-		<div class="screen__content">
-			<form class="login" method="post" asp-area="SEC_User" asp-controller="SEC_User" asp-action="Login">
-				@if(TempData["Error"]!=null){
-					<div class="text-danger">@Html.Raw(TempData["Error"])</div>
-				}
-				<div class="login__field">
-					<i class="login__icon fas fa-user"></i>
-					<input type="text" class="login__input" asp-for="UserName" placeholder="User name / Email">
-					<span asp-validation-for="UserName" class="text-danger"></span>
-				</div>
-				<div class="login__field">
-					<i class="login__icon fas fa-lock"></i>
-					<input type="password" class="login__input" asp-for="Password" placeholder="Password">
-					<span asp-validation-for="Password" class="text-danger"></span>
-				</div>
-				<button class="button login__submit" type="submit">
-					<span class="button__text">Log In Now</span>
-					<i class="button__icon fas fa-chevron-right"></i>
-				</button>				
-			</form>
-			<div class="social-login">
-				<h3>log in via</h3>
-				<div class="social-icons">
-					<a href="#" class="social-login__icon fab fa-instagram"></a>
-					<a href="#" class="social-login__icon fab fa-facebook"></a>
-					<a href="#" class="social-login__icon fab fa-twitter"></a>
-				</div>
-			</div>
-		</div>
-		<div class="screen__background">
-			<span class="screen__background__shape screen__background__shape4"></span>
-			<span class="screen__background__shape screen__background__shape3"></span>		
-			<span class="screen__background__shape screen__background__shape2"></span>
-			<span class="screen__background__shape screen__background__shape1"></span>
-		</div>		
-	</div>
+@model Multi_AddressBook.Areas.Models.SEC_UserModel
+<!-- BEGIN LOGO -->
+<div class="logo">
+    <h2 class="bold text-danger">Address Book</h2>
 </div>
+<!-- END LOGO -->
+<!-- BEGIN LOGIN -->
+<div class="content">
+    <!-- BEGIN LOGIN FORM -->
+    <form class="login-form" method="post" asp-area="SEC_User" asp-controller="SEC_User" asp-action="Login">
+        <h3 class="form-title font-green">Sign In</h3>
+
+        @if (TempData["Error"]!=null)
+        {
+            <div class="text-danger">@Html.Raw(TempData["Error"]) </div>
+        }
+        
+        <div class="form-group">
+            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+            <label class="control-label visible-ie8 visible-ie9">Username</label>
+            <input class="form-control form-control-solid placeholder-no-fix" type="text" asp-for="UserName" placeholder="Enter Username" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Password</label>
+            <input class="form-control form-control-solid placeholder-no-fix" type="password" asp-for="Password" placeholder="Enter Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-actions text-center">
+            <button type="submit" class="btn green uppercase">Login</button>
+        </div>
+    </form>
+    <!-- END LOGIN FORM -->
+</div> 

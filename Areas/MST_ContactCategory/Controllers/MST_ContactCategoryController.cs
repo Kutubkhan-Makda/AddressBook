@@ -1,11 +1,11 @@
-﻿using AddressBook.DAL;
-using AddressBook.BAL;
-using AddressBook.Areas.Models;
+﻿using Multi_AddressBook.DAL;
+using Multi_AddressBook.BAL;
+using Multi_AddressBook.Areas.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace AddressBook.Areas.MST_ContactCategory.Controllers
+namespace Multi_AddressBook.Areas.MST_ContactCategory.Controllers
 {
     [CheckAccess]
     [Area("MST_ContactCategory")]
@@ -17,16 +17,15 @@ namespace AddressBook.Areas.MST_ContactCategory.Controllers
         {
             Configuration = _configuration;
         }
+        CON_DAL dalCON = new CON_DAL();
         public ActionResult Index()
         {
-            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-            CON_DAL dalCON = new CON_DAL();
-            DataTable dt = dalCON.PR_ContactCategory_SelectAll(str);
+            DataTable dt = dalCON.PR_ContactCategory_SelectAll();
             return View("MST_ContactCategoryList", dt);
         }
         public ActionResult Delete(int ContactCategoryID)
         {
-            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
+            String str = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
             SqlConnection conn = new SqlConnection(str);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -43,7 +42,7 @@ namespace AddressBook.Areas.MST_ContactCategory.Controllers
         {
             if (ContactCategoryID != null)
             {
-                String str = this.Configuration.GetConnectionString("SQL_AddressBook");
+                String str = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
                 SqlConnection conn = new SqlConnection(str);
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
@@ -69,7 +68,7 @@ namespace AddressBook.Areas.MST_ContactCategory.Controllers
         [HttpPost]
         public ActionResult Save(MST_ContactCategoryModel modelMST_ContactCategory)
         {
-            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
+            String str = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
             SqlConnection conn = new SqlConnection(str);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();

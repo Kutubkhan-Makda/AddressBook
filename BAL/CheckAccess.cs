@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace AddressBook.BAL
+namespace Multi_AddressBook.BAL
 {
     public class CheckAccess : ActionFilterAttribute, IAuthorizationFilter
     {

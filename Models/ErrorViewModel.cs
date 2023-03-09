@@ -1,4 +1,4 @@
-namespace AddressBook.Models
+namespace Multi_AddressBook.Models
 {
     public class ErrorViewModel
     {

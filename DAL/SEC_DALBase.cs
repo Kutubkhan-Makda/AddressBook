@@ -1,17 +1,17 @@
-using AddressBook.Models;
+using Multi_AddressBook.Models;
 using Microsoft.Practices.EnterpriseLibrary.Data.Sql;
 using System.Data;
 using System.Data.Common;
 
-namespace AddressBook.DAL
+namespace Multi_AddressBook.DAL
 {
-    public class SEC_DALBase
+    public class SEC_DALBase : DALConnection
     {
-        public DataTable PR_User_SelectByIDPass(string conn,String? UserName,String? Password)
+        public DataTable PR_User_SelectByIDPass(String? UserName,String? Password)
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_User_SelectByIDPass");
                 sqlDB.AddInParameter(dbCMD, "UserName", SqlDbType.NVarChar, UserName);
                 sqlDB.AddInParameter(dbCMD, "Password", SqlDbType.NVarChar, Password);

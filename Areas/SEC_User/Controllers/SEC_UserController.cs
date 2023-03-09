@@ -1,11 +1,11 @@
-using AddressBook.DAL;
-using AddressBook.BAL;
-using AddressBook.Areas.Models;
+using Multi_AddressBook.DAL;
+using Multi_AddressBook.BAL;
+using Multi_AddressBook.Areas.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace AddressBook.Areas.SEC_User.Controllers
+namespace Multi_AddressBook.Areas.SEC_User.Controllers
 {
     [Area("SEC_User")]
     [Route("SEC_User/[Controller]/[action]")]
@@ -26,7 +26,6 @@ namespace AddressBook.Areas.SEC_User.Controllers
         [HttpPost]
         public IActionResult Login(SEC_UserModel modelSEC_User)
         {
-            String connstr = this.Configuration.GetConnectionString("SQL_AddressBook");
             String error = null;
 
             if(modelSEC_User.UserName == null )
@@ -45,7 +44,7 @@ namespace AddressBook.Areas.SEC_User.Controllers
             }
             else{
                 SEC_DAL dal = new SEC_DAL();
-                DataTable dt = dal.PR_User_SelectByIDPass(connstr,modelSEC_User.UserName,modelSEC_User.Password);
+                DataTable dt = dal.PR_User_SelectByIDPass(modelSEC_User.UserName,modelSEC_User.Password);
                 if(dt.Rows.Count > 0)
                 {
                     foreach(DataRow dr in dt.Rows)
@@ -67,6 +66,12 @@ namespace AddressBook.Areas.SEC_User.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index","SEC_User");
         }
     }
 }

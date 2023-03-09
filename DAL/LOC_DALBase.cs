@@ -1,19 +1,19 @@
-﻿using AddressBook.Models;
+﻿using Multi_AddressBook.Models;
 using Microsoft.Practices.EnterpriseLibrary.Data.Sql;
 using System.Data;
 using System.Data.Common;
 
-namespace AddressBook.DAL
+namespace Multi_AddressBook.DAL
 {
-    public class LOC_DALBase
+    public class LOC_DALBase : DALConnection
     {
 
         #region dbo.PR_LOC_State_SelectAll
-        public DataTable PR_LOC_State_SelectAll(string conn)
+        public DataTable PR_LOC_State_SelectAll()
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_State_SelectAll");
 
                 DataTable dt = new DataTable();
@@ -33,11 +33,11 @@ namespace AddressBook.DAL
         #endregion
 
 
-        public DataTable PR_LOC_Country_SelectAll(string conn)
+        public DataTable PR_LOC_Country_SelectAll()
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_Country_SelectAll");
 
                 DataTable dt = new DataTable();
@@ -57,11 +57,11 @@ namespace AddressBook.DAL
 
 
         #region dbo.PR_LOC_City_SelectAll
-        public DataTable PR_LOC_City_SelectAll(string conn)
+        public DataTable PR_LOC_City_SelectAll()
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_City_SelectAll");
 
                 DataTable dt = new DataTable();
@@ -82,11 +82,11 @@ namespace AddressBook.DAL
 
         #endregion
 
-        public bool? PR_LOC_Country_Delete(string conn,int? CountryID)
+        public bool? PR_LOC_Country_Delete(int? CountryID)
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_City_DeleteByPK");
                 sqlDB.AddInParameter(dbCMD, "CountryID", SqlDbType.Int, CountryID);
                 int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
@@ -97,11 +97,11 @@ namespace AddressBook.DAL
                 return null;
             }
         }
-        public bool? PR_LOC_State_Delete(string conn,int? StateID)
+        public bool? PR_LOC_State_Delete(int? StateID)
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_State_DeleteByPK");
                 sqlDB.AddInParameter(dbCMD, "StateID", SqlDbType.Int, StateID);
                 int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
@@ -113,11 +113,11 @@ namespace AddressBook.DAL
             }
         }
 
-        public bool? PR_LOC_City_Delete(string conn,int? CityID)
+        public bool? PR_LOC_City_Delete(int? CityID)
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_City_DeleteByPK");
                 sqlDB.AddInParameter(dbCMD, "CityID", SqlDbType.Int, CityID);
                 int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
@@ -129,11 +129,11 @@ namespace AddressBook.DAL
             }
         }
 
-        public DataTable PR_LOC_State_SelectByDropdownList(string conn)
+        public DataTable PR_LOC_State_SelectByDropdownList()
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_Country_SelectForDropDown");
 
                 DataTable dt = new DataTable();
@@ -150,11 +150,11 @@ namespace AddressBook.DAL
             }
         }
 
-        public DataTable PR_LOC_State_SelectByPK(string conn, int? StateID)
+        public DataTable PR_LOC_State_SelectByPK(int? StateID)
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_State_SelectByPK");
                 sqlDB.AddInParameter(dbCMD, "StateID", SqlDbType.Int, StateID);
 
@@ -172,11 +172,11 @@ namespace AddressBook.DAL
             }
         }
 
-        public DataTable PR_LOC_Country_SelectByPK(string conn, int? CountryID)
+        public DataTable PR_LOC_Country_SelectByPK(int? CountryID)
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_Country_SelectByPK");
                 sqlDB.AddInParameter(dbCMD, "CountryID", SqlDbType.Int, CountryID);
 
@@ -194,11 +194,11 @@ namespace AddressBook.DAL
             }
         }
 
-        public DataTable PR_LOC_City_SelectByPK(string conn, int? CityID)
+        public DataTable PR_LOC_City_SelectByPK(int? CityID)
         {
             try
             {
-                SqlDatabase sqlDB = new SqlDatabase(conn);
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_City_SelectByPK");
                 sqlDB.AddInParameter(dbCMD, "CityID", SqlDbType.Int, CityID);
 

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 using System.Data;
-using AddressBook.Areas.Models;
-using AddressBook.DAL;
-using AddressBook.BAL;
+using Multi_AddressBook.Areas.Models;
+using Multi_AddressBook.DAL;
+using Multi_AddressBook.BAL;
 
-namespace AddressBook.Areas.LOC_State.Controllers
+namespace Multi_AddressBook.Areas.LOC_State.Controllers
 {
     [CheckAccess]
     [Area("LOC_State")]
@@ -24,23 +24,19 @@ namespace AddressBook.Areas.LOC_State.Controllers
 
         public IActionResult Index()
         {
-            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-            DataTable dt1 = dalLOC.PR_LOC_State_SelectAll(str);
+            DataTable dt1 = dalLOC.PR_LOC_State_SelectAll();
             return View("LOC_StateList", dt1);
             
         }
         public ActionResult Delete(int StateID)
         {
-            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-            if (Convert.ToBoolean(dalLOC.PR_LOC_State_Delete(str, StateID)))
+            if (Convert.ToBoolean(dalLOC.PR_LOC_State_Delete(StateID)))
                 return RedirectToAction("Index");
             return View("Index");
         }
         public IActionResult Add(int? StateID)
          {
-
-            String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
-            DataTable dt1 = dalLOC.PR_LOC_State_SelectByDropdownList(connectionstr);
+            DataTable dt1 = dalLOC.PR_LOC_State_SelectByDropdownList();
             
             List<Areas.Models.LOC_CountryDropDownModel> list=new List<Areas.Models.LOC_CountryDropDownModel>();
             foreach(DataRow dr in dt1.Rows)
@@ -53,14 +49,14 @@ namespace AddressBook.Areas.LOC_State.Controllers
             ViewBag.CountryList=list;
             if (StateID != null)
             {
-                //String str = this.Configuration.GetConnectionString("SQL_AddressBook");
+                //String str = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
                 //SqlConnection conn = new SqlConnection(str);
                 //conn.Open();
                 //SqlCommand cmd = conn.CreateCommand();
                 //cmd.CommandType = CommandType.StoredProcedure;
                 //cmd.CommandText = "PR_LOC_State_SelectByPK";
                 //cmd.Parameters.Add("@StateID", SqlDbType.Int).Value = StateID;
-                DataTable dt = dalLOC.PR_LOC_State_SelectByPK(connectionstr, StateID);
+                DataTable dt = dalLOC.PR_LOC_State_SelectByPK(StateID);
                 //SqlDataReader objSDR = cmd.ExecuteReader();
                 //dt.Load(objSDR);
                 if(dt.Rows.Count > 0)
@@ -84,7 +80,7 @@ namespace AddressBook.Areas.LOC_State.Controllers
         [HttpPost]
         public IActionResult Save(LOC_StateModel modelLoc_State)
         {
-            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
+            string connectionString = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
             SqlCommand objCmd = conn.CreateCommand();
@@ -121,7 +117,7 @@ namespace AddressBook.Areas.LOC_State.Controllers
         }
         public ActionResult Search(int StateID)
         {
-            string str = this.Configuration.GetConnectionString("SQL_AddressBook");
+            string str = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
             SqlConnection conn = new SqlConnection(str);
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();

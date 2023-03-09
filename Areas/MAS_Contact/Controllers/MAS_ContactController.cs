@@ -1,11 +1,11 @@
-﻿using AddressBook.DAL;
-using AddressBook.BAL;
-using AddressBook.Areas.Models;
+﻿using Multi_AddressBook.DAL;
+using Multi_AddressBook.BAL;
+using Multi_AddressBook.Areas.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace AddressBook.Areas.MAS_Contact.Controllers
+namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
 {
     [CheckAccess]
     [Area("MAS_Contact")]
@@ -24,16 +24,14 @@ namespace AddressBook.Areas.MAS_Contact.Controllers
 
         public ActionResult Index()
         {
-            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
-            DataTable dt = dalCON.PR_MAS_Contact_SelectAll(connectionString);
+            DataTable dt = dalCON.PR_MAS_Contact_SelectAll();
             return View("MAS_ContactList",dt);
         }
 
 
         public ActionResult Delete(int ContactID)
         {
-            String connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
-            if (Convert.ToBoolean(dalCON.PR_MAS_Contact_Delete(connectionString, ContactID)))
+            if (Convert.ToBoolean(dalCON.PR_MAS_Contact_Delete(ContactID)))
                 return RedirectToAction("Index");
             return View("Index");
         }
@@ -41,8 +39,7 @@ namespace AddressBook.Areas.MAS_Contact.Controllers
 
         public IActionResult Add(int? ContactID)
         {
-            String connectionstr7 = this.Configuration.GetConnectionString("SQL_AddressBook");
-            DataTable dt7 = dalCON.PR_ContactCategory_SelectByDropdownList(conn: connectionstr7);
+            DataTable dt7 = dalCON.PR_ContactCategory_SelectByDropdownList();
             
             List<Areas.Models.MST_ContactCategoryDropDownModel> list7 = new List<Areas.Models.MST_ContactCategoryDropDownModel>();
             foreach (DataRow dr in dt7.Rows)
@@ -54,8 +51,7 @@ namespace AddressBook.Areas.MAS_Contact.Controllers
             }
             ViewBag.ContactCategoryList = list7;
 
-            String connectionstr1 = this.Configuration.GetConnectionString("SQL_AddressBook");
-            DataTable dt2 = dalLOC.PR_LOC_State_SelectByDropdownList(connectionstr1);
+            DataTable dt2 = dalLOC.PR_LOC_State_SelectByDropdownList();
             
             List<Areas.Models.LOC_CountryDropDownModel> list1 = new List<Areas.Models.LOC_CountryDropDownModel>();
             foreach (DataRow dr in dt2.Rows)
@@ -76,8 +72,7 @@ namespace AddressBook.Areas.MAS_Contact.Controllers
             
             if(ContactID!=null)
             {
-                String str5 = this.Configuration.GetConnectionString("SQL_AddressBook");
-                DataTable dt = dalCON.PR_MAS_Contact_SelectByPK(str5, ContactID);
+                DataTable dt = dalCON.PR_MAS_Contact_SelectByPK(ContactID);
                 MAS_ContactModel modelMAS_Contact = new MAS_ContactModel();
 
                 foreach(DataRow dr in dt.Rows)
@@ -107,7 +102,7 @@ namespace AddressBook.Areas.MAS_Contact.Controllers
 
         public ActionResult DropDownByCountry(int CountryID)
         {
-            String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
+            String connectionstr = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
            
            
             SqlConnection conn1 = new SqlConnection(connectionstr);
@@ -155,7 +150,7 @@ namespace AddressBook.Areas.MAS_Contact.Controllers
                 }
 
             }
-            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
+            string connectionString = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
             SqlCommand objCmd = conn.CreateCommand();
@@ -207,7 +202,7 @@ namespace AddressBook.Areas.MAS_Contact.Controllers
 
         public ActionResult DropDownByState(int StateID)
         {
-            String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
+            String connectionstr = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
            
            
             SqlConnection conn1 = new SqlConnection(connectionstr);
