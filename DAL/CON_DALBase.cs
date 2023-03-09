@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.Data.Sql;
 using System.Data.Common;
 using System.Data;
+using Multi_AddressBook.BAL;
 
 namespace Multi_AddressBook.DAL
 {
@@ -13,6 +14,7 @@ namespace Multi_AddressBook.DAL
             {
                 SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_ContactCategory_SelectAll");
+                sqlDB.AddInParameter(dbCMD, "UserID", SqlDbType.Int, @CV.UserID());
 
                 DataTable dt = new DataTable();
                 using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
@@ -37,6 +39,7 @@ namespace Multi_AddressBook.DAL
             {
                 SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MAS_Contact_SelectAll");
+                sqlDB.AddInParameter(dbCMD, "UserID", SqlDbType.Int, @CV.UserID());
 
                 DataTable dt = new DataTable();
                 using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))

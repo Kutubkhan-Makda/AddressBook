@@ -103,7 +103,6 @@ namespace Multi_AddressBook.Areas.LOC_Country.Controllers
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "PR_LOC_Country_Search";
             cmd.Parameters.AddWithValue("@CountryName", Convert.ToString(HttpContext.Request.Form["CountryName"]));
-            cmd.Parameters.AddWithValue("@CountryCode", Convert.ToString(HttpContext.Request.Form["CountryCode"]));
             DataTable dt = new DataTable();
             SqlDataReader objSDR = cmd.ExecuteReader();
             dt.Load(objSDR);

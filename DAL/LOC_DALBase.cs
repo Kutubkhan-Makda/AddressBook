@@ -2,6 +2,7 @@
 using Microsoft.Practices.EnterpriseLibrary.Data.Sql;
 using System.Data;
 using System.Data.Common;
+using Multi_AddressBook.BAL;
 
 namespace Multi_AddressBook.DAL
 {
@@ -15,6 +16,7 @@ namespace Multi_AddressBook.DAL
             {
                 SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_State_SelectAll");
+                sqlDB.AddInParameter(dbCMD, "UserID", SqlDbType.Int, @CV.UserID());
 
                 DataTable dt = new DataTable();
                 using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
@@ -39,6 +41,7 @@ namespace Multi_AddressBook.DAL
             {
                 SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_Country_SelectAll");
+                sqlDB.AddInParameter(dbCMD, "UserID", SqlDbType.Int, @CV.UserID());
 
                 DataTable dt = new DataTable();
                 using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
@@ -63,6 +66,7 @@ namespace Multi_AddressBook.DAL
             {
                 SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_City_SelectAll");
+                sqlDB.AddInParameter(dbCMD, "UserID", SqlDbType.Int, @CV.UserID());
 
                 DataTable dt = new DataTable();
                 using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
