@@ -102,8 +102,7 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
 
         public ActionResult DropDownByCountry(int CountryID)
         {
-            String connectionstr = this.Configuration.GetConnectionString("SQL_Multi_AddressBook");
-           
+            String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
            
             SqlConnection conn1 = new SqlConnection(connectionstr);
             conn1.Open();
@@ -115,10 +114,10 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
             SqlDataReader objSDR1 = cmd1.ExecuteReader();
             dt1.Load(objSDR1);
            
-            List<Areas.Models.LOC_StateDropDownModel> list = new List<Areas.Models.LOC_StateDropDownModel>();
+            List<Models.LOC_StateDropDownModel> list = new List<Models.LOC_StateDropDownModel>();
             foreach (DataRow dr in dt1.Rows)
             {
-                Areas.Models.LOC_StateDropDownModel vl = new Areas.Models.LOC_StateDropDownModel();
+                Models.LOC_StateDropDownModel vl = new Models.LOC_StateDropDownModel();
                 vl.StateID = (Convert.ToInt32(dr["StateID"]));
                 vl.StateName = (Convert.ToString(dr["StateName"]));
                 list.Add(vl);
@@ -127,7 +126,6 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
             var vmodel = list;
             return Json(vmodel);
         }
-
 
         [HttpPost]
         public IActionResult Save(MAS_ContactModel modelMAS_Contact)
