@@ -1,99 +1,88 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Country List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @using System.Data
 @model DataTable
 
-<div class="col-md-12">
-    <div class="row">
-        <div class=" col-md-10">
-            <h3><u>Country List</u></h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a asp-controller="LOC_Country" asp-action="Index"><i class="fa fa-home"></i>&nbsp;Home</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a asp-controller="LOC_Country" asp-action="Index">Country List</a>
+            <i class="fa fa-circle"></i>
+        </li>
+    </ul>
+</div>
+<!-- BEGIN EXAMPLE TABLE PORTLET-->
+<div class="portlet light bordered margin-top-10">
+    <div class="portlet-title">
+        <div class="caption font-dark">
+            <i class="icon-settings font-dark"></i>
+            <span class="caption-subject bold uppercase">Country List</span>
         </div>
-        <div class ="actions">
+        <div class="actions">
             <div class="btn-group btn-group-devided">
-                <a asp-controller="LOC_Country" asp-action="Add" class="btn green"><i class="fa fa-plus"></i>&nbsp;Add Country</a>
-        </div>
+                <a asp-area="LOC_Country" asp-controller="LOC_Country" asp-action="Add" class="btn green btn-rounded"><i class="fa fa-plus"></i>&nbsp;Add Country</a>
             </div>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="pull-right">
+            <div id="sample_1_filter" class="dataTables_filter">
+                <label>Search Any&nbsp;<input type="text" class="form-control input-sm input-small input-inline" id="sample_1"></label>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-hover table-header-fixed dataTable">
+            <thead>
+                <tr class="">
+                    @*<th>Country ID</th>*@
+                    <th>Country Name</th>
+                    <th>Country Code</th>
+                    <th class="text-center">Created</th>
+                    <th class="text-center">Modified</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="sample_2">
+                @foreach (DataRow dr in Model.Rows)
+                {
+                    <tr>
+                        @*<td>@dr["CountryID"]</td>*@
+                        <td>@dr["CountryName"]</td>
+                        <td>@dr["CountryCode"]</td>
+                        <td class="text-center">@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-MM-yyyy hh:mm:ss")</td>
+                        <td class="text-center">@Convert.ToDateTime(dr["ModificationDate"]).ToString("dd-MM-yyyy hh:mm:ss")</td>
+                        <td class="text-center">
+                            <form method="post" asp-controller="LOC_Country" asp-action="Delete">
+                                <input type="hidden" name="CountryID" value="@Convert.ToInt32(dr["CountryID"])">
+                                <button type="submit" class=" btn btn-danger btn-xs" onclick="return DeleteConf();"><i class="fa fa-close"></i></button>
+                                <a class="btn btn-info btn-xs" asp-controller="LOC_Country" asp-action="Add" asp-route-countryid="@Convert.ToInt32(dr["CountryID"])"><i class="fa fa-pencil"></i></a>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
-
-<div class="portlet-body">
-    <div class="pull-right">
-        <div id="sample_1_filter" class="dataTables_filter">
-            <label>Search Any&nbsp;<input type="" class="form-control input-sm input-small input-inline" placeholder="Search Anything" id="sample_1" aria-controls="sample_1"></label>
-         </div>&nbsp;
-        </div>
- </div>
-<form method="post" asp-controller="LOC_Country" asp-action="Search">
-    <div>
-        <div class="split-left">
-            <div class="centered">
-
-                <label>
-                    Country Name &nbsp;
-                    <input type="text" name="CountryName" class="form-control input-sm input-small input-inline" placeholder="Enter Country" />
-                </label>
-            </div>
-        </div>
-        <div class="split-right">
-            <div class="centered">
-                <label>
-                    Country Code &nbsp;
-                    <input type="text" name="CountryCode" class="form-control input-sm input-small input-inline" placeholder="Enter Country Code" />
-                </label>
-            </div>
-        </div>
-    </div>
-
-    <button class="btn btn-info">Search</button>
-</form>
-
-   
-<table class="table table-striped table-bordered table-hover table-header-fixed dataTable" id="sample_1">
-    
-    <thead>
-        <tr>
-            <th>CountryName</th>&nbsp
-            <th>CountryCode</th>&nbsp
-            <th>CreationDate</th>&nbsp
-            <th>ModificationDate</th>
-            <th class="text-center">Action</th>
-        </tr>
-
-    </thead>
-    <tbody id="sample_2">
-        @foreach(DataRow dr in Model.Rows){
-            <tr>
-               
-                <td>@dr["CountryName"]</td>&nbsp
-                <td>@dr["CountryCode"]</td>&nbsp
-                <td>@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-mm-yyyy")</td>&nbsp
-                <td>@Convert.ToDateTime(dr["ModificationDate"]).ToString("dd-mm-yyyy")</td>
-                <td>
-                    <form method=" post" asp-controller="LOC_Country" asp-action="Delete">
-                        <input type="hidden" name="CountryID" value=" @Convert.ToInt32(dr["CountryID"].ToString()) "/>
-                            <button type="submit" class=" btn btn-danger btn-xs" onclick="return DeleteConf();"><i class="fa fa-close"></i></button>
-                            <a class=" btn btn-info btn-xs" asp-controller="LOC_Country" asp-action="Add" asp-route-countryid="@Convert.ToInt32(dr["CountryID"])"><i class="fa fa-pencil"></i></a>
-                    </form>
-                </td>
-            </tr>
-        }
-       
-    </tbody>
-</table>
+<!-- END EXAMPLE TABLE PORTLET-->
 @section Scripts
-{
+    {
     <script>
-        $(document).ready(function (){
-            $("#sample_1").on("keyup",function(){
-                var value=$(this).val().toLowerCase();
-                $("#sample_2 tr").filter(function(){
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
+
         function DeleteConf()
         {
             if(confirm("Are you sure you want to Delete ?"))

@@ -91,7 +91,7 @@ namespace Multi_AddressBook.DAL
             try
             {
                 SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
-                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_City_DeleteByPK");
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_Country_DeleteByPK");
                 sqlDB.AddInParameter(dbCMD, "CountryID", SqlDbType.Int, CountryID);
                 int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
                 return (vReturnValue == -1 ? false : true);
