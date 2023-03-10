@@ -3,39 +3,83 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model Multi_AddressBook.Areas.Models.LOC_CityModel
-<div class="row">
-    <div class="col-md-12">
-        <h3> @TempData["CityInsertMsg"]</h3>
-        <form method="post" asp-controller="LOC_City" asp-action="Save" enctype="multipart/form-data">
-            @Html.HiddenFor(x=>x.CityID)
-            <div class="form-group">
-                <label>CityName</label>
-                <input type="text" asp-for="CityName" class=form-control placeholder="Enter City Name" />
-                <span asp-validation-for="CityName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label>CityCode</label>
-                <input type="text" asp-for="CityCode" class=form-control placeholder="Enter City Code" />
-            </div>
-            <div class="form-group">
-                <label>CountryName</label>
-                <select class="form-control" asp-for="CountryID" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))" onchange="fnOnStateChange();">
-                    <option value="">Select Country</option>
-                </select>
-                <span asp-validation-for="CountryID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label>StateName</label>
-                <select class="form-control" asp-for="StateID" asp-items="@(new SelectList(ViewBag.StateList,"StateID","StateName"))">
-                    <option value="">Select State</option>
-                </select>
-                <span asp-validation-for="StateID" class="text-danger"></span>
-            </div>
 
-            <hr />
-            <div class="center-button"><input class="btn btn-success" type="submit" value="Save"></div>
-            <div class="center-button"><a asp-controller="LOC_City" asp-action="Index" class="btn btn-danger">Cancel</a></div>
-        </form>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i>&nbsp;Home</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>City Add/Edit</span>
+            <i class="fa fa-circle"></i>
+        </li>
+    </ul>
+</div>
+
+<div class="row margin-top-10">
+    <div class="col-md-12">
+        <div class="col-md-9">
+            <!-- BEGIN SAMPLE FORM PORTLET-->
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject font-dark sbold uppercase">City Add/Edit</span>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <h4 class="font-green-sharp">@TempData["CityInsertMsg"]</h4>
+                    <form class="form-horizontal" role="form" method="post" asp-controller="LOC_City" asp-action="Save">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        @Html.HiddenFor(x=>x.CityID)
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><span class="text-danger">*</span>Country Name</label>
+                                <div class="col-md-9">
+                                    <select class="form-control" asp-for="CountryID" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))" onchange="fnOnStateChange();">
+                                        <option value="">Select Country</option>
+                                    </select>
+                                    <span asp-validation-for="CountryID" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><span class="text-danger">*</span>State Name</label>
+                                <div class="col-md-9">
+                                    <select class="form-control" asp-for="StateID" asp-items="@(new SelectList(ViewBag.StateList,"StateID","StateName"))">
+                                        <option value="">Select State</option>
+                                    </select>
+                                    <span asp-validation-for="StateID" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><span class="text-danger">*</span>City Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" asp-for="CityName" placeholder="Enter City Name" />
+                                    <span asp-validation-for="CityName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><span class="text-danger">*</span>City Code</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" asp-for="CityCode" placeholder="Enter City Code" />
+                                    <span asp-validation-for="CityCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <input type="submit" class="btn green" value="Save"/>
+                                    <a class="btn default" asp-controller="LOC_City" asp-action="Index">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- END SAMPLE FORM PORTLET-->
+        </div>
     </div>
 </div>
 

@@ -4,83 +4,99 @@
 }
 @using System.Data
 @model DataTable
-<div class="col-md-12">
-    <div class="row">
-        <div class=" col-md-10">
-            <h3>City List</h3>
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i>&nbsp;Home</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a asp-controller="LOC_City" asp-action="Index">City List</a>
+            <i class="fa fa-circle"></i>
+        </li>
+    </ul>
+</div>
+<!-- BEGIN EXAMPLE TABLE PORTLET-->
+<div class="portlet light bordered margin-top-10">
+    <div class="portlet-title">
+        <div class="caption font-dark">
+            <i class="icon-settings font-dark"></i>
+            <span class="caption-subject bold uppercase">City List</span>
         </div>
         <div class="actions">
             <div class="btn-group btn-group-devided">
-                <a asp-controller="LOC_City" asp-action="Add" class="btn green"><i class="fa fa-plus"></i>&nbsp;Add City</a>
+                <a asp-area="LOC_City" asp-controller="LOC_City" asp-action="Add" class="btn green"><i class="fa fa-plus"></i>&nbsp;Add City</a>
             </div>
         </div>
+    </div>
+    <div class="portlet-body">
+        <div class="pull-left">
+            <form method="post" asp-controller="LOC_City" asp-action="Search">
+                <div class="Search-Area-con">
+                    <div class="split-left">
+                        <div class="centered">
+                            <label>
+                                City Name &nbsp;
+                                <input type="text" name="CityName" class="form-control input-sm input-small input-inline" placeholder="Enter City" />
+                            </label>
+                        </div>
+                    </div>
+                    <div class="split-right">
+                        <div class="centered">
+                            <label>
+                                City Code &nbsp;
+                                <input type="text" name="CityCode" class="form-control input-sm input-small input-inline" placeholder="Enter City Code" />
+                            </label>
+                        </div>
+                    </div>
+                    <button class="btn btn-light btn-circle btn-sm"><i class="fas fa-search" style="font-size: 1.25rem;"></i></button>
+                </div>
+            </form>
+        </div>
+        <div class="pull-right">
+            <div id="sample_1_filter" class="dataTables_filter">
+                <label>Search Any&nbsp;<input type="text" class="form-control input-sm input-small input-inline" id="sample_1"></label>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-hover table-header-fixed dataTable">
+            <thead>
+                <tr class="">
+                    @*<th>Country ID</th>*@
+                    <th>Country Name</th>
+                    <th>State Name</th>
+                    <th>City Name</th>
+                    <th>City Code</th>
+                    <th class="text-center">Created</th>
+                    <th class="text-center">Modified</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="sample_2">
+                @foreach (DataRow dr in Model.Rows)
+                {
+                    <tr>
+                        @*<td>@dr["CountryID"]</td>*@
+                        <td>@dr["CountryName"]</td>
+                        <td>@dr["StateName"]</td>
+                        <td>@dr["CityName"]</td>
+                        <td>@dr["CityCode"]</td>
+                        <td class="text-center">@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-MM-yyyy hh:mm:ss")</td>
+                        <td class="text-center">@Convert.ToDateTime(dr["ModificationDate"]).ToString("dd-MM-yyyy hh:mm:ss")</td>
+                        <td class="text-center">
+                            <form method="post" asp-controller="LOC_City" asp-action="Delete">
+                                <input type="hidden" name="CityID" value="@Convert.ToInt32(dr["CityID"])">
+                                <button type="submit" class="btn btn-danger btn-xs" onclick="return fun3();"><i class="fa fa-close"></i></button>
+                                <a class="btn btn-info btn-xs" asp-controller="LOC_City" asp-action="Add" asp-route-cityid="@Convert.ToInt32(dr["CityID"])"><i class="fa fa-pencil"></i></a>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
-<div class="portlet-body">
-    <div class="pull-right">
-        <div id="sample_1_filter" class="dataTables_filter">
-            <label>Search Any&nbsp;<input type="" class="form-control input-sm input-small input-inline" placeholder="Search Anything" id="sample_1" aria-controls="sample_1"></label>
-        </div>
-    </div>
-</div>
-<form method="post" asp-controller="LOC_City" asp-action="Search">
-    <div>
-        <div class="split-left">
-            <div class="centered">
-                <label>
-                    State Name &nbsp;
-                    <input type="text" name="CityName" class="form-control input-sm input-small input-inline" placeholder="Enter City" />
-                </label>
-            </div>
-        </div>
-        <div class="split-right">
-            <div class="centered">
-                <label>
-                    City Code &nbsp;
-                    <input type="text" name="CityCode" class="form-control input-sm input-small input-inline" placeholder="Enter City Code" />
-                </label>
-            </div>
-        </div>
-    </div>
-    <button class="btn btn-info">Search</button>
-</form>
-<table class="table table-striped table-bordered table-hover table-header-fixed dataTable" style="margin-top: 1rem;" id="sample_1">
-    <thead>
-        <tr>
-            <th>CityName</th>
-            <th>CityCode</th>
-            <th>CreationDate</th>
-            <th>ModificationDate</th>
-            <th>StateName</th>
-            <th>CountryName</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody id="sample_2">
-        @foreach (DataRow dr in Model.Rows)
-        {
-            <tr>
-                
-                <td>@dr["CityName"]</td>
-                <td>@dr["CityCode"]</td>
-                <td>@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-mm-yyyy")</td>
-                <td>@Convert.ToDateTime(dr["ModificationDate"]).ToString("dd-mm-yyyy")</td>
-                
-                <td>@dr["StateName"]</td>
-                
-                <td>@dr["CountryName"]</td>
-                <td>
-                    <form method="post" asp-controller="LOC_City" asp-action="Delete">
-                        <input type="hidden" name="CityID" value=" @Convert.ToInt32(dr["CityID"].ToString()) " />
-                        <button type="submit" class=" btn btn-danger btn-xs" onclick="return fun3();"><i class="fa fa-close"></i></button>
-                        <a class=" btn btn-info btn-xs" asp-controller="LOC_City" asp-action="Add" asp-route-cityid="@Convert.ToInt32(dr["CityID"])"><i class="fa fa-pencil"></i></a>
-                    </form>
-                </td>
-            </tr>
-        }
 
-    </tbody>
-</table>
 @section Scripts
 {
     <script>
