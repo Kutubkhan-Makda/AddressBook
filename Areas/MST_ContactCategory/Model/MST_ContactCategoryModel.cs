@@ -7,7 +7,7 @@ namespace Multi_AddressBook.Areas.Models
     {
         [Required]
         public int? ContactCategoryID { get; set; }
-        public string ContactCategoryName { get; set; }
+        public string? ContactCategoryName { get; set; }
         
         public DateTime CreationDate { get; set; }
         public DateTime ModificationDate { get; set; }
@@ -16,7 +16,7 @@ namespace Multi_AddressBook.Areas.Models
 
     public class MST_ContactCategoryDropDownModel
     {
-        public int ContactCategoryID { get; set; }
-        public string ContactCategoryName { get; set; }
+        public int? ContactCategoryID { get; set; }
+        public string? ContactCategoryName { get; set; }
     }
 }

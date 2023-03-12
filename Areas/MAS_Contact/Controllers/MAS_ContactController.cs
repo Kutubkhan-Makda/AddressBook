@@ -45,8 +45,8 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
             foreach (DataRow dr in dt7.Rows)
             {
                 Areas.Models.MST_ContactCategoryDropDownModel modelMST_ContactCategory = new Areas.Models.MST_ContactCategoryDropDownModel();
-                modelMST_ContactCategory.ContactCategoryID = Convert.ToInt32(dr["ContactCategoryID"]);
-                modelMST_ContactCategory.ContactCategoryName = (string)dr["ContactCategoryName"];
+                modelMST_ContactCategory.ContactCategoryID = (Convert.ToInt32(dr["ContactCategoryID"]));
+                modelMST_ContactCategory.ContactCategoryName = (Convert.ToString(dr["ContactCategoryName"]));
                 list7.Add(modelMST_ContactCategory);
             }
             ViewBag.ContactCategoryList = list7;
