@@ -19,7 +19,7 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
             Configuration = _configuration;
         }
 
-        CON_DAL dalCON = new CON_DAL();
+        MAS_DAL dalCON = new MAS_DAL();
         LOC_DAL dalLOC = new LOC_DAL();
 
         public ActionResult Index()

@@ -5,7 +5,7 @@ using Multi_AddressBook.BAL;
 
 namespace Multi_AddressBook.DAL
 {
-    public class CON_DALBase : DALConnection
+    public class MAS_DALBase : DALConnection
     {
         #region PR_ContactCategory_SelectAll
         public DataTable PR_ContactCategory_SelectAll()

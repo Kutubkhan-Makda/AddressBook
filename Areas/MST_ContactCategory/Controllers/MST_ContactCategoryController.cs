@@ -17,7 +17,7 @@ namespace Multi_AddressBook.Areas.MST_ContactCategory.Controllers
         {
             Configuration = _configuration;
         }
-        CON_DAL dalCON = new CON_DAL();
+        MAS_DAL dalCON = new MAS_DAL();
         public ActionResult Index()
         {
             DataTable dt = dalCON.PR_ContactCategory_SelectAll();
