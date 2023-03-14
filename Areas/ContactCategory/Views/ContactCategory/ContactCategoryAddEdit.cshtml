@@ -2,11 +2,11 @@
     ViewData["Title"] = "ContactCategory Add/Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model Multi_AddressBook.Areas.Models.MST_ContactCategoryModel
+@model Multi_AddressBook.Areas.Models.ContactCategoryModel
 <div class="row">
     <div class="col-md-12">
         <h3> @TempData["ContactCategoryInsertMsg"]</h3>
-        <form method="post" asp-controller="MST_ContactCategory" asp-action="Save" enctype="multipart/form-data">
+        <form method="post" asp-controller="ContactCategory" asp-action="Save" enctype="multipart/form-data">
             @Html.HiddenFor(x=>x.ContactCategoryID)
             <div class="form-group">
                 <label>ContactCategory Name</label>

@@ -41,13 +41,13 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
         {
             DataTable dt7 = dalCON.PR_ContactCategory_SelectByDropdownList();
             
-            List<Areas.Models.MST_ContactCategoryDropDownModel> list7 = new List<Areas.Models.MST_ContactCategoryDropDownModel>();
+            List<Areas.Models.ContactCategoryDropDownModel> list7 = new List<Areas.Models.ContactCategoryDropDownModel>();
             foreach (DataRow dr in dt7.Rows)
             {
-                Areas.Models.MST_ContactCategoryDropDownModel modelMST_ContactCategory = new Areas.Models.MST_ContactCategoryDropDownModel();
-                modelMST_ContactCategory.ContactCategoryID = (Convert.ToInt32(dr["ContactCategoryID"]));
-                modelMST_ContactCategory.ContactCategoryName = (Convert.ToString(dr["ContactCategoryName"]));
-                list7.Add(modelMST_ContactCategory);
+                Areas.Models.ContactCategoryDropDownModel modelContactCategory = new Areas.Models.ContactCategoryDropDownModel();
+                modelContactCategory.ContactCategoryID = (Convert.ToInt32(dr["ContactCategoryID"]));
+                modelContactCategory.ContactCategoryName = (Convert.ToString(dr["ContactCategoryName"]));
+                list7.Add(modelContactCategory);
             }
             ViewBag.ContactCategoryList = list7;
 

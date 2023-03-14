@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Multi_AddressBook.Areas.Models
 {
-    public class MST_ContactCategoryModel
+    public class ContactCategoryModel
     {
         [Required]
         public int? ContactCategoryID { get; set; }
@@ -14,7 +14,7 @@ namespace Multi_AddressBook.Areas.Models
 
     }
 
-    public class MST_ContactCategoryDropDownModel
+    public class ContactCategoryDropDownModel
     {
         public int? ContactCategoryID { get; set; }
         public string? ContactCategoryName { get; set; }
