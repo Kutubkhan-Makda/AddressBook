@@ -18,10 +18,10 @@ namespace Multi_AddressBook.Areas.LOC_Country.Controllers
             Configuration = _configuration;
         }
 
-        LOC_DAL dalLOC = new LOC_DAL();
         #region SelectAll
         public ActionResult Index()
         {
+            LOC_DAL dalLOC = new LOC_DAL();
             DataTable dt = dalLOC.PR_LOC_Country_SelectAll();
             return View("LOC_CountryList", dt);
         }
@@ -30,6 +30,7 @@ namespace Multi_AddressBook.Areas.LOC_Country.Controllers
         #region Delete
         public ActionResult Delete(int CountryID)
         {
+            LOC_DAL dalLOC = new LOC_DAL();
             if (Convert.ToBoolean(dalLOC.PR_LOC_Country_Delete(CountryID)))
                 return RedirectToAction("Index");
             return View("Index");
@@ -39,6 +40,7 @@ namespace Multi_AddressBook.Areas.LOC_Country.Controllers
 
         public IActionResult Add(int? CountryID)
         {
+            LOC_DAL dalLOC = new LOC_DAL();
             if (CountryID != null)
             {
                 DataTable dt = dalLOC.PR_LOC_Country_SelectByPK(CountryID);
