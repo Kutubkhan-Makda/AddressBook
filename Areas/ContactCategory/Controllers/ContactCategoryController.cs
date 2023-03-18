@@ -25,18 +25,10 @@ namespace Multi_AddressBook.Areas.ContactCategory.Controllers
         }
         public ActionResult Delete(int ContactCategoryID)
         {
-            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-            SqlConnection conn = new SqlConnection(str);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PR_ContactCategory_DeleteByPK";
-            cmd.Parameters.AddWithValue("@ContactCategoryID", ContactCategoryID);
-            DataTable dt = new DataTable();
-            cmd.ExecuteNonQuery();
-            conn.Close();
-
-            return RedirectToAction("Index");
+            MAS_DAL dalCON = new MAS_DAL();
+            if (Convert.ToBoolean(dalCON.PR_ContactCategory_Delete(ContactCategoryID)))
+                return RedirectToAction("Index");
+            return View("Index");
         }
         public IActionResult Add(int? ContactCategoryID)
         {

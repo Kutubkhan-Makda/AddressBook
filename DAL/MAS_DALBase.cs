@@ -72,6 +72,22 @@ namespace Multi_AddressBook.DAL
             }
         }
 
+        public bool? PR_ContactCategory_Delete(int? ContactCategoryID)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_ContactCategory_DeleteByPK");
+                sqlDB.AddInParameter(dbCMD, "ContactCategoryID", SqlDbType.Int, ContactCategoryID);
+                int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
+                return (vReturnValue == -1 ? false : true);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public DataTable PR_ContactCategory_SelectByDropdownList()
         {
             try
