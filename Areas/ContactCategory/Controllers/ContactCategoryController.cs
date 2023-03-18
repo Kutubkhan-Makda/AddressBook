@@ -32,18 +32,11 @@ namespace Multi_AddressBook.Areas.ContactCategory.Controllers
         }
         public IActionResult Add(int? ContactCategoryID)
         {
+            MAS_DAL dalCON = new MAS_DAL();
             if (ContactCategoryID != null)
             {
-                String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-                SqlConnection conn = new SqlConnection(str);
-                conn.Open();
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "PR_ContactCategory_SelectByPK";
-                cmd.Parameters.Add("@ContactCategoryID", SqlDbType.Int).Value = ContactCategoryID;
-                DataTable dt = new DataTable();
-                SqlDataReader objSDR = cmd.ExecuteReader();
-                dt.Load(objSDR);
+                DataTable dt = dalCON.PR_ContactCategory_SelectByPK(ContactCategoryID);
+
                 ContactCategoryModel modelContactCategory = new ContactCategoryModel();
                 foreach (DataRow dr in dt.Rows)
                 {
