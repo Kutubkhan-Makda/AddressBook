@@ -18,21 +18,23 @@ namespace Multi_AddressBook.Areas.LOC_City.Controllers
             Configuration = _configuration;
         }
 
-        LOC_DAL dalLOC = new LOC_DAL();
         public ActionResult Index()
         {
+            LOC_DAL dalLOC = new LOC_DAL();
             DataTable dt = dalLOC.PR_LOC_City_SelectAll();
             return View("LOC_CityList", dt);
         }
 
         public ActionResult Delete(int CityID)
         {
+            LOC_DAL dalLOC = new LOC_DAL();
             if (Convert.ToBoolean(dalLOC.PR_LOC_City_Delete(CityID)))
                 return RedirectToAction("Index");
             return View("Index");
         }
         public IActionResult Add(int? CityID)
         {
+            LOC_DAL dalLOC = new LOC_DAL();
             DataTable dtDropdown = dalLOC.PR_LOC_State_SelectByDropdownList();
             
             List<Areas.Models.LOC_CountryDropDownModel> listCountry = new List<Areas.Models.LOC_CountryDropDownModel>();
