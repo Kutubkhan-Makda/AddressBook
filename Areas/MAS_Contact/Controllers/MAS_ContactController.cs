@@ -19,11 +19,9 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
             Configuration = _configuration;
         }
 
-        MAS_DAL dalCON = new MAS_DAL();
-        LOC_DAL dalLOC = new LOC_DAL();
-
         public ActionResult Index()
         {
+            MAS_DAL dalCON = new MAS_DAL();
             DataTable dt = dalCON.PR_MAS_Contact_SelectAll();
             return View("MAS_ContactList",dt);
         }
@@ -31,6 +29,7 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
 
         public ActionResult Delete(int ContactID)
         {
+            MAS_DAL dalCON = new MAS_DAL();
             if (Convert.ToBoolean(dalCON.PR_MAS_Contact_Delete(ContactID)))
                 return RedirectToAction("Index");
             return View("Index");
@@ -39,6 +38,8 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
 
         public IActionResult Add(int? ContactID)
         {
+            LOC_DAL dalLOC = new LOC_DAL();
+            MAS_DAL dalCON = new MAS_DAL();
             DataTable dt7 = dalCON.PR_ContactCategory_SelectByDropdownList();
             
             List<Areas.Models.ContactCategoryDropDownModel> list7 = new List<Areas.Models.ContactCategoryDropDownModel>();
