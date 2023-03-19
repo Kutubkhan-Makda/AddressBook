@@ -75,7 +75,7 @@ namespace Multi_AddressBook.Areas.LOC_Country.Controllers
                 }
             }
             
-            return View("LOC_CountryAddEdit");
+            return RedirectToAction("Index");
         }
         public ActionResult Search(int CountryID)
         {
