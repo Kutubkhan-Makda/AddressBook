@@ -93,6 +93,7 @@ namespace Multi_AddressBook.DAL
                 SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_Country_DeleteByPK");
                 sqlDB.AddInParameter(dbCMD, "CountryID", SqlDbType.Int, CountryID);
+                sqlDB.AddInParameter(dbCMD, "UserID", SqlDbType.Int, @CV.UserID());
                 int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
                 return (vReturnValue == -1 ? false : true);
             }
@@ -108,6 +109,7 @@ namespace Multi_AddressBook.DAL
                 SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_State_DeleteByPK");
                 sqlDB.AddInParameter(dbCMD, "StateID", SqlDbType.Int, StateID);
+                sqlDB.AddInParameter(dbCMD, "UserID", SqlDbType.Int, @CV.UserID());
                 int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
                 return (vReturnValue == -1 ? false : true);
             }
@@ -124,6 +126,7 @@ namespace Multi_AddressBook.DAL
                 SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_City_DeleteByPK");
                 sqlDB.AddInParameter(dbCMD, "CityID", SqlDbType.Int, CityID);
+                sqlDB.AddInParameter(dbCMD, "UserID", SqlDbType.Int, @CV.UserID());
                 int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
                 return (vReturnValue == -1 ? false : true);
             }
