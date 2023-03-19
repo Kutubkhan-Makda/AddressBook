@@ -61,27 +61,9 @@ namespace Multi_AddressBook.Areas.LOC_Country.Controllers
         [HttpPost]
         public IActionResult Save(LOC_CountryModel modelLoc_Country)
         {
-            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
-            SqlConnection conn = new SqlConnection(connectionString);
-            conn.Open();
-            SqlCommand objCmd = conn.CreateCommand();
-            objCmd.CommandType = CommandType.StoredProcedure;
-            if(modelLoc_Country.CountryID == null)
-            {
-                objCmd.CommandText = "PR_LOC_Country_Insert";
-                objCmd.Parameters.Add("@CreationDate",SqlDbType.Date).Value = DBNull.Value;
-            }
-            else
-            {
-                objCmd.CommandText = "PR_LOC_Country_UpdateByPK";
-                objCmd.Parameters.Add("@CountryID",SqlDbType.Int).Value = modelLoc_Country.CountryID;
-            }
-            objCmd.Parameters.Add("@CountryName",SqlDbType.VarChar).Value = modelLoc_Country.CountryName;
-            objCmd.Parameters.Add("@CountryCode",SqlDbType.VarChar).Value = modelLoc_Country.CountryCode;
-            objCmd.Parameters.Add("@ModificationDate",SqlDbType.Date).Value = DBNull.Value;
-            
+            LOC_DAL dalLOC = new LOC_DAL();
              
-            if(Convert.ToBoolean(objCmd.ExecuteNonQuery()))
+            if(Convert.ToBoolean(dalLOC.PR_LOC_Save_Country(modelLoc_Country.CountryID,modelLoc_Country.CountryName,modelLoc_Country.CountryCode)))
             {
                 if(modelLoc_Country.CountryID == null)
                 {
@@ -92,7 +74,7 @@ namespace Multi_AddressBook.Areas.LOC_Country.Controllers
                     TempData["CountryInsetMsg"] = "Record Updated Successfully";
                 }
             }
-            conn.Close();
+            //conn.Close();
             
             return View("LOC_CountryAddEdit");
         }
