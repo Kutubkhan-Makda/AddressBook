@@ -13,7 +13,7 @@ namespace Multi_AddressBook.BAL
             }
 
             var rd = filterContext.RouteData;
-            string currentArea = rd.Values["Area"].ToString();
+            //string currentArea = rd.Values["Area"].ToString();
             string currentAction = rd.Values["action"].ToString();
             string currentController = rd.Values["controller"].ToString();
         }

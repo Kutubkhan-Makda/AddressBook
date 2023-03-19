@@ -182,7 +182,7 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
         [HttpPost]
         public IActionResult Save(MAS_ContactModel modelMAS_Contact)
         {
-            LOC_DAL dalLOC = new LOC_DAL();
+            MAS_DAL dalCON = new MAS_DAL();
             if (modelMAS_Contact.PhotoPath != null)
             {
                 string FilePath = "wwwroot\\Upload";
@@ -202,41 +202,41 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
 
             }
 
-            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
-            SqlConnection conn = new SqlConnection(connectionString);
-            conn.Open();
-            SqlCommand objCmd = conn.CreateCommand();
-            objCmd.CommandType = CommandType.StoredProcedure;
-            if(modelMAS_Contact.ContactID == null)
-            {
-                objCmd.CommandText = "PR_MAS_Contact_Insert";
-                objCmd.Parameters.Add("@CreationDate",SqlDbType.Date).Value = DBNull.Value;
-            }
-            else
-            {
-                objCmd.CommandText = "PR_MAS_Contact_UpdateByPK";
-                objCmd.Parameters.Add("@ContactID",SqlDbType.Int).Value = modelMAS_Contact.ContactID;
-            }
-            objCmd.Parameters.Add("@ContactName",SqlDbType.VarChar).Value = modelMAS_Contact.ContactName;
-            objCmd.Parameters.Add("@ContactAddress",SqlDbType.VarChar).Value = modelMAS_Contact.ContactAddress;
-            objCmd.Parameters.Add("@ContactCategoryID",SqlDbType.Int).Value = modelMAS_Contact.ContactCategoryID;
-            objCmd.Parameters.Add("@CountryID",SqlDbType.Int).Value = modelMAS_Contact.CountryID;
-            objCmd.Parameters.Add("@StateID",SqlDbType.Int).Value = modelMAS_Contact.StateID;
-            objCmd.Parameters.Add("@CityID",SqlDbType.Int).Value = modelMAS_Contact.CityID;
-            objCmd.Parameters.Add("@ContactPincode",SqlDbType.VarChar).Value = modelMAS_Contact.ContactPincode;
-            objCmd.Parameters.Add("@ContactMobile",SqlDbType.VarChar).Value = modelMAS_Contact.ContactMobile;
-            objCmd.Parameters.Add("@ContactEmail",SqlDbType.VarChar).Value = modelMAS_Contact.ContactEmail;
-            objCmd.Parameters.Add("@ContactDOB",SqlDbType.Date).Value = modelMAS_Contact.ContactDOB;
-            objCmd.Parameters.Add("@ContactLinkedIN",SqlDbType.VarChar).Value = modelMAS_Contact.ContactLinkedIN;
-            objCmd.Parameters.Add("@ContactGender",SqlDbType.VarChar).Value = modelMAS_Contact.ContactGender;
-            objCmd.Parameters.Add("@ContactTypeOfProfession",SqlDbType.VarChar).Value = modelMAS_Contact.ContactTypeOfProfession;
-            objCmd.Parameters.Add("@ContactCompanyName",SqlDbType.VarChar).Value = modelMAS_Contact.ContactCompanyName;
-            objCmd.Parameters.Add("@ContactDesignation",SqlDbType.VarChar).Value = modelMAS_Contact.ContactDesignation;
-            objCmd.Parameters.Add("@ModificationDate",SqlDbType.Date).Value = DBNull.Value;
-            objCmd.Parameters.Add("@PhotoPath", SqlDbType.NVarChar).Value = modelMAS_Contact.PhotoPath;
+            //string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
+            //SqlConnection conn = new SqlConnection(connectionString);
+            //conn.Open();
+            //SqlCommand objCmd = conn.CreateCommand();
+            //objCmd.CommandType = CommandType.StoredProcedure;
+            //if(modelMAS_Contact.ContactID == null)
+            //{
+            //    objCmd.CommandText = "PR_MAS_Contact_Insert";
+            //    objCmd.Parameters.Add("@CreationDate",SqlDbType.Date).Value = DBNull.Value;
+            //}
+            //else
+            //{
+            //    objCmd.CommandText = "PR_MAS_Contact_UpdateByPK";
+            //    objCmd.Parameters.Add("@ContactID",SqlDbType.Int).Value = modelMAS_Contact.ContactID;
+            //}
+            //objCmd.Parameters.Add("@ContactName",SqlDbType.VarChar).Value = modelMAS_Contact.ContactName;
+            //objCmd.Parameters.Add("@ContactAddress",SqlDbType.VarChar).Value = modelMAS_Contact.ContactAddress;
+            //objCmd.Parameters.Add("@ContactCategoryID",SqlDbType.Int).Value = modelMAS_Contact.ContactCategoryID;
+            //objCmd.Parameters.Add("@CountryID",SqlDbType.Int).Value = modelMAS_Contact.CountryID;
+            //objCmd.Parameters.Add("@StateID",SqlDbType.Int).Value = modelMAS_Contact.StateID;
+            //objCmd.Parameters.Add("@CityID",SqlDbType.Int).Value = modelMAS_Contact.CityID;
+            //objCmd.Parameters.Add("@ContactPincode",SqlDbType.VarChar).Value = modelMAS_Contact.ContactPincode;
+            //objCmd.Parameters.Add("@ContactMobile",SqlDbType.VarChar).Value = modelMAS_Contact.ContactMobile;
+            //objCmd.Parameters.Add("@ContactEmail",SqlDbType.VarChar).Value = modelMAS_Contact.ContactEmail;
+            //objCmd.Parameters.Add("@ContactDOB",SqlDbType.Date).Value = modelMAS_Contact.ContactDOB;
+            //objCmd.Parameters.Add("@ContactLinkedIN",SqlDbType.VarChar).Value = modelMAS_Contact.ContactLinkedIN;
+            //objCmd.Parameters.Add("@ContactGender",SqlDbType.VarChar).Value = modelMAS_Contact.ContactGender;
+            //objCmd.Parameters.Add("@ContactTypeOfProfession",SqlDbType.VarChar).Value = modelMAS_Contact.ContactTypeOfProfession;
+            //objCmd.Parameters.Add("@ContactCompanyName",SqlDbType.VarChar).Value = modelMAS_Contact.ContactCompanyName;
+            //objCmd.Parameters.Add("@ContactDesignation",SqlDbType.VarChar).Value = modelMAS_Contact.ContactDesignation;
+            //objCmd.Parameters.Add("@ModificationDate",SqlDbType.Date).Value = DBNull.Value;
+            //objCmd.Parameters.Add("@PhotoPath", SqlDbType.NVarChar).Value = modelMAS_Contact.PhotoPath;
             
              
-            if(Convert.ToBoolean(objCmd.ExecuteNonQuery()))
+            if(Convert.ToBoolean(dalCON.PR_MAS_Save_Contact(modelMAS_Contact.ContactID,modelMAS_Contact.CityID,modelMAS_Contact.StateID,modelMAS_Contact.CountryID,modelMAS_Contact.ContactName,modelMAS_Contact.ContactAddress,modelMAS_Contact.ContactCategoryID,modelMAS_Contact.ContactPincode,modelMAS_Contact.ContactMobile,modelMAS_Contact.ContactEmail,modelMAS_Contact.ContactDOB,modelMAS_Contact.ContactLinkedIN,modelMAS_Contact.ContactGender,modelMAS_Contact.ContactTypeOfProfession,modelMAS_Contact.ContactCompanyName,modelMAS_Contact.ContactDesignation,modelMAS_Contact.PhotoPath)))
             {
                 if(modelMAS_Contact.ContactID == null)
                 {
@@ -247,7 +247,6 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
                     TempData["ContactInsertMsg"] = "Record Updated Successfully";
                 }
             }
-            conn.Close();
             
             return RedirectToAction("Index");
         }
