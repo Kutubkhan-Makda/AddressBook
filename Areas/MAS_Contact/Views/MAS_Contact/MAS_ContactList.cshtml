@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Country List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -8,7 +7,13 @@
         width: 60px;
         height: 60px;
     }
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 </style>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 @using System.Data
 @model DataTable
 
@@ -25,7 +30,7 @@
     </ul>
 </div>
 <!-- BEGIN EXAMPLE TABLE PORTLET-->
-<div class="portlet light bordered margin-top-10" style="width: 300%;">
+<div class="portlet light bordered margin-top-10">
     <div class="portlet-title">
         <div class="caption font-dark">
             <i class="icon-settings font-dark"></i>
@@ -43,6 +48,8 @@
                 <label>Search Any&nbsp;<input type="text" class="form-control input-sm input-small input-inline" id="sample_1"></label>
             </div>
         </div>
+
+        
         <table class="table table-striped table-bordered table-hover table-header-fixed dataTable">
             <thead>
                 <tr class="">
@@ -102,9 +109,12 @@
                 }
             </tbody>
         </table>
+        
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 @section Scripts
     {
     <script>
@@ -124,5 +134,10 @@
                 return false;
             }
         }
+        $(document).ready(function () {
+            $('#example').DataTable({
+                scrollX: true,
+            });
+        });
     </script>
 }
