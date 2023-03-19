@@ -20,6 +20,6 @@ namespace Multi_AddressBook.Areas.Models
     public class LOC_StateDropDownModel
     {
         public int StateID { get; set; }
-        public string? StateName { get; set; }
+        public string StateName { get; set; }
     }
 }

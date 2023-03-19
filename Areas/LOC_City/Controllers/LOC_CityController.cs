@@ -87,7 +87,7 @@ namespace Multi_AddressBook.Areas.LOC_City.Controllers
                         vl.StateName = (Convert.ToString(dr["StateName"]));
                         listState1.Add(vl);
                     }
-                    ViewBag.StateList = listState;
+                    ViewBag.StateList = listState1;
 
                     return View("LOC_CityAddEdit", modelLOC_City);
                 }
