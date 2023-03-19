@@ -81,27 +81,28 @@ namespace Multi_AddressBook.Areas.LOC_State.Controllers
         [HttpPost]
         public IActionResult Save(LOC_StateModel modelLoc_State)
         {
-            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
-            SqlConnection conn = new SqlConnection(connectionString);
-            conn.Open();
-            SqlCommand objCmd = conn.CreateCommand();
-            objCmd.CommandType = CommandType.StoredProcedure;
-            if(modelLoc_State.StateID == null)
-            {
-                objCmd.CommandText = "PR_LOC_State_Insert";
-                objCmd.Parameters.Add("@CreationDate",SqlDbType.Date).Value = DBNull.Value;
-            }
-            else
-            {
-                objCmd.CommandText = "PR_LOC_State_UpdateByPK";
-                objCmd.Parameters.Add("@StateID",SqlDbType.Int).Value = modelLoc_State.StateID;
-            }
-            objCmd.Parameters.Add("@StateName",SqlDbType.VarChar).Value = modelLoc_State.StateName;
-            objCmd.Parameters.Add("@StateCode",SqlDbType.VarChar).Value = modelLoc_State.StateCode;
-            objCmd.Parameters.Add("@CountryID",SqlDbType.Int).Value = modelLoc_State.CountryID;
-            objCmd.Parameters.Add("@ModificationDate",SqlDbType.Date).Value = DBNull.Value;
+            LOC_DAL dalLOC = new LOC_DAL();
+            //string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
+            //SqlConnection conn = new SqlConnection(connectionString);
+            //conn.Open();
+            //SqlCommand objCmd = conn.CreateCommand();
+            //objCmd.CommandType = CommandType.StoredProcedure;
+            //if(modelLoc_State.StateID == null)
+            //{
+            //    objCmd.CommandText = "PR_LOC_State_Insert";
+            //    objCmd.Parameters.Add("@CreationDate",SqlDbType.Date).Value = DBNull.Value;
+            //}
+            //else
+            //{
+            //    objCmd.CommandText = "PR_LOC_State_UpdateByPK";
+            //    objCmd.Parameters.Add("@StateID",SqlDbType.Int).Value = modelLoc_State.StateID;
+            //}
+            //objCmd.Parameters.Add("@StateName",SqlDbType.VarChar).Value = modelLoc_State.StateName;
+            //objCmd.Parameters.Add("@StateCode",SqlDbType.VarChar).Value = modelLoc_State.StateCode;
+            //objCmd.Parameters.Add("@CountryID",SqlDbType.Int).Value = modelLoc_State.CountryID;
+            //objCmd.Parameters.Add("@ModificationDate",SqlDbType.Date).Value = DBNull.Value;
              
-            if(Convert.ToBoolean(objCmd.ExecuteNonQuery()))
+            if(Convert.ToBoolean(dalLOC.PR_LOC_Save_State(modelLoc_State.StateID,modelLoc_State.CountryID,modelLoc_State.StateName,modelLoc_State.StateCode)))
             {
                 if(modelLoc_State.StateID == null)
                 {
@@ -112,7 +113,6 @@ namespace Multi_AddressBook.Areas.LOC_State.Controllers
                     TempData["StateInsetMsg"] = "Record Updated Successfully";
                 }
             }
-            conn.Close();
             
             return RedirectToAction("Index");
         }
