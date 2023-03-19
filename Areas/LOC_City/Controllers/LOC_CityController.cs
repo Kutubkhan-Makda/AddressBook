@@ -100,28 +100,28 @@ namespace Multi_AddressBook.Areas.LOC_City.Controllers
         public IActionResult Save(LOC_CityModel modelLoc_City)
         {
             LOC_DAL dalLOC = new LOC_DAL();
-            string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
-            SqlConnection conn = new SqlConnection(connectionString);
-            conn.Open();
-            SqlCommand objCmd = conn.CreateCommand();
-            objCmd.CommandType = CommandType.StoredProcedure;
-            if(modelLoc_City.CityID == null)
-            {
-                objCmd.CommandText = "PR_LOC_City_Insert";
-                objCmd.Parameters.Add("@CreationDate",SqlDbType.Date).Value = DBNull.Value;
-            }
-            else
-            {
-                objCmd.CommandText = "PR_LOC_City_UpdateByPK";
-                objCmd.Parameters.Add("@CityID",SqlDbType.Int).Value = modelLoc_City.CityID;
-            }
-            objCmd.Parameters.Add("@CityName",SqlDbType.VarChar).Value = modelLoc_City.CityName;
-            objCmd.Parameters.Add("@CityCode",SqlDbType.VarChar).Value = modelLoc_City.CityCode;
-            objCmd.Parameters.Add("@StateID",SqlDbType.Int).Value = modelLoc_City.StateID;
-            objCmd.Parameters.Add("@CountryID",SqlDbType.Int).Value = modelLoc_City.CountryID;
-            objCmd.Parameters.Add("@ModificationDate",SqlDbType.Date).Value = DBNull.Value;
+            //string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
+            //SqlConnection conn = new SqlConnection(connectionString);
+            //conn.Open();
+            //SqlCommand objCmd = conn.CreateCommand();
+            //objCmd.CommandType = CommandType.StoredProcedure;
+            //if(modelLoc_City.CityID == null)
+            //{
+            //    objCmd.CommandText = "PR_LOC_City_Insert";
+            //    objCmd.Parameters.Add("@CreationDate",SqlDbType.Date).Value = DBNull.Value;
+            //}
+            //else
+            //{
+            //    objCmd.CommandText = "PR_LOC_City_UpdateByPK";
+            //    objCmd.Parameters.Add("@CityID",SqlDbType.Int).Value = modelLoc_City.CityID;
+            //}
+            //objCmd.Parameters.Add("@CityName",SqlDbType.VarChar).Value = modelLoc_City.CityName;
+            //objCmd.Parameters.Add("@CityCode",SqlDbType.VarChar).Value = modelLoc_City.CityCode;
+            //objCmd.Parameters.Add("@StateID",SqlDbType.Int).Value = modelLoc_City.StateID;
+            //objCmd.Parameters.Add("@CountryID",SqlDbType.Int).Value = modelLoc_City.CountryID;
+            //objCmd.Parameters.Add("@ModificationDate",SqlDbType.Date).Value = DBNull.Value;
              
-            if(Convert.ToBoolean(objCmd.ExecuteNonQuery()))
+            if(Convert.ToBoolean(dalLOC.PR_LOC_Save_City(modelLoc_City.CityID,modelLoc_City.StateID,modelLoc_City.CountryID,modelLoc_City.CityName,modelLoc_City.CityCode)))
             {
                 if(modelLoc_City.CityID == null)
                 {
@@ -132,7 +132,6 @@ namespace Multi_AddressBook.Areas.LOC_City.Controllers
                     TempData["CityInsetMsg"] = "Record Updated Successfully";
                 }
             }
-            conn.Close();
             
             return RedirectToAction("Index");
         }

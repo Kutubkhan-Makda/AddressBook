@@ -40,10 +40,10 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
         {
             LOC_DAL dalLOC = new LOC_DAL();
             MAS_DAL dalCON = new MAS_DAL();
-            DataTable dt7 = dalCON.PR_ContactCategory_SelectByDropdownList();
+            DataTable dtDropdownContactCategory = dalCON.PR_ContactCategory_SelectByDropdownList();
             
             List<Areas.Models.ContactCategoryDropDownModel> list7 = new List<Areas.Models.ContactCategoryDropDownModel>();
-            foreach (DataRow dr in dt7.Rows)
+            foreach (DataRow dr in dtDropdownContactCategory.Rows)
             {
                 Areas.Models.ContactCategoryDropDownModel modelContactCategory = new Areas.Models.ContactCategoryDropDownModel();
                 modelContactCategory.ContactCategoryID = (Convert.ToInt32(dr["ContactCategoryID"]));
@@ -95,6 +95,7 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
                     modelMAS_Contact.ContactDesignation = dr["ContactDesignation"].ToString();
                     modelMAS_Contact.ModificationDate = Convert.ToDateTime(dr["ModificationDate"]);
                     modelMAS_Contact.ContactCategoryID = Convert.ToInt32(dr["ContactCategoryID"]);
+                    modelMAS_Contact.PhotoPath = dr["PhotoPath"].ToString();
                 }
 
                 //String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
@@ -182,7 +183,7 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
         public IActionResult Save(MAS_ContactModel modelMAS_Contact)
         {
             LOC_DAL dalLOC = new LOC_DAL();
-            if (modelMAS_Contact.File != null)
+            if (modelMAS_Contact.PhotoPath != null)
             {
                 string FilePath = "wwwroot\\Upload";
                 string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
@@ -239,16 +240,16 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
             {
                 if(modelMAS_Contact.ContactID == null)
                 {
-                    TempData["ContactInsetMsg"] = "Record Inserted Successfully";
+                    TempData["ContactInsertMsg"] = "Record Inserted Successfully";
                 }
                 else
                 {
-                    TempData["ContactInsetMsg"] = "Record Updated Successfully";
+                    TempData["ContactInsertMsg"] = "Record Updated Successfully";
                 }
             }
             conn.Close();
             
-            return View("MAS_ContactAddEdit");
+            return RedirectToAction("Index");
         }
 
         public ActionResult DropDownByState(int StateID)

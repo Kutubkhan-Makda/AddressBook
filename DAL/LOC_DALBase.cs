@@ -331,5 +331,37 @@ namespace Multi_AddressBook.DAL
                 return null;
             }
         }
+
+        public bool? PR_LOC_Save_City(int? CityID,int? StateID,int? CountryID,string? CityName,string? CityCode)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
+                DbCommand dbCMD;
+                if(CityID == null)
+                {
+                    dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_City_Insert");
+                    sqlDB.AddInParameter(dbCMD, "@CreationDate",SqlDbType.Date, DBNull.Value);
+                }
+                else
+                {
+                    dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_City_UpdateByPK");
+                    sqlDB.AddInParameter(dbCMD, "@CityID",SqlDbType.Int, CityID);
+                }
+                sqlDB.AddInParameter(dbCMD, "@CityName",SqlDbType.VarChar, CityName);
+                sqlDB.AddInParameter(dbCMD, "@CityCode",SqlDbType.VarChar, CityCode);
+                sqlDB.AddInParameter(dbCMD, "@CountryID",SqlDbType.Int, CountryID);
+                sqlDB.AddInParameter(dbCMD, "@StateID",SqlDbType.Int, StateID);
+                sqlDB.AddInParameter(dbCMD, "@ModificationDate",SqlDbType.Date, DBNull.Value);
+                
+
+                int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
+                return (vReturnValue == -1 ? false : true);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }
