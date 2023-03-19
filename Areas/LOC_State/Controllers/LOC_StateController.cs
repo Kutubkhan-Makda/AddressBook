@@ -37,7 +37,7 @@ namespace Multi_AddressBook.Areas.LOC_State.Controllers
         public IActionResult Add(int? StateID)
          {
             LOC_DAL dalLOC = new LOC_DAL();
-            DataTable dt1 = dalLOC.PR_LOC_State_SelectByDropdownList();
+            DataTable dt1 = dalLOC.PR_LOC_Country_SelectByDropdownList();
             
             List<Areas.Models.LOC_CountryDropDownModel> list=new List<Areas.Models.LOC_CountryDropDownModel>();
             foreach(DataRow dr in dt1.Rows)

@@ -52,7 +52,7 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
             }
             ViewBag.ContactCategoryList = list7;
 
-            DataTable dt2 = dalLOC.PR_LOC_State_SelectByDropdownList();
+            DataTable dt2 = dalLOC.PR_LOC_Country_SelectByDropdownList();
             
             List<Areas.Models.LOC_CountryDropDownModel> listCountry = new List<Areas.Models.LOC_CountryDropDownModel>();
             foreach (DataRow dr in dt2.Rows)

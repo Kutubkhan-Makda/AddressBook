@@ -35,10 +35,10 @@ namespace Multi_AddressBook.Areas.LOC_City.Controllers
         public IActionResult Add(int? CityID)
         {
             LOC_DAL dalLOC = new LOC_DAL();
-            DataTable dtDropdown = dalLOC.PR_LOC_State_SelectByDropdownList();
+            DataTable dtDropdownCountry = dalLOC.PR_LOC_Country_SelectByDropdownList();
             
             List<Areas.Models.LOC_CountryDropDownModel> listCountry = new List<Areas.Models.LOC_CountryDropDownModel>();
-            foreach (DataRow dr in dtDropdown.Rows)
+            foreach (DataRow dr in dtDropdownCountry.Rows)
             {
                 Areas.Models.LOC_CountryDropDownModel modelLOC_CountryDropDown = new Areas.Models.LOC_CountryDropDownModel();
                 modelLOC_CountryDropDown.CountryID = (Convert.ToInt32(dr["CountryID"]));
@@ -68,19 +68,21 @@ namespace Multi_AddressBook.Areas.LOC_City.Controllers
                         modelLOC_City.CountryID = (Convert.ToInt32(dr["CountryID"]));
                     }
 
-                    String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
-                    SqlConnection conn1 = new SqlConnection(connectionstr);
-                    conn1.Open();
-                    SqlCommand cmd1 = conn1.CreateCommand();
-                    cmd1.CommandType = CommandType.StoredProcedure;
-                    cmd1.CommandText = "PR_LOC_State_SelectForDropDownByCountryID";
-                    cmd1.Parameters.AddWithValue("@CountryID", modelLOC_City.CountryID);
-                    DataTable dt1 = new DataTable();
-                    SqlDataReader objSDR1 = cmd1.ExecuteReader();
-                    dt1.Load(objSDR1);
+                    //String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
+                    //SqlConnection conn1 = new SqlConnection(connectionstr);
+                    //conn1.Open();
+                    //SqlCommand cmd1 = conn1.CreateCommand();
+                    //cmd1.CommandType = CommandType.StoredProcedure;
+                    //cmd1.CommandText = "PR_LOC_State_SelectForDropDownByCountryID";
+                    //cmd1.Parameters.AddWithValue("@CountryID", modelLOC_City.CountryID);
+                    //DataTable dt1 = new DataTable();
+                    //SqlDataReader objSDR1 = cmd1.ExecuteReader();
+                    //dt1.Load(objSDR1);
+
+                    DataTable dtDropdownState = dalLOC.PR_LOC_State_SelectByDropdownList(modelLOC_City.CountryID);
 
                     List<Areas.Models.LOC_StateDropDownModel> listState1 = new List<Areas.Models.LOC_StateDropDownModel>();
-                    foreach (DataRow dr in dt1.Rows)
+                    foreach (DataRow dr in dtDropdownState.Rows)
                     {
                         Areas.Models.LOC_StateDropDownModel vl = new Areas.Models.LOC_StateDropDownModel();
                         vl.StateID = (Convert.ToInt32(dr["StateID"]));
@@ -97,6 +99,7 @@ namespace Multi_AddressBook.Areas.LOC_City.Controllers
         [HttpPost]
         public IActionResult Save(LOC_CityModel modelLoc_City)
         {
+            LOC_DAL dalLOC = new LOC_DAL();
             string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
@@ -135,20 +138,23 @@ namespace Multi_AddressBook.Areas.LOC_City.Controllers
         }
         public ActionResult DropDownByCountry(int CountryID)
         {
-            String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
+            LOC_DAL dalLOC = new LOC_DAL();
+            //String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
+           //
+            //SqlConnection conn1 = new SqlConnection(connectionstr);
+            //conn1.Open();
+            //SqlCommand cmd1 = conn1.CreateCommand();
+            //cmd1.CommandType = CommandType.StoredProcedure;
+            //cmd1.CommandText = "PR_LOC_State_SelectForDropDownByCountryID";
+            //cmd1.Parameters.AddWithValue("@CountryID", CountryID);
+            //DataTable dt1 = new DataTable();
+            //SqlDataReader objSDR1 = cmd1.ExecuteReader();
+            //dt1.Load(objSDR1);
            
-            SqlConnection conn1 = new SqlConnection(connectionstr);
-            conn1.Open();
-            SqlCommand cmd1 = conn1.CreateCommand();
-            cmd1.CommandType = CommandType.StoredProcedure;
-            cmd1.CommandText = "PR_LOC_State_SelectForDropDownByCountryID";
-            cmd1.Parameters.AddWithValue("@CountryID", CountryID);
-            DataTable dt1 = new DataTable();
-            SqlDataReader objSDR1 = cmd1.ExecuteReader();
-            dt1.Load(objSDR1);
-           
+           DataTable dtDropdownState = dalLOC.PR_LOC_State_SelectByDropdownList(CountryID);
+
             List<Models.LOC_StateDropDownModel> listState = new List<Models.LOC_StateDropDownModel>();
-            foreach (DataRow dr in dt1.Rows)
+            foreach (DataRow dr in dtDropdownState.Rows)
             {
                 Models.LOC_StateDropDownModel vl = new Models.LOC_StateDropDownModel();
                 vl.StateID = (Convert.ToInt32(dr["StateID"]));
