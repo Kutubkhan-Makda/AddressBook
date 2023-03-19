@@ -147,16 +147,16 @@ namespace Multi_AddressBook.Areas.LOC_City.Controllers
             SqlDataReader objSDR1 = cmd1.ExecuteReader();
             dt1.Load(objSDR1);
            
-            List<Models.LOC_StateDropDownModel> list = new List<Models.LOC_StateDropDownModel>();
+            List<Models.LOC_StateDropDownModel> listState = new List<Models.LOC_StateDropDownModel>();
             foreach (DataRow dr in dt1.Rows)
             {
                 Models.LOC_StateDropDownModel vl = new Models.LOC_StateDropDownModel();
                 vl.StateID = (Convert.ToInt32(dr["StateID"]));
                 vl.StateName = (Convert.ToString(dr["StateName"]));
-                list.Add(vl);
+                listState.Add(vl);
             }
            
-            var vmodel = list;
+            var vmodel = listState;
             return Json(vmodel);
         }
         public ActionResult Search(int CityID)

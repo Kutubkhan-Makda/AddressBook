@@ -54,21 +54,21 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
 
             DataTable dt2 = dalLOC.PR_LOC_State_SelectByDropdownList();
             
-            List<Areas.Models.LOC_CountryDropDownModel> list1 = new List<Areas.Models.LOC_CountryDropDownModel>();
+            List<Areas.Models.LOC_CountryDropDownModel> listCountry = new List<Areas.Models.LOC_CountryDropDownModel>();
             foreach (DataRow dr in dt2.Rows)
             {
                 Areas.Models.LOC_CountryDropDownModel modelLOC_CountryDropDown = new Areas.Models.LOC_CountryDropDownModel();
                 modelLOC_CountryDropDown.CountryID = (Convert.ToInt32(dr["CountryID"]));
                 modelLOC_CountryDropDown.CountryName = (Convert.ToString(dr["CountryName"]));
-                list1.Add(modelLOC_CountryDropDown);
+                listCountry.Add(modelLOC_CountryDropDown);
             }
-            ViewBag.CountryList = list1;
+            ViewBag.CountryList = listCountry;
 
-            List<Areas.Models.LOC_StateDropDownModel> list4 = new List<Areas.Models.LOC_StateDropDownModel>();
-            ViewBag.StateList = list4;
+            List<Areas.Models.LOC_StateDropDownModel> listState = new List<Areas.Models.LOC_StateDropDownModel>();
+            ViewBag.StateList = listState;
 
-            List<Areas.Models.LOC_CityDropDownModel> list5 = new List<Areas.Models.LOC_CityDropDownModel>();
-            ViewBag.CityList = list5;
+            List<Areas.Models.LOC_CityDropDownModel> listCity = new List<Areas.Models.LOC_CityDropDownModel>();
+            ViewBag.CityList = listCity;
 
             
             if(ContactID!=null)
@@ -96,6 +96,49 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
                     modelMAS_Contact.ModificationDate = Convert.ToDateTime(dr["ModificationDate"]);
                     modelMAS_Contact.ContactCategoryID = Convert.ToInt32(dr["ContactCategoryID"]);
                 }
+
+                String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
+                SqlConnection conn1 = new SqlConnection(connectionstr);
+                conn1.Open();
+                SqlCommand cmd1 = conn1.CreateCommand();
+                cmd1.CommandType = CommandType.StoredProcedure;
+                cmd1.CommandText = "PR_LOC_State_SelectForDropDownByCountryID";
+                cmd1.Parameters.AddWithValue("@CountryID", modelMAS_Contact.CountryID);
+                DataTable dt1 = new DataTable();
+                SqlDataReader objSDR1 = cmd1.ExecuteReader();
+                dt1.Load(objSDR1);
+
+                List<Areas.Models.LOC_StateDropDownModel> listState1 = new List<Areas.Models.LOC_StateDropDownModel>();
+                foreach (DataRow dr in dt1.Rows)
+                {
+                    Areas.Models.LOC_StateDropDownModel vl = new Areas.Models.LOC_StateDropDownModel();
+                    vl.StateID = (Convert.ToInt32(dr["StateID"]));
+                    vl.StateName = (Convert.ToString(dr["StateName"]));
+                    listState1.Add(vl);
+                }
+                ViewBag.StateList = listState1;
+
+
+                SqlConnection conn2 = new SqlConnection(connectionstr);
+                conn2.Open();
+                SqlCommand cmd2 = conn2.CreateCommand();
+                cmd2.CommandType = CommandType.StoredProcedure;
+                cmd2.CommandText = "PR_LOC_City_SelectForDropDown";
+                cmd2.Parameters.AddWithValue("@StateID", modelMAS_Contact.StateID);
+                DataTable dt3 = new DataTable();
+                SqlDataReader objSDR2 = cmd2.ExecuteReader();
+                dt3.Load(objSDR2);
+
+                List<Models.LOC_CityDropDownModel> listCity1 = new List<Models.LOC_CityDropDownModel>();
+                foreach (DataRow dr in dt3.Rows)
+                {
+                    Models.LOC_CityDropDownModel vl = new Models.LOC_CityDropDownModel();
+                    vl.CityID = (Convert.ToInt32(dr["CityID"]));
+                    vl.CityName = (Convert.ToString(dr["CityName"]));
+                    listCity1.Add(vl);
+                }
+                ViewBag.CityList = listCity1;
+
                 return View("MAS_ContactAddEdit",modelMAS_Contact);
             }
             return View("MAS_ContactAddEdit");
@@ -115,16 +158,16 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
             SqlDataReader objSDR1 = cmd1.ExecuteReader();
             dt1.Load(objSDR1);
            
-            List<Models.LOC_StateDropDownModel> list = new List<Models.LOC_StateDropDownModel>();
+            List<Models.LOC_StateDropDownModel> listState = new List<Models.LOC_StateDropDownModel>();
             foreach (DataRow dr in dt1.Rows)
             {
                 Models.LOC_StateDropDownModel vl = new Models.LOC_StateDropDownModel();
                 vl.StateID = (Convert.ToInt32(dr["StateID"]));
                 vl.StateName = (Convert.ToString(dr["StateName"]));
-                list.Add(vl);
+                listState.Add(vl);
             }
            
-            var vmodel = list;
+            var vmodel = listState;
             return Json(vmodel);
         }
 
@@ -214,16 +257,16 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
             SqlDataReader objSDR1 = cmd1.ExecuteReader();
             dt1.Load(objSDR1);
            
-            List<Models.LOC_CityDropDownModel> list = new List<Models.LOC_CityDropDownModel>();
+            List<Models.LOC_CityDropDownModel> listCity = new List<Models.LOC_CityDropDownModel>();
             foreach (DataRow dr in dt1.Rows)
             {
                 Models.LOC_CityDropDownModel vl = new Models.LOC_CityDropDownModel();
                 vl.CityID = (Convert.ToInt32(dr["CityID"]));
                 vl.CityName = (Convert.ToString(dr["CityName"]));
-                list.Add(vl);
+                listCity.Add(vl);
             }
            
-            var vmodel = list;
+            var vmodel = listCity;
             return Json(vmodel);
         }
     }
