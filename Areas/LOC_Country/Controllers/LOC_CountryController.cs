@@ -74,7 +74,6 @@ namespace Multi_AddressBook.Areas.LOC_Country.Controllers
                     TempData["CountryInsetMsg"] = "Record Updated Successfully";
                 }
             }
-            //conn.Close();
             
             return View("LOC_CountryAddEdit");
         }
