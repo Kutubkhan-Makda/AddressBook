@@ -97,19 +97,21 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
                     modelMAS_Contact.ContactCategoryID = Convert.ToInt32(dr["ContactCategoryID"]);
                 }
 
-                String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
-                SqlConnection conn1 = new SqlConnection(connectionstr);
-                conn1.Open();
-                SqlCommand cmd1 = conn1.CreateCommand();
-                cmd1.CommandType = CommandType.StoredProcedure;
-                cmd1.CommandText = "PR_LOC_State_SelectForDropDownByCountryID";
-                cmd1.Parameters.AddWithValue("@CountryID", modelMAS_Contact.CountryID);
-                DataTable dt1 = new DataTable();
-                SqlDataReader objSDR1 = cmd1.ExecuteReader();
-                dt1.Load(objSDR1);
+                //String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
+                //SqlConnection conn1 = new SqlConnection(connectionstr);
+                //conn1.Open();
+                //SqlCommand cmd1 = conn1.CreateCommand();
+                //cmd1.CommandType = CommandType.StoredProcedure;
+                //cmd1.CommandText = "PR_LOC_State_SelectForDropDownByCountryID";
+                //cmd1.Parameters.AddWithValue("@CountryID", modelMAS_Contact.CountryID);
+                //DataTable dt1 = new DataTable();
+                //SqlDataReader objSDR1 = cmd1.ExecuteReader();
+                //dt1.Load(objSDR1);
+
+                DataTable dtDropdownState = dalLOC.PR_LOC_State_SelectByDropdownList(modelMAS_Contact.CountryID);
 
                 List<Areas.Models.LOC_StateDropDownModel> listState1 = new List<Areas.Models.LOC_StateDropDownModel>();
-                foreach (DataRow dr in dt1.Rows)
+                foreach (DataRow dr in dtDropdownState.Rows)
                 {
                     Areas.Models.LOC_StateDropDownModel vl = new Areas.Models.LOC_StateDropDownModel();
                     vl.StateID = (Convert.ToInt32(dr["StateID"]));
@@ -119,18 +121,20 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
                 ViewBag.StateList = listState1;
 
 
-                SqlConnection conn2 = new SqlConnection(connectionstr);
-                conn2.Open();
-                SqlCommand cmd2 = conn2.CreateCommand();
-                cmd2.CommandType = CommandType.StoredProcedure;
-                cmd2.CommandText = "PR_LOC_City_SelectForDropDown";
-                cmd2.Parameters.AddWithValue("@StateID", modelMAS_Contact.StateID);
-                DataTable dt3 = new DataTable();
-                SqlDataReader objSDR2 = cmd2.ExecuteReader();
-                dt3.Load(objSDR2);
+                //SqlConnection conn2 = new SqlConnection(connectionstr);
+                //conn2.Open();
+                //SqlCommand cmd2 = conn2.CreateCommand();
+                //cmd2.CommandType = CommandType.StoredProcedure;
+                //cmd2.CommandText = "PR_LOC_City_SelectForDropDown";
+                //cmd2.Parameters.AddWithValue("@StateID", modelMAS_Contact.StateID);
+                //DataTable dt3 = new DataTable();
+                //SqlDataReader objSDR2 = cmd2.ExecuteReader();
+                //dt3.Load(objSDR2);
+
+                DataTable dtDropdownCity = dalLOC.PR_LOC_City_SelectByDropdownList(modelMAS_Contact.StateID);
 
                 List<Models.LOC_CityDropDownModel> listCity1 = new List<Models.LOC_CityDropDownModel>();
-                foreach (DataRow dr in dt3.Rows)
+                foreach (DataRow dr in dtDropdownCity.Rows)
                 {
                     Models.LOC_CityDropDownModel vl = new Models.LOC_CityDropDownModel();
                     vl.CityID = (Convert.ToInt32(dr["CityID"]));
@@ -146,20 +150,23 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
 
         public ActionResult DropDownByCountry(int CountryID)
         {
-            String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
-           
-            SqlConnection conn1 = new SqlConnection(connectionstr);
-            conn1.Open();
-            SqlCommand cmd1 = conn1.CreateCommand();
-            cmd1.CommandType = CommandType.StoredProcedure;
-            cmd1.CommandText = "PR_LOC_State_SelectForDropDownByCountryID";
-            cmd1.Parameters.AddWithValue("@CountryID", CountryID);
-            DataTable dt1 = new DataTable();
-            SqlDataReader objSDR1 = cmd1.ExecuteReader();
-            dt1.Load(objSDR1);
+            LOC_DAL dalLOC = new LOC_DAL();
+            //String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
+           //
+            //SqlConnection conn1 = new SqlConnection(connectionstr);
+            //conn1.Open();
+            //SqlCommand cmd1 = conn1.CreateCommand();
+            //cmd1.CommandType = CommandType.StoredProcedure;
+            //cmd1.CommandText = "PR_LOC_State_SelectForDropDownByCountryID";
+            //cmd1.Parameters.AddWithValue("@CountryID", CountryID);
+            //DataTable dt1 = new DataTable();
+            //SqlDataReader objSDR1 = cmd1.ExecuteReader();
+            //dt1.Load(objSDR1);
+
+            DataTable dtDropdownState = dalLOC.PR_LOC_State_SelectByDropdownList(CountryID);
            
             List<Models.LOC_StateDropDownModel> listState = new List<Models.LOC_StateDropDownModel>();
-            foreach (DataRow dr in dt1.Rows)
+            foreach (DataRow dr in dtDropdownState.Rows)
             {
                 Models.LOC_StateDropDownModel vl = new Models.LOC_StateDropDownModel();
                 vl.StateID = (Convert.ToInt32(dr["StateID"]));
@@ -174,6 +181,7 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
         [HttpPost]
         public IActionResult Save(MAS_ContactModel modelMAS_Contact)
         {
+            LOC_DAL dalLOC = new LOC_DAL();
             if (modelMAS_Contact.File != null)
             {
                 string FilePath = "wwwroot\\Upload";
@@ -192,6 +200,7 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
                 }
 
             }
+
             string connectionString = this.Configuration.GetConnectionString("SQL_AddressBook");
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
@@ -244,21 +253,22 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
 
         public ActionResult DropDownByState(int StateID)
         {
-            String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
-           
-           
-            SqlConnection conn1 = new SqlConnection(connectionstr);
-            conn1.Open();
-            SqlCommand cmd1 = conn1.CreateCommand();
-            cmd1.CommandType = CommandType.StoredProcedure;
-            cmd1.CommandText = "PR_LOC_City_SelectForDropDown";
-            cmd1.Parameters.AddWithValue("@StateID", StateID);
-            DataTable dt1 = new DataTable();
-            SqlDataReader objSDR1 = cmd1.ExecuteReader();
-            dt1.Load(objSDR1);
+            LOC_DAL dalLOC = new LOC_DAL();
+            //String connectionstr = this.Configuration.GetConnectionString("SQL_AddressBook");
+            //SqlConnection conn1 = new SqlConnection(connectionstr);
+            //conn1.Open();
+            //SqlCommand cmd1 = conn1.CreateCommand();
+            //cmd1.CommandType = CommandType.StoredProcedure;
+            //cmd1.CommandText = "PR_LOC_City_SelectForDropDown";
+            //cmd1.Parameters.AddWithValue("@StateID", StateID);
+            //DataTable dt1 = new DataTable();
+            //SqlDataReader objSDR1 = cmd1.ExecuteReader();
+            //dt1.Load(objSDR1);
+
+            DataTable dtDropdownCity = dalLOC.PR_LOC_City_SelectByDropdownList(StateID);
            
             List<Models.LOC_CityDropDownModel> listCity = new List<Models.LOC_CityDropDownModel>();
-            foreach (DataRow dr in dt1.Rows)
+            foreach (DataRow dr in dtDropdownCity.Rows)
             {
                 Models.LOC_CityDropDownModel vl = new Models.LOC_CityDropDownModel();
                 vl.CityID = (Convert.ToInt32(dr["CityID"]));

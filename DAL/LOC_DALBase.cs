@@ -179,6 +179,28 @@ namespace Multi_AddressBook.DAL
             }
         }
 
+        public DataTable PR_LOC_City_SelectByDropdownList(int? StateID)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_LOC_City_SelectForDropDown");
+                sqlDB.AddInParameter(dbCMD, "StateID", SqlDbType.Int, StateID);
+
+                DataTable dt = new DataTable();
+                using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
+                {
+                    dt.Load(dr);
+                }
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public DataTable PR_LOC_State_SelectByPK(int? StateID)
         {
             try
