@@ -196,5 +196,34 @@ namespace Multi_AddressBook.DAL
                 return null;
             }
         }
+
+        public bool? PR_MAS_Save_ContactCategory(int? ContactCategoryID,string? ContactCategoryName)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
+                DbCommand dbCMD;
+                if(ContactCategoryID == null)
+                {
+                    dbCMD = sqlDB.GetStoredProcCommand("PR_ContactCategory_Insert");
+                    sqlDB.AddInParameter(dbCMD, "@CreationDate",SqlDbType.Date, DBNull.Value);
+                }
+                else
+                {
+                    dbCMD = sqlDB.GetStoredProcCommand("PR_ContactCategory_UpdateByPK");
+                    sqlDB.AddInParameter(dbCMD, "@ContactCategoryID",SqlDbType.Int, ContactCategoryID);
+                }
+                sqlDB.AddInParameter(dbCMD, "@ContactCategoryName", SqlDbType.NVarChar, ContactCategoryName);
+                sqlDB.AddInParameter(dbCMD, "@ModificationDate", SqlDbType.DateTime, DBNull.Value);
+
+
+                int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
+                return (vReturnValue == -1 ? false : true);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

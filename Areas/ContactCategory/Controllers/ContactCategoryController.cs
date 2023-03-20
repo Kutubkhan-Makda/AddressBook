@@ -53,26 +53,42 @@ namespace Multi_AddressBook.Areas.ContactCategory.Controllers
         [HttpPost]
         public ActionResult Save(ContactCategoryModel modelContactCategory)
         {
-            String str = this.Configuration.GetConnectionString("SQL_AddressBook");
-            SqlConnection conn = new SqlConnection(str);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            if (modelContactCategory.ContactCategoryID == null)
-            {
-                cmd.CommandText = "PR_ContactCategory_Insert";
-                cmd.Parameters.Add("@CreationDate", SqlDbType.DateTime).Value = DBNull.Value;
-            }
-            else
-            {
-                cmd.CommandText = "PR_ContactCategory_UpdateByPK";
-                cmd.Parameters.Add("@ContactCategoryID", SqlDbType.Int).Value = modelContactCategory.ContactCategoryID;
-            } 
-            cmd.Parameters.Add("@ContactCategoryName", SqlDbType.NVarChar).Value = modelContactCategory.ContactCategoryName;
-            cmd.Parameters.Add("@ModificationDate", SqlDbType.DateTime).Value = DBNull.Value;
+            MAS_DAL dalCON = new MAS_DAL();
+            //String str = this.Configuration.GetConnectionString("SQL_AddressBook");
+            //SqlConnection conn = new SqlConnection(str);
+            //conn.Open();
+            //SqlCommand cmd = conn.CreateCommand();
+            //cmd.CommandType = CommandType.StoredProcedure;
+            //if (modelContactCategory.ContactCategoryID == null)
+            //{
+            //    cmd.CommandText = "PR_ContactCategory_Insert";
+            //    cmd.Parameters.Add("@CreationDate", SqlDbType.DateTime).Value = DBNull.Value;
+            //}
+            //else
+            //{
+            //    cmd.CommandText = "PR_ContactCategory_UpdateByPK";
+            //    cmd.Parameters.Add("@ContactCategoryID", SqlDbType.Int).Value = modelContactCategory.ContactCategoryID;
+            //} 
+            //cmd.Parameters.Add("@ContactCategoryName", SqlDbType.NVarChar).Value = modelContactCategory.ContactCategoryName;
+            //cmd.Parameters.Add("@ModificationDate", SqlDbType.DateTime).Value = DBNull.Value;
+            //
+            //cmd.ExecuteNonQuery();
+            //conn.Close();
 
-            cmd.ExecuteNonQuery();
-            conn.Close();
+
+            if(Convert.ToBoolean(dalCON.PR_MAS_Save_ContactCategory(modelContactCategory.ContactCategoryID,modelContactCategory.ContactCategoryName)))
+            {
+                if(modelContactCategory.ContactCategoryID == null)
+                {
+                    TempData["CountryInsetMsg"] = "Record Inserted Successfully";
+                }
+                else
+                {
+                    TempData["CountryInsetMsg"] = "Record Updated Successfully";
+                }
+            }
+
+
             return RedirectToAction("Index");
         }
     }
