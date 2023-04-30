@@ -183,7 +183,7 @@ namespace Multi_AddressBook.Areas.MAS_Contact.Controllers
         public IActionResult Save(MAS_ContactModel modelMAS_Contact)
         {
             MAS_DAL dalCON = new MAS_DAL();
-            if (modelMAS_Contact.PhotoPath != null)
+            if (modelMAS_Contact.File != null)
             {
                 string FilePath = "wwwroot\\Upload";
                 string path = Path.Combine(Directory.GetCurrentDirectory(), FilePath);
