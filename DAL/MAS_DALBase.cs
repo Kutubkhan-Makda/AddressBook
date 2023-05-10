@@ -155,7 +155,9 @@ namespace Multi_AddressBook.DAL
 
         public bool? PR_MAS_Save_Contact(int? ContactID,int? CityID,int? StateID,int? CountryID,string? ContactName,string? ContactAddress,int? ContactCategoryID,int? ContactPincode,string? ContactMobile,string? ContactEmail,DateTime? ContactDOB,string? ContactLinkedIN,string? ContactGender,string? ContactTypeOfProfession,string? ContactCompanyName,string? ContactDesignation,string? PhotoPath)
         {
-            SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(SQL_Connection);
                 DbCommand dbCMD;
                 if(ContactID == null)
                 {
@@ -188,9 +190,6 @@ namespace Multi_AddressBook.DAL
 
                 int vReturnValue = sqlDB.ExecuteNonQuery(dbCMD);
                 return (vReturnValue == -1 ? false : true);
-            try
-            {
-                
             }
             catch (Exception ex)
             {
